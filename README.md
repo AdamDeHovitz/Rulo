@@ -12,7 +12,7 @@ Installation Instruction:
 
 
 
-Calendar:
+Calendar: <br>
 12/23 - Figure out GPS (Deanna, Adam) <br>
 1/5   - Full login work - comments about you, rating, picture, user since, number of ratings, age-not displayed, Name first and last,  (Sophie, Benedict)
 
