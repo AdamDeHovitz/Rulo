@@ -13,8 +13,8 @@ Installation Instruction:
 
 
 Calendar: <br>
-12/23 - Figure out GPS (Deanna, Adam) <br>
-1/5   - Full login work - comments about you, rating, picture, user since, number of ratings, age-not displayed, Name first and last,  (Sophie, Benedict)
+<b> 12/23 </b> - Figure out GPS (Deanna, Adam) <br>
+<b> 1/5 </b> - Full login work - comments about you, rating, picture, user since, number of ratings, age-not displayed, Name first and last,  (Sophie, Benedict)
 
 
 Account <br>
