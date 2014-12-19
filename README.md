@@ -24,13 +24,13 @@ google
 Event will have radius (default for now) if in radius 
 
 Event
-  *Decription
-  *Location of event
-  *Name of person who created it
-  *time created (~maybe time of event)
-  *Map with where it was created with a radius
-  *Once you join other people who have joined will show up on the map so you can STALK them
-  *~As of now events terminate in two hours
+  * Decription
+  * Location of event
+  * Name of person who created it
+  * time created (~maybe time of event)
+  * Map with where it was created with a radius
+  * Once you join other people who have joined will show up on the map so you can STALK them
+  * ~As of now events terminate in two hours
 
 Updates:
 
