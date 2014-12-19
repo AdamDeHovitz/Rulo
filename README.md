@@ -5,7 +5,7 @@ In this project we will harness the power of deals, special, and bulk offers by 
 
 Costco and 6 inches with a Pizza Pie
 
-Napoleon: First Consul
+Napoleon: First Consul \n
 Sophie: Second Consul
 
 Installation Instruction:
