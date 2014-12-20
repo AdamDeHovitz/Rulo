@@ -17,7 +17,7 @@ Calendar: <br>
 <b> 1/5 </b> - Full login work - comments about you, rating, picture, user since, number of ratings, age-not displayed, Name first and last,  (Sophie, Benedict)
 
 
-Account <br>
+Account 
 * registration page (user/flask form)
 * get reg info, check validity, create new user
 google
