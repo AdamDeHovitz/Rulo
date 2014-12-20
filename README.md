@@ -17,11 +17,12 @@ Sophie: Second Consul
 <b> 1/5 </b> - Full login work - comments about you, rating, picture, user since, number of ratings, age-not displayed, Name first and last,  (Sophie, Benedict)
 
 
-Account 
+Account
 * registration page (user/flask form stuff)
 * get reg info, check validity, create new user
 * redirect to their page? <br>
-google
+
+Google
 
 
 Event will have radius (default for now) if in radius 
