@@ -20,7 +20,7 @@ Sophie: Second Consul
 Account 
 * registration page (user/flask form stuff)
 * get reg info, check validity, create new user
-* redirect to their page?
+* redirect to their page? <br>
 google
 
 
