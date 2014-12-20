@@ -18,8 +18,8 @@ Calendar: <br>
 
 
 Account <br>
-	* registration page (user/flask form)
-	* get reg info, check validity, create new user
+* registration page (user/flask form)
+* get reg info, check validity, create new user
 google
 
 
