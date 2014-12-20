@@ -1,18 +1,18 @@
 Rulo
 ====
 
-In this project we will harness the power of deals, special, and bulk offers by uniting people in their quest for saving. 
+In this project we will harness the power of deals, specials, and bulk offers by uniting people in their quest for saving. 
 
 Costco and 6 inches with a Pizza Pie
 
 Napoleon: First Consul <br>
 Sophie: Second Consul
 
-Installation Instruction:
+###Installation Instructions:
 
 
 
-Calendar: <br>
+###Calendar: <br>
 <b> 12/23 </b> - Figure out GPS (Deanna, Adam) <br>
 <b> 1/5 </b> - Full login work - comments about you, rating, picture, user since, number of ratings, age-not displayed, Name first and last,  (Sophie, Benedict)
 
