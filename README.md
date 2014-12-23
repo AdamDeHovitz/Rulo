@@ -14,17 +14,14 @@ Sophie: Second Consul
 
 ###Calendar: <br>
 <b> 12/23 </b> - Figure out GPS (Deanna, Adam) <br>
-<b> 1/5 </b> - Full login work - comments about you, rating, picture,
-user since, number of ratings, age-not displayed, Name first and last,
-username, password (Sophie, Benedict)
+<b> 1/5 </b> - Full login work - comments about you, rating, picture, user since, number of ratings, age-not displayed, Name first and last, (Sophie, Benedict)
 
 
 Account 
 * registration page (user/flask form stuff)
 * get reg info, check validity, create new user
 * redirect to their page?
-* tabs: home; events, people, logout (if logged in); register, login (if not) 
-Google
+google
 
 
 Event will have radius (default for now) if in radius 
@@ -36,7 +33,7 @@ Event
   * time created (~maybe time of event)
   * Map with where it was created with a radius
   * Once you join other people who have joined will show up on the map
-  so you can STALK them
+    so you can STALK them
   * ~As of now events terminate in two hours
 
 Updates:
