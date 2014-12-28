@@ -30,11 +30,16 @@
     function showPosition(position) {
     var m = document.getElementById("map");
     var img = new Image();
-    img.src = "https://maps.googleapis.com/maps/api/staticmap?center="+position.coords.latitude+","+position.coords.longitude+"&zoom=15&size=350x350&sensor=true";
+    var marker = new Image();
+    img.src="https://maps.googleapis.com/maps/api/staticmap?center="+position.coords.latitude+","+position.coords.longitude+"&zoom=15&size=350x350&sensor=true";
+    marker.src="marker.png";
     x.innerHTML = "Latitude: " + position.coords.latitude + 
     "<br>Longitude: " + position.coords.longitude;
     m.innerHTML="";
     m.appendChild(img);
+    marker.width = marker.width * .06;
+    marker.height = marker.height * .06;
+    m.appendChild(marker);
     }
 
     <!-- distance functions -->
