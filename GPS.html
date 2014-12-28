@@ -27,13 +27,13 @@
 
     function getDistance() {
     if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(calcDistance);
+    navigator.geolocation.getCurrentPosition(calcDistanceFromUser);
     } else { 
     x.innerHTML = "Geolocation is not supported by this browser.";
     }
-    } <!-- this calls the geolocation but getCurrentPosition(calcDistance) doesnt work for obvious reasons -->
+    }
 
-    function calcDistance(position){
+    function calcDistanceFromUser(position){
     latCoord = 10; <!-- this is a placeholder... we will need to get the location of users here I believe -->
     longCoord = 10; <!-- Also a placeholder -->
     latDist = (position.coords.latitude - latCoord)*(position.coords.latitude - latCoord);
