@@ -10,7 +10,8 @@
   <button onclick="getDistanceFromUser()">Get Distance!</button>
   <button onclick="getInRadius()">Are you within radius?</button>
   
-  <p id="demo"></p>
+  <div id="demo"></div>
+  <div id="map"></map>
 
   <script>
     var x = document.getElementById("demo");
@@ -28,7 +29,11 @@
 
     function showPosition(position) {
     x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;	
+    "<br>Longitude: " + position.coords.longitude;
+    var m = document.getElementById("map");
+    var img = new Image();
+    img.src = "https://maps.googleapis.com/maps/api/staticmap?center="+position.coords.latitude+","+position.coords.longitude+"&zoom=13&size=300x300&sensor=false";
+    m.appendChild(img);
     }
 
     <!-- distance functions -->
