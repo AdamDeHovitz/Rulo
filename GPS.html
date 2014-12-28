@@ -38,7 +38,7 @@
     longCoord = 10; <!-- Also a placeholder -->
     latDist = (position.coords.latitude - latCoord)*(position.coords.latitude - latCoord);
     longDist = (position.coords.longitude - longCoord)*(position.coords.longitude - longCoord);
-    x.innerHTML = "Distance: " + sqrt(longDist+latDist);
+    x.innerHTML = "Distance: " + Math.sqrt(longDist+latDist);
     }
 
 
