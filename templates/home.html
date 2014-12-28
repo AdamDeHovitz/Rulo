@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+
+{% if udict['uname'] %}
+<h1> Welcome to your homepage {{udict['fname']}}! </h1>
+
+{% else %}
+<h1> Welcome! </h1>
+<p>
+Please login to access your account
+{% endif %}
+
+
+
+{% endblock %}
