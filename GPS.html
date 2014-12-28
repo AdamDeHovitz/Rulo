@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  </head>
+  <body>
+    <div id="demo">
+      Hey!
+    </div>
+    <div id="map">
+    </div>
+
+    <script>
+
+      document.getElementById("demo").innerHTML="HELLO";
+      
+     <!--  No clue why my indenting wont even work let alone either of these codes
+
+	 function get_location() {
+	 navigator.geolocation.getCurrentPosition(show_map);
+	 }
+	 
+	 var x = document.getElementById("demo");
+	 function getLocation() {
+	 if (navigator.geolocation) {
+	 navigator.geolocation.getCurrentPosition(showPosition);
+	 } else {
+	 x.innerHTML = "Geolocation is not supported by this browser.";
+	 }
+	 }
+	 function showPosition(position) {
+	 x.innerHTML = "Latitude: " + position.coords.latitude + 
+	 "<br>Longitude: " + position.coords.longitude; 
+	 }
+	 
+	 var showPosition = function(p){
+	 console.log("In ShowPosition");
+	 console.log(p);
+	 var d = document.getElementById("demo");
+	 d.innerHTML = "latitude: "+p.coords.latitude + "<br>Longitude: " + p.coords.longitude;
+	 var m = document.getElementById("map");
+	 var img = new Image();
+	 img.src = "https://maps.googleapis.com/maps/api/staticmap?center="+p.coords.latitude+","+p.coords.longitude+"&zoom=13&size=300x300&sensor=false";
+	 m.appendChild(img);
+	 }
+	 
+	 var go = function(){
+	 if ("geolocation" in navigator){
+	 console.log("Yay Geolocation");
+	 }
+	 else{
+	 console.log("Nope");
+	 }
+	 }; -->
+    </script>
+    
+  </body>
+      
+</html>
