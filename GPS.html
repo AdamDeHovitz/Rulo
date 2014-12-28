@@ -5,7 +5,8 @@
   <p>Click for latitude and longitude</p>
 
   <button onclick="getLocation()">Get Coordinates!</button>
-  <button onclick="getDistance()">Get Distance!</button>
+  <button onclick="getDistanceFromUser()">Get Distance!</button>
+  <button onclick="getInRadius()">Are you within radius?</button>
   
   <p id="demo"></p>
 
@@ -29,7 +30,7 @@
 
     <!-- distance functions -->
 
-    function getDistance() {
+    function getDistanceFromUser() {
     if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(calcDistanceFromUser);
     } else { 
@@ -45,8 +46,29 @@
     x.innerHTML = "Distance: " + Math.sqrt(longDist+latDist);
     }
 
-    
+    <!-- Radius distane functions -->
 
+    function getInRadius() {
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(inRadius);
+    } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+    }
+
+    function inRadius(position){
+    console.log("in inRadius");
+    if (calcDistanceFromUser() <= 130){
+				  console.log("should respond yes");
+				  x.innerHTML = "yes";
+				  }
+				  else{
+				  console.log("should respond no");
+				  x.innerHTML = "no";
+				  }
+				} <!-- needs to be fixed -->
+
+    
   </script>
 
 </body>
