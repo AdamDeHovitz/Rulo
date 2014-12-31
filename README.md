@@ -14,7 +14,7 @@ Sophie: Second Consul
 
 ###Calendar: <br>
 <b> 12/23 </b> - Figure out GPS (Deanna, Adam) ~ DONE <br>
-<b> 1/5 </b> - Full login work - so far: name (f+l), username, age; still to do: comments about you, rating, picture, user since, number of ratings (Sophie, Benedict) <br>
+<b> 1/5 </b> - Full login work - so far: name (f+l), username, age; still to do: comments about you, rating, picture, user since* (send date from form?), number of ratings (Sophie, Benedict) <br>
 <b> 1/5 </b> Integrate demo of gps via map on homepage of where you are with a radius around it (deanna, adam) <br>
 <b> 1/11  3 pm</b> Basic events done (sophie, benedict) (ie creating them, NOT joining) <br>
 <b> 1/11  3 pm</b> have GPS ready to plug into the events [ie generic gps code that we can plug in] (d & a) <br>
