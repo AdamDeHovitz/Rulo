@@ -37,7 +37,11 @@ def checkPword(uname,pw):
 
 def addPerson(pdict):
     #pdict['events'] = []
+    #pdict['picture'] = file; should be sent from form 
     # --> other stuff that needs to be initialized
+    pdict['comments'] = []
+    pdict['ratings'] = []
+    
     users.insert(pdict)
 
 def addField(uname, field, data):
