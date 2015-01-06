@@ -23,6 +23,10 @@ def authenticate(page):
 @app.route('/')
 def index():
     return redirect('/home')
+@app.route('/gps')
+def gps():
+    return render_template("GPS.html");
+
 
 @app.route('/home')
 def home():
@@ -90,7 +94,21 @@ def personal():
             login.addField(username,"fname",request.form["fname"])
             login.addField(username,"lname",request.form["lname"])          
         util.addField(username,submit,request.form[submit])
-    return render_template('personal.html', udict=mongo.getUser(username))
+    return render_template('personal.html', udict=util.getUser(username))
+
+@app.route('/create_events', methods=['GET','POST'])
+def event_create():    
+    username = escape(session['username'])
+
+    return render_template('eventCreate.html', udict=util.getUser(username))
+
+@app.route('/create_event_process', methods=['GET','POST'])
+def process():    
+    username = escape(session['username'])
+    ename = request.form["ename"]     
+    numb = request.form["numb"]    
+    desc = request.form["desc"]  
+    return render_template('eventCreated.html', udict=util.getUser(username), ename = ename, numb = numb, desc = desc)
 
 
 
