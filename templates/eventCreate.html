@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+
+<h1>{{udict['fname']}}, Create an event! </h1>
+
+<form action="/create_event_process" method="post" class="pure-form pure-form-aligned">
+  <!-- redirecting idk -->
+  <fieldset>
+    <div class="pure-control-group">
+      <label for="ename">Event Name</label>
+      <input id="ename" name="ename" type="text"
+	     placeholder="Let's get Turkeys!"></div><br>
+    <div class="pure-control-group">
+      <label for="numb">Total People Needed</label>
+      <input id="numb" name="numb" type="text" placeholder="3"></div><br>
+    <div class="pure-control-group">
+      <label for="desc">Description</label><textarea name="Text1"
+  id="desc" name="desc" placeholder="What is your event?"cols="40" rows="5">
+</textarea><div><br>
+
+    
+    <button type="submit" class="pure-button">Go!</button>
+  </fieldset>
+  <br><br><br>
+
+
+
+{% endblock %}
