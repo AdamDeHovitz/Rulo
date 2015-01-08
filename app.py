@@ -103,12 +103,18 @@ def event_create():
     return render_template('eventCreate.html', udict=util.getUser(username))
 
 @app.route('/create_event_process', methods=['GET','POST'])
-def process():    
-    username = escape(session['username'])
-    ename = request.form["ename"]     
-    numb = request.form["numb"]    
-    desc = request.form["desc"]  
-    return render_template('eventCreated.html', udict=util.getUser(username), ename = ename, numb = numb, desc = desc)
+def process(): 
+    if request.method=="POST":   
+        
+        username = escape(session['username'])
+        ename = request.form["ename"]     
+        numb = request.form["numb"]    
+        print("number: "+numb)
+        desc = request.form["desc"]  
+        print("desc: " + desc)
+        lon = request.form["long"]
+        lat = request.form["lat"]
+        return render_template('eventCreated.html', udict=util.getUser(username), lat = lat, lon = lon, ename = ename, numb = numb, desc = desc)
 
 
 

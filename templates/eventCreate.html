@@ -17,15 +17,41 @@
       <label for="numb">Total People Needed</label>
       <input id="numb" name="numb" type="text" placeholder="3"></div><br>
     <div class="pure-control-group">
-      <label for="desc">Description</label><textarea name="Text1"
-  id="desc" name="desc" placeholder="What is your event?"cols="40" rows="5">
-</textarea><div><br>
-
+      <label for="desc">Description</label><textarea name="desc" id="desc" placeholder="What is your event?"cols="40" rows="5">
+</textarea></div><br>
+ <input name="long" value = "" id = "long" type="hidden">
+ <input name="lat" value = "" id = "lat" type="hidden">
     
     <button type="submit" class="pure-button">Go!</button>
   </fieldset>
+  </form>
   <br><br><br>
 
 
+<script>
 
-{% endblock %}
+    <!-- long and lat functions -->
+    
+
+
+    function showPosition(position) {
+    var lat = document.getElementById("lat");
+    var long = document.getElementById("long");
+
+    lat.value = position.coords.latitude;
+    long.value = position.coords.longitude;}
+
+    function getLocation() {
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+    }
+    }
+var x = showPosition(position)
+x()
+
+    
+
+
+</script>
+
+  {% endblock %}
