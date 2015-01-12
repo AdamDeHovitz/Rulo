@@ -96,6 +96,13 @@ def personal():
         util.addField(username,submit,request.form[submit])
     return render_template('personal.html', udict=util.getUser(username))
 
+@app.route('/settings/<thing>', methods=['POST','GET'])
+def settings():
+    username = escape(session['username'])
+    if request.method==
+
+
+
 @app.route('/create_events', methods=['GET','POST'])
 def event_create():    
     username = escape(session['username'])
