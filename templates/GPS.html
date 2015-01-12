@@ -11,7 +11,7 @@
   <button onclick="getInRadius()">Are you within radius?</button>
   
   <div id="demo"></div>
-  map<br>
+
   <div id="map"></div>
 
   <script>
@@ -38,8 +38,6 @@
     "<br>Longitude: " + position.coords.longitude;
     m.innerHTML="";
     m.appendChild(img);
-    var lat = position.coords.latitude;
-    vat long = position.coords.latitude; <!-- for adam to use -->
     var xVal = m.width/2;
     var yVal = m.height/2;
     marker.width = marker.width * .06;
