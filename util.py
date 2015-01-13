@@ -45,6 +45,9 @@ def addPerson(pdict):
     users.insert(pdict)
 
 def addField(uname, field, data):
+    '''
+    add a new field or update an old one 
+    '''
     #p = users.find_one({"fname":fname})
     #p[field] = data
     #users.save(p)

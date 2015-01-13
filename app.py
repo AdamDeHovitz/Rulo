@@ -84,7 +84,8 @@ def verify():
         else:
             flash(valid_msg)
             return redirect('/login')
-
+        
+'''
 @app.route('/personal', methods=['GET','POST'])
 def personal():    
     username = escape(session['username'])
@@ -95,11 +96,14 @@ def personal():
             login.addField(username,"lname",request.form["lname"])          
         util.addField(username,submit,request.form[submit])
     return render_template('personal.html', udict=util.getUser(username))
+'''
 
-@app.route('/settings/<thing>', methods=['POST','GET'])
+@app.route('/personal/<thing>', methods=['POST','GET'])
 def settings():
     username = escape(session['username'])
-    if request.method==
+    if request.method=="POST":
+        
+        util.addField(username, thing, data)
 
 
 
