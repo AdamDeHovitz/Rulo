@@ -48,6 +48,7 @@ def user():
         newuser['pw'] = request.form['pw']
         newuser['rpw'] = request.form['rpw']
         newuser['age'] = request.form['age'] #type = unicode
+        newuser['email'] = request.form['email']
         valid_msg = util.newUser(newuser)
         if valid_msg == '':
             session['username'] = request.form['uname']
@@ -84,26 +85,32 @@ def verify():
         else:
             flash(valid_msg)
             return redirect('/login')
-        
-'''
+
 @app.route('/personal', methods=['GET','POST'])
-def personal():    
+def p():
+    username = escape(session['username'])
+    return render_template('personal.html', udict=util.getUser(username), change = "Null")
+        
+
+@app.route('/personal_process', methods=['GET','POST'])
+def personal_process():    
     username = escape(session['username'])
     if request.method=="POST":
         submit = request.form['submit']
         if submit == 'name':
-            login.addField(username,"fname",request.form["fname"])
-            login.addField(username,"lname",request.form["lname"])          
-        util.addField(username,submit,request.form[submit])
-    return render_template('personal.html', udict=util.getUser(username))
-'''
+            util.addField(username,"fname",request.form["fname"])
+            util.addField(username,"lname",request.form["lname"]) 
+        else:
+            util.addField(username, submit, request.form["variable"])
+    return redirect('/personal')
+
 
 @app.route('/personal/<thing>', methods=['POST','GET'])
-def settings():
+def personal(thing = None):
     username = escape(session['username'])
-    if request.method=="POST":
-        
-        util.addField(username, thing, data)
+    
+    return render_template('personal.html', udict=util.getUser(username), change = thing)
+  
 
 
 
