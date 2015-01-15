@@ -15,9 +15,21 @@ def newUser(udict):
     pwcheck = (udict['pw'] == udict['rpw'])
     uname = udict['uname']
     email = udict['email']
+<<<<<<< HEAD
     pic = udict['pic']
+=======
+    age = udict['age']
+>>>>>>> 97b4f15d35919f5179739dc60ab8132e0bfb46f5
     uncheck = users.find_one({'uname':uname}) == None
     emailcheck = users.find_one({'email':email}) == None
+    agecheck = False
+    validagecheck = True
+    try:
+        age = int(age)
+        agecheck = (age > 13)
+    except ValueError:
+        validagecheck = False
+    
     s = ""
     if uncheck == False:
         s = "That username has already been used\n"
@@ -27,6 +39,10 @@ def newUser(udict):
         s +=  "Passwords do not match"
     elif emailcheck == False:
         s += "Email has already been registered"
+    elif agecheck == False:
+        s += "You must be older than 13 years of age"
+    elif validagecheck == False:
+        s += "Please enter a numerical age"
     else:
         addPerson(udict)
     return s
