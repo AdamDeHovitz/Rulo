@@ -2,8 +2,10 @@
 
 
 {% block body %}
+<h1> Hey there {{udict['fname']}}! </h1>
+<h2>Check out your local Events </h2>
 
-<h1> Events </h1>
+
 
 {% for e in elist %}
    Creator: {{e['creator']}} <br>

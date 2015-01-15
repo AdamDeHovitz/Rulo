@@ -34,6 +34,7 @@ def home():
     if 'username' in session:
         username = escape(session['username'])
         udict = util.getUser(username)
+        return redirect('/events')
     return render_template('home.html', udict = udict)
 
 @app.route('/user', methods=['POST'])
