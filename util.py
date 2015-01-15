@@ -13,8 +13,10 @@ def newUser(udict):
     dict: fname, lname, uname, email, pw + rpw, pic 
     '''
     pwcheck = (udict['pw'] == udict['rpw'])
-    uname = udict['uname'] 
+    uname = udict['uname']
+    email = udict['email']
     uncheck = users.find_one({'uname':uname}) == None
+    emailcheck = users.find_one({'email':email}) == None
     s = ""
     if uncheck == False:
         s = "That username has already been used\n"
@@ -22,6 +24,8 @@ def newUser(udict):
         s += "Password must be between 5 and 20 characters\n"
     elif pwcheck == False:
         s +=  "Passwords do not match"
+    elif emailcheck = False:
+        s += "Email has already been registered"
     else:
         addPerson(udict)
     return s
