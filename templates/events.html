@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+<h1> Events </h1>
+
+{% for e in elist %}
+   Creator: {{e['creator']}} <br>
+   Name: {{e['ename']}} <br>
+   Number: {{e['numb']}} <br>
+   Description: {{e['desc']}} <br>
+   Lat: {{e['lat']}} <br>
+   Lon: {{e['lon']}} <br>
+<hr>
+
+{% endfor %}
+
+
+
+{% endblock %}

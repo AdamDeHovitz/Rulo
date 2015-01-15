@@ -97,19 +97,20 @@ def personal_process():
     username = escape(session['username'])
     if request.method=="POST":
         submit = request.form['submit']
+        print submit
         if submit == 'name':
             util.addField(username,"fname",request.form["fname"])
             util.addField(username,"lname",request.form["lname"]) 
         else:
-            util.addField(username, submit, request.form["variable"])
+            util.addField(username, submit, request.form[submit])
     return redirect('/personal')
 
 
 @app.route('/personal/<thing>', methods=['POST','GET'])
 def personal(thing = None):
     username = escape(session['username'])
-    
-    return render_template('personal.html', udict=util.getUser(username), change = thing)
+    udict = util.getUser(username)
+    return render_template('personal.html', udict=udict, change=thing)
   
 
 
@@ -122,18 +123,37 @@ def event_create():
 
 @app.route('/create_event_process', methods=['GET','POST'])
 def process(): 
-    if request.method=="POST":   
-        
+    if request.method=="POST":                       
         username = escape(session['username'])
-        ename = request.form["ename"]     
+        edict = {}
+        edict['creator'] = username
+
+        ename = request.form["ename"]  
+        edict['ename'] = request.form["ename"]  
         numb = request.form["numb"]    
+        edict['numb'] = request.form["numb"]    
         print("number: "+numb)
         desc = request.form["desc"]  
+        edict['desc'] = request.form["desc"]    
         print("desc: " + desc)
         lon = request.form["long"]
+        edict['long'] = request.form["long"]    
         lat = request.form["lat"]
+        edict['lat'] = request.form["lat"]    
+        util.createEvent(edict)
+
         return render_template('eventCreated.html', udict=util.getUser(username), lat = lat, lon = lon, ename = ename, numb = numb, desc = desc)
 
+
+
+@app.route('/events')
+def events():
+    username = escape(session['username'])
+    udict = util.getUser(username)
+
+    elist = util.listEvents();
+
+    return render_template('events.html', udict=udict, elist=elist)
 
 
 if __name__ == '__main__':
