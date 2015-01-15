@@ -49,6 +49,7 @@ def user():
         newuser['rpw'] = request.form['rpw']
         newuser['age'] = request.form['age'] #type = unicode
         newuser['email'] = request.form['email']
+        newuser['pic'] = request.form['pic']
         valid_msg = util.newUser(newuser)
         if valid_msg == '':
             session['username'] = request.form['uname']

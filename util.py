@@ -15,6 +15,7 @@ def newUser(udict):
     pwcheck = (udict['pw'] == udict['rpw'])
     uname = udict['uname']
     email = udict['email']
+    pic = udict['pic']
     uncheck = users.find_one({'uname':uname}) == None
     emailcheck = users.find_one({'email':email}) == None
     s = ""
