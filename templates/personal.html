@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<h1>Personal Information</h1>
+{{change}}
+<br><br>
+<form action="/personal_process" method="post" class="pure-form pure-form-aligned">
+<fieldset>
+Name: {{udict['fname']}} {{udict['lname']}} <br>
+
+
+{% if change == "name" %}
+<label for="fname">First Name</label>
+  <input id="fname" name="fname" type="text"
+  placeholder="First Name">
+<br>
+<label for="lname">Last Name</label>
+  <input id="lname" name="lname" type="text" placeholder="Last Name"><br>
+
+<button type="submit" name="submit" value="name" class="pure-button">submit</button>
+     {% else %}
+<font size="2"><a href="/personal/name">Change</a></font>
+     {% endif %}
+<br><br>
+
+
+
+email:
+{% if udict['email'] %}
+{{udict['email']}}
+{% else %}
+NA
+{% endif %}<br>
+{% if change == "email" %}
+<label for="email">Email:</label>
+  <input id="email" name="email" type="text"
+  placeholder="example@gmail.com">
+
+<button type="submit" name="submit" value="name" class="pure-button">submit</button>
+     {% else %}
+<font size="2"><a href="/personal/email">Change</a></font>
+
+     {% endif %}
+
+
+
+
+<br><br>
+GPA:
+{% if udict['gpa'] %}
+{{udict['gpa']}}
+{% else %}
+NA
+{% endif %}<br>
+{% if changegpa %}
+
+<label for="gpa">New GPA</label>
+  <input id="gpa" name="gpa" type="text" placeholder="88.88"><br>
+<button type="submit" name="submit" value="gpa" class="pure-button">submit</button>
+     {% else %}
+<font size="2"<br><a href="/gpa">Change</a></font>
+{% endif %}
+</fieldset>
+
+
+{% endblock %}
