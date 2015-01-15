@@ -24,7 +24,7 @@ def newUser(udict):
         s += "Password must be between 5 and 20 characters\n"
     elif pwcheck == False:
         s +=  "Passwords do not match"
-    elif emailcheck = False:
+    elif emailcheck == False:
         s += "Email has already been registered"
     else:
         addPerson(udict)
