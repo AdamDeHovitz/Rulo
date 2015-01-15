@@ -7,10 +7,10 @@ db = conn["rulo"]
 users = db.users
 events = db.events
 
-
+#----------------------USER STUFF--------------------#
 def newUser(udict):
     '''
-    dict: name, username, etc
+    dict: fname, lname, uname, email, pw + rpw, pic 
     '''
     pwcheck = (udict['pw'] == udict['rpw'])
     uname = udict['uname'] 
@@ -66,6 +66,22 @@ def getAttribute(uname, field):
 
 
 
+#--------------------------EVENT STUFF------------------------#
+
+def createEvent(edict):
+    events.insert(edict)
+
+def listEvents():
+    eventslist = []
+    for e in events.find():
+        eventslist.append(e)
+    return eventslist
+
+
+if __name__ == "__main__":
+    #for person in users.find():
+    #    users.remove(person)
+    print listEvents()
 
 """
  people = db.people
