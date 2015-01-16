@@ -36,16 +36,26 @@ Email: {{udict['email']}} <br>
 
    <button type="submit" name="submit" value="email" 
 	   class="pure-button">submit</button>
-{% else %}
+   {% else %}
    <font size="2"><a href="/personal/email">Change</a></font>
 
-{% endif %}
+   {% endif %}
+  <br><br>
 
+Password <!-- we have to add a check to type in previous password-->
+   {% if change == "pw" %}
+   <label for="pw">Password</label>
+   <input id="pw" name="pw" type="text" placeholder="Password">
+   <br>
 
+   <button type="submit" name="submit" value="pw" 
+	   class="pure-button">submit</button>
+   {% else %}
+   <font size="2"><a href="/personal/pword">Change</a></font>
 
+   {% endif %}
 
-
+   
 </fieldset>
-
 
 {% endblock %}
