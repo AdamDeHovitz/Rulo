@@ -13,8 +13,20 @@ def newUser(udict):
     dict: fname, lname, uname, email, pw + rpw, pic 
     '''
     pwcheck = (udict['pw'] == udict['rpw'])
-    uname = udict['uname'] 
+    uname = udict['uname']
+    email = udict['email']
+    pic = udict['pic']
+    age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
+    emailcheck = users.find_one({'email':email}) == None
+    agecheck = False
+    validagecheck = True
+    try:
+        age = int(age)
+        agecheck = (age > 13)
+    except ValueError:
+        validagecheck = False
+    
     s = ""
     if uncheck == False:
         s = "That username has already been used\n"
@@ -22,6 +34,12 @@ def newUser(udict):
         s += "Password must be between 5 and 20 characters\n"
     elif pwcheck == False:
         s +=  "Passwords do not match"
+    elif emailcheck == False:
+        s += "Email has already been registered"
+    elif agecheck == False:
+        s += "You must be older than 13 years of age"
+    elif validagecheck == False:
+        s += "Please enter a numerical age"
     else:
         addPerson(udict)
     return s
@@ -69,6 +87,7 @@ def getAttribute(uname, field):
 #--------------------------EVENT STUFF------------------------#
 
 def createEvent(edict):
+    edict['peeps'] = [edict['creator']] #list of people in event
     events.insert(edict)
 
 def listEvents():
@@ -77,11 +96,25 @@ def listEvents():
         eventslist.append(e)
     return eventslist
 
+def addPersonEvent(uname, eventid):
+    #adding a person to an event
+    ev = events.find_one({'_id':eventid, 'peeps':{'$exists':True}}) 
+    if ev == None:
+        return None
+    ev['peeps'].add(uname);
+
 
 if __name__ == "__main__":
     #for person in users.find():
     #    users.remove(person)
     print listEvents()
+    
+    addPersonEvent('ssss','ObjectId(54b879a767a8a20cff85754c)')
+    for e in events.find():
+        print e['_id']
+    
+
+    
 
 """
  people = db.people
