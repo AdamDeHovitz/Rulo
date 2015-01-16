@@ -134,10 +134,10 @@ def process():
         edict['ename'] = request.form["ename"]  
         numb = request.form["numb"]    
         edict['numb'] = request.form["numb"]    
-        print("number: "+numb)
+
         desc = request.form["desc"]  
         edict['desc'] = request.form["desc"]    
-        print("desc: " + desc)
+
         lon = request.form["long"]
         edict['long'] = request.form["long"]    
         lat = request.form["lat"]
@@ -148,15 +148,24 @@ def process():
 
 
 
-@app.route('/events')
+@app.route('/events', methods=['GET','POST'])  
 def events():
     username = escape(session['username'])
     udict = util.getUser(username)
-
     elist = util.listEvents();
-
     return render_template('events.html', udict=udict, elist=elist)
 
+@app.route('/joinevent', methods=['GET','POST']) #does order matter? 
+def joinevent():
+    username = escape(session['username'])
+    udict = util.getUser(username)
+    elist = util.listEvents();
+    if request.method=="POST":
+        event = request.form["submit"]   
+        print event
+        util.addPersonEvent(username, event)
+        return render_template('events.html', udict=udict, elist=elist)
+    return render_template('events.html', udict=udict, elist=elist)
 
 if __name__ == '__main__':
     app.debug = True
