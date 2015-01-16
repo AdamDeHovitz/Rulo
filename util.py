@@ -87,6 +87,7 @@ def getAttribute(uname, field):
 #--------------------------EVENT STUFF------------------------#
 
 def createEvent(edict):
+    edict['peeps'] = [edict['creator']] #list of people in event
     events.insert(edict)
 
 def listEvents():
@@ -95,11 +96,25 @@ def listEvents():
         eventslist.append(e)
     return eventslist
 
+def addPersonEvent(uname, eventid):
+    #adding a person to an event
+    ev = events.find_one({'_id':eventid, 'peeps':{'$exists':True}}) 
+    if ev == None:
+        return None
+    ev['peeps'].add(uname);
+
 
 if __name__ == "__main__":
     #for person in users.find():
     #    users.remove(person)
     print listEvents()
+    '''
+    addPersonEvent('ssss','ObjectId(54b879a767a8a20cff85754c)')
+    for e in events.find():
+        print e['_id']
+    '''
+
+    
 
 """
  people = db.people
