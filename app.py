@@ -23,6 +23,8 @@ def authenticate(page):
 @app.route('/')
 def index():
     return redirect('/home')
+
+
 @app.route('/gps')
 def gps():
     return render_template("GPS.html");
@@ -36,6 +38,7 @@ def home():
         udict = util.getUser(username)
         return redirect('/events')
     return render_template('home.html', udict = udict)
+
 
 @app.route('/user', methods=['POST'])
 def user():
@@ -59,6 +62,7 @@ def user():
             flash(valid_msg)
             return redirect('/register')
 
+        
 @app.route('/login')
 def login():    
     return render_template('login.html', udict={'uname':False})
@@ -88,6 +92,7 @@ def verify():
             flash(valid_msg)
             return redirect('/login')
 
+        
 @app.route('/personal', methods=['GET','POST'])
 def p():
     username = escape(session['username'])
@@ -123,15 +128,14 @@ def personal(thing = None):
         return redirect('/home')
     else:
         return render_template('personal.html', udict=udict, change=thing)
-  
 
-
-
+    
 @app.route('/create_events', methods=['GET','POST'])
 def event_create():    
     username = escape(session['username'])
 
     return render_template('eventCreate.html', udict=util.getUser(username))
+
 
 @app.route('/create_event_process', methods=['GET','POST'])
 def process(): 
@@ -156,14 +160,14 @@ def process():
 
         return render_template('eventCreated.html', udict=util.getUser(username), lat = lat, lon = lon, ename = ename, numb = numb, desc = desc)
 
-
-
+    
 @app.route('/events', methods=['GET','POST'])  
 def events():
     username = escape(session['username'])
     udict = util.getUser(username)
     elist = util.listEvents();
     return render_template('events.html', udict=udict, elist=elist)
+
 
 @app.route('/joinevent', methods=['GET','POST']) #does order matter? 
 def joinevent():
@@ -176,6 +180,7 @@ def joinevent():
         util.addPersonEvent(username, event)
         return render_template('events.html', udict=udict, elist=elist)
     return render_template('events.html', udict=udict, elist=elist)
+
 
 if __name__ == '__main__':
     app.debug = True
