@@ -108,19 +108,13 @@ if __name__ == "__main__":
     #for person in users.find():
     #    users.remove(person)
     print listEvents()
-<<<<<<< HEAD
     
-    addPersonEvent('ssss','ObjectId(54b879a767a8a20cff85754c)')
-    for e in events.find():
-        print e['_id']
-    
-=======
     '''
     addPersonEvent('ssss','ObjectId(54b879a767a8a20cff85754c)')
     for e in events.find():
         print e['_id']
     '''
->>>>>>> master
+
 
     
 
