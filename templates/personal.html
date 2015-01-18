@@ -19,17 +19,17 @@ Name: {{udict['fname']}} {{udict['lname']}} <br>
 
    <button type="submit" name="submit" value="name" 
 	   class="pure-button">submit</button>
-{% else %}
+   {% else %}
    <font size="2"><a href="/personal/name">Change</a></font>
 
-{% endif %}
-<br><br>
+   {% endif %}
+   <br><br>
 
 
 
-Email: {{udict['email']}} <br>
+   Email: {{udict['email']}} <br>
 
-{% if change == "email" %}
+   {% if change == "email" %}
    <label for="email">Email:</label>
    <input id="email" name="email" type="text"
 	  placeholder="example@gmail.com">
@@ -40,11 +40,12 @@ Email: {{udict['email']}} <br>
    <font size="2"><a href="/personal/email">Change</a></font>
 
    {% endif %}
-  <br><br>
+   <br><br>
 
-Password <!-- we have to add a check to type in previous password-->
-   {% if change == "pw" %}
+  {% if change == "pw" %}
    <label for="pw">Password</label>
+   <input id="oldpw" name="oldpw" type="text" placeholder="Old Password">
+   <!-- has to agree with old password-->
    <input id="pw" name="pw" type="text" placeholder="Password">
    <br>
 
@@ -52,6 +53,18 @@ Password <!-- we have to add a check to type in previous password-->
 	   class="pure-button">submit</button>
    {% else %}
    <font size="2"><a href="/personal/pword">Change</a></font>
+
+   {% endif %}
+
+   {% if change == "age" %}
+   <label for="pw">Age</label>
+   <input id="age" name="age" type="text" placeholder="age">
+   <br>
+
+   <button type="submit" name="submit" value="age" 
+	   class="pure-button">submit</button>
+   {% else %}
+   <font size="2"><a href="/personal/age">Change</a></font>
 
    {% endif %}
 
