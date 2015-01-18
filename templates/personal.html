@@ -9,7 +9,6 @@
 <fieldset>
 Name: {{udict['fname']}} {{udict['lname']}} <br>
 
-
 {% if change == "name" %}
    <label for="fname">First Name</label>
    <input id="fname" name="fname" type="text" placeholder="First Name">
@@ -24,8 +23,6 @@ Name: {{udict['fname']}} {{udict['lname']}} <br>
 
    {% endif %}
    <br><br>
-
-
 
    Email: {{udict['email']}} <br>
 
@@ -67,8 +64,7 @@ Name: {{udict['fname']}} {{udict['lname']}} <br>
    <font size="2"><a href="/personal/age">Change</a></font>
 
    {% endif %}
-
-   
+ 
 </fieldset>
 
 {% endblock %}
