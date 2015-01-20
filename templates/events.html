@@ -9,13 +9,15 @@
 
 <hr>
 {% for e in elist %}
+{% if e.inRadius %} <!-- need to figure out how the gps part will integrate-->
    <h2> Name: {{e['ename']}} </h2> <br>   
    Creator: {{e['creator']}} <br> 
    Number of people: {{e['numb']}} <br>
    Description: {{e['desc']}} <br>
    Lat: {{e['lat']}} <br>
    Lon: {{e['lon']}} <br>
-
+   {% endif %}
+   
    <button type="submit" name="submit" value='{{e['_id']}}'
 	   class="pure-button"> join </button>
 <hr>
