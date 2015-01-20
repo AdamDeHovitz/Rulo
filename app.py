@@ -23,6 +23,8 @@ def authenticate(page):
 @app.route('/')
 def index():
     return redirect('/home')
+
+
 @app.route('/gps')
 def gps():
     return render_template("GPS.html");
@@ -34,7 +36,9 @@ def home():
     if 'username' in session:
         username = escape(session['username'])
         udict = util.getUser(username)
+        return redirect('/events')
     return render_template('home.html', udict = udict)
+
 
 @app.route('/user', methods=['POST'])
 def user():
@@ -49,6 +53,7 @@ def user():
         newuser['rpw'] = request.form['rpw']
         newuser['age'] = request.form['age'] #type = unicode
         newuser['email'] = request.form['email']
+        newuser['pic'] = request.form['pic']
         valid_msg = util.newUser(newuser)
         if valid_msg == '':
             session['username'] = request.form['uname']
@@ -57,6 +62,7 @@ def user():
             flash(valid_msg)
             return redirect('/register')
 
+        
 @app.route('/login')
 def login():    
     return render_template('login.html', udict={'uname':False})
@@ -86,6 +92,7 @@ def verify():
             flash(valid_msg)
             return redirect('/login')
 
+        
 @app.route('/personal', methods=['GET','POST'])
 def p():
     username = escape(session['username'])
@@ -110,16 +117,25 @@ def personal_process():
 def personal(thing = None):
     username = escape(session['username'])
     udict = util.getUser(username)
-    return render_template('personal.html', udict=udict, change=thing)
-  
+    uname = request.form['uname']
+    pw = request.form['pw']
+    if change = "pw":
+        valid_msg = util.checkPword(uname,pw)
+        if valid_msg == '':
+            reurn render_template('personal.html', udict=udict, change=thing)
+        else:
+            session['username'] = uname
+        return redirect('/home')
+    else:
+        return render_template('personal.html', udict=udict, change=thing)
 
-
-
+    
 @app.route('/create_events', methods=['GET','POST'])
 def event_create():    
     username = escape(session['username'])
 
     return render_template('eventCreate.html', udict=util.getUser(username))
+
 
 @app.route('/create_event_process', methods=['GET','POST'])
 def process(): 
@@ -132,10 +148,10 @@ def process():
         edict['ename'] = request.form["ename"]  
         numb = request.form["numb"]    
         edict['numb'] = request.form["numb"]    
-        print("number: "+numb)
+
         desc = request.form["desc"]  
         edict['desc'] = request.form["desc"]    
-        print("desc: " + desc)
+
         lon = request.form["long"]
         edict['long'] = request.form["long"]    
         lat = request.form["lat"]
@@ -144,15 +160,25 @@ def process():
 
         return render_template('eventCreated.html', udict=util.getUser(username), lat = lat, lon = lon, ename = ename, numb = numb, desc = desc)
 
-
-
-@app.route('/events')
+    
+@app.route('/events', methods=['GET','POST'])  
 def events():
     username = escape(session['username'])
     udict = util.getUser(username)
-
     elist = util.listEvents();
+    return render_template('events.html', udict=udict, elist=elist)
 
+
+@app.route('/joinevent', methods=['GET','POST']) #does order matter? 
+def joinevent():
+    username = escape(session['username'])
+    udict = util.getUser(username)
+    elist = util.listEvents();
+    if request.method=="POST":
+        event = request.form["submit"]   
+        print event
+        util.addPersonEvent(username, event)
+        return render_template('events.html', udict=udict, elist=elist)
     return render_template('events.html', udict=udict, elist=elist)
 
 

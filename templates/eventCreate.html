@@ -1,13 +1,11 @@
 {% extends 'layout.html' %}
 
-
 {% block body %}
-
 
 <h1>{{udict['fname']}}, Create an event! </h1>
 
 <form action="/create_event_process" method="post" class="pure-form pure-form-aligned">
-  <!-- redirecting idk -->
+ 
   <fieldset>
     <div class="pure-control-group">
       <label for="ename">Event Name</label>
@@ -32,25 +30,70 @@
 
     <!-- long and lat functions -->
     
-
-
-    function showPosition(position) {
-    var lat = document.getElementById("lat");
-    var long = document.getElementById("long");
-
-    lat.value = position.coords.latitude;
-    long.value = position.coords.longitude;}
-
     function getLocation() {
     if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
     }
     }
-var x = showPosition(position)
-x()
 
+    function showPosition(position) {
+    var m = document.getElementById("map");
+    var img = new Image();
+    var marker = new Image();
+    img.src="https://maps.googleapis.com/maps/api/staticmap?center="+position.coords.latitude+","+position.coords.longitude+"&zoom=15&size=350x350&sensor=true";
+    marker.src="marker.png";
+    x.innerHTML = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude;
+    m.innerHTML="";
+    m.appendChild(img);
+    var xVal = m.width/2;
+    var yVal = m.height/2;
+    marker.width = marker.width * .06;
+    marker.height = marker.height * .06;
+    m.appendChild(marker);
+    }
+
+    <!-- distance functions -->
+
+    function getDistanceFromUser() {
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(calcDistanceFromUser);
+    } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
     
+    }
+    }
 
+    function calcDistanceFromUser(position){
+    latCoord = parseInt(Math.random()* 100); <!-- this is a placeholder... we will need to get the location of users here I believe -->
+    longCoord = parseInt(Math.random() * 100); <!-- Also a placeholder -->
+    latDist = (position.coords.latitude - latCoord)*(position.coords.latitude - latCoord);
+    longDist = (position.coords.longitude - longCoord)*(position.coords.longitude - longCoord);
+    dist = Math.sqrt(longDist+latDist);
+    x.innerHTML = "Distance: " + Math.sqrt(longDist+latDist);
+    }
+
+    <!-- Radius distane functions -->
+
+    function getInRadius() {
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(inRadius);
+    } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+    }
+
+    function inRadius(position){
+    if (dist<=130){
+	       console.log("should respond yes");
+	       x.innerHTML = "yes";
+	       }
+	       else{
+	       console.log("should respond no");
+	       x.innerHTML = "no";
+	       }} <!-- for this function to work you must rerun calcDist -->
 
 </script>
 
