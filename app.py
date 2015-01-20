@@ -51,10 +51,11 @@ def user():
         newuser['lname'] = request.form['lname']
         newuser['pw'] = request.form['pw']
         newuser['rpw'] = request.form['rpw']
-        newuser['age'] = request.form['age'] #type = unicode
+        newuser['age'] = request.form['age'] 
         newuser['email'] = request.form['email']
         newuser['pic'] = request.form['pic']
         valid_msg = util.newUser(newuser)
+        print("Good?")
         if valid_msg == '':
             session['username'] = request.form['uname']
             return redirect('/home')
