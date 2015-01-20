@@ -119,10 +119,10 @@ def personal(thing = None):
     udict = util.getUser(username)
     uname = request.form['uname']
     pw = request.form['pw']
-    if change = "pw":
+    if change == "pw":
         valid_msg = util.checkPword(uname,pw)
         if valid_msg == '':
-            reurn render_template('personal.html', udict=udict, change=thing)
+            return render_template('personal.html', udict=udict, change=thing)
         else:
             session['username'] = uname
         return redirect('/home')
