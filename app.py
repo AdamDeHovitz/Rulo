@@ -51,10 +51,11 @@ def user():
         newuser['lname'] = request.form['lname']
         newuser['pw'] = request.form['pw']
         newuser['rpw'] = request.form['rpw']
-        newuser['age'] = request.form['age'] #type = unicode
+        newuser['age'] = request.form['age'] 
         newuser['email'] = request.form['email']
         newuser['pic'] = request.form['pic']
         valid_msg = util.newUser(newuser)
+        print("Good?")
         if valid_msg == '':
             session['username'] = request.form['uname']
             return redirect('/home')
@@ -119,10 +120,10 @@ def personal(thing = None):
     udict = util.getUser(username)
     uname = request.form['uname']
     pw = request.form['pw']
-    if change = "pw":
+    if change == "pw":
         valid_msg = util.checkPword(uname,pw)
         if valid_msg == '':
-            reurn render_template('personal.html', udict=udict, change=thing)
+            return render_template('personal.html', udict=udict, change=thing)
         else:
             session['username'] = uname
         return redirect('/home')
