@@ -18,7 +18,7 @@ def uploadPicture (picture):
     return _id
 
 def updatePicture (picture, user):
-    _id = uploadPicture(picture):
+    _id = uploadPicture(picture)
     users.update({"uname":user},{'$set':{'pic':_id}})
     
 def getPicture (user):
