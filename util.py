@@ -1,11 +1,31 @@
 import pymongo, csv
-from pymongo import Connection
+from pymongo import Connection, MongoClient
+import gridfs
 
+
+picsDB = MongoClient().gridfs_work
+fs = gridfs.GridFS(picsDB)
 
 conn = Connection()
 db = conn["rulo"]
 users = db.users
 events = db.events
+
+#----------------------PIC STUFF---------------------#
+
+def uploadPicture (picture):
+    _id = fs.put(picture)
+    return _id
+
+def updatePicture (picture, user):
+    _id = uploadPicture(picture):
+    users.update({"uname":user},{'$set':{'pic':_id}})
+    
+def getPicture (user):
+    p = users.find_one({"uname":user})
+    _id = p['pic']
+    picture = fs.get(_id)
+    return picture
 
 #----------------------USER STUFF--------------------#
 def newUser(udict):
@@ -15,7 +35,7 @@ def newUser(udict):
     pwcheck = (udict['pw'] == udict['rpw'])
     uname = udict['uname']
     email = udict['email']
-    pic = udict['pic']
+    udict['pic'] = uploadPicture(udict['pic'], 
     age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
     emailcheck = users.find_one({'email':email}) == None
@@ -69,7 +89,10 @@ def addField(uname, field, data):
     #p = users.find_one({"fname":fname})
     #p[field] = data
     #users.save(p)
-    users.update({"uname":uname},{'$set':{field:data}})
+    if field == 'pic':
+        updatePicture (data, uname)
+    else:
+        users.update({"uname":uname},{'$set':{field:data}})
 
 def getUser(uname):
     return users.find_one({'uname':uname})
@@ -107,15 +130,14 @@ def addPersonEvent(uname, eventid):
 if __name__ == "__main__":
     #for person in users.find():
     #    users.remove(person)
-    #print listEvents()
+    print listEvents()
     
     '''
-    addPersonEvent('ssss','54b879a767a8a20cff85754c')
-    
+    addPersonEvent('ssss','ObjectId(54b879a767a8a20cff85754c)')
     for e in events.find():
-        print e['_id']    
+        print e['_id']
     '''
-    print events.find_one({"_id" : ObjectId("54b879a767a8a20cff85754c")})
+
 
     
 
