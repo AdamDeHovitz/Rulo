@@ -18,7 +18,7 @@ def uploadPicture (picture):
     return _id
 
 def updatePicture (picture, user):
-    _id = uploadPicture(picture):
+    _id = uploadPicture(picture)
     users.update({"uname":user},{'$set':{'pic':_id}})
     
 def getPicture (user):
@@ -35,7 +35,7 @@ def newUser(udict):
     pwcheck = (udict['pw'] == udict['rpw'])
     uname = udict['uname']
     email = udict['email']
-    udict['pic'] = uploadPicture(udict['pic'], 
+    udict['pic'] = uploadPicture(udict['pic']) 
     age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
     emailcheck = users.find_one({'email':email}) == None
