@@ -3,11 +3,9 @@ from pymongo import Connection, MongoClient
 import gridfs
 
 
-picsDB = MongoClient().gridfs_work
-fs = gridfs.GridFS(picsDB)
-
 conn = Connection()
 db = conn["rulo"]
+fs = gridfs.GridFS(db)
 users = db.users
 events = db.events
 
