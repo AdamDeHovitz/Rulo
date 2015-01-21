@@ -34,11 +34,7 @@ def newUser(udict):
     pwcheck = (udict['pw'] == udict['rpw'])
     uname = udict['uname']
     email = udict['email']
-<<<<<<< HEAD
     udict['pic'] = uploadPicture(udict['pic'])
-=======
-    udict['pic'] = uploadPicture(udict['pic']) 
->>>>>>> 3359b5d15cc18d4e56caa60a0d443ae2278e05f4
     age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
     emailcheck = users.find_one({'email':email}) == None
