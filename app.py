@@ -53,7 +53,10 @@ def user():
         newuser['rpw'] = request.form['rpw']
         newuser['age'] = request.form['age'] 
         newuser['email'] = request.form['email']
-        newuser['pic'] = request.form['pic']
+        if request.form['pic'] == None:
+            newuser['pic'] = 
+        else:
+            newuser['pic'] = request.form['pic']
         valid_msg = util.newUser(newuser)
         print("Good?")
         if valid_msg == '':
