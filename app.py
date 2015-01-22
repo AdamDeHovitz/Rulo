@@ -44,7 +44,6 @@ def home():
 def user():
     #print("user!");
     if request.method=="POST":
-        print request.form['uname']
         newuser = {}
         newuser['uname'] = request.form['uname']
         newuser['fname'] = request.form['fname']
@@ -53,10 +52,15 @@ def user():
         newuser['rpw'] = request.form['rpw']
         newuser['age'] = request.form['age'] 
         newuser['email'] = request.form['email']
+<<<<<<< HEAD
         if request.form['pic'] == None:
             newuser['pic'] = 
         else:
             newuser['pic'] = request.form['pic']
+=======
+        newuser['pic'] = request.form['pic']
+        print type(newuser['pic'])
+>>>>>>> e172b6d4e7b24e7cad50aa7b8a2d6831ee927abf
         valid_msg = util.newUser(newuser)
         print("Good?")
         if valid_msg == '':
@@ -117,8 +121,9 @@ def personal_process():
     return redirect('/personal')
 
 
-@app.route('/personal/<thing>', methods=['POST','GET'])
+@app.route('/personal/<thing>', methods=['GET', 'POST'])
 def personal(thing = None):
+    print "got to personal method"
     username = escape(session['username'])
     udict = util.getUser(username)
     uname = request.form['uname']

@@ -11,7 +11,7 @@ href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
 </head>
 
 <div class="pure-menu pure-menu-open pure-menu-horizontal">
-        
+
 	{% if username or udict['uname'] %}
 	<li><a href="/events">Events</a></li>
 	<li><a href="/create_events">Create Events</a></li>
@@ -23,10 +23,10 @@ href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
         <li><a href="/register">Register</a></li>
 	<li><a href="/login" style="text-align:right">Login</a></li>
 	{% endif %}
-    <!-- put in whichever tabs we want -->   
-   
+    <!-- put in whichever tabs we want -->
+
  </div>
- 
+
 <!--
 <div class="pure-u-1-5">
   <div class="pure-menu pure-menu-open pure-menu-horizontal">
@@ -59,8 +59,8 @@ href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
 
 {% block body %}
 {% endblock %}
-     
-   </div> 
+
+   </div>
 
 
 </div>
@@ -69,6 +69,14 @@ href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
 
 <hr>
 <address></address>
+DO NOT PRESS THIS BUTTON
+<button onclick="action()">Get Coordinates!</button>
+<div id="map-test"></div>
+<p id="map-location"></p>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2ie2fjoFfkQMGGPZotTg1rxsEcaYuDHY"></script>
+
+<script src="../static/GPSEvent.js"></script>
 
 
 </body> </html>

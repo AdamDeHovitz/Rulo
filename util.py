@@ -2,8 +2,7 @@ import pymongo, csv
 from pymongo import Connection, MongoClient
 import gridfs
 
-
-picsDB = MongoClient().gridfs_work
+picsDB = MongoClient().gridfs_example
 fs = gridfs.GridFS(picsDB)
 
 conn = Connection()

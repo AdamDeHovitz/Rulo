@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<h1>Your Events</h1>
+
+{% if ulist %}
+{% for e in ulist %}
+   <h2> Name: {{e['ename']}} </h2> <br>   
+   Number of people: {{e['numb']}} <br>
+   Description: {{e['desc']}} <br>
+Active Requests:
+Members:
+{% for u in ulist['peeps'] %}
+{{u}}
+|remove button here|
+{% endfor %}
+
+|cancel/end event button here|
+
+{% endfor %}
+{% endif %}
+<br>
+<br>
+
+<h1> Joined Events <h1>
+
+{% for e in jlist %}
+   <h2> Name: {{e['ename']}} </h2> <br> 
+   Description: {{e['desc']}} <br>
+Location:
+Members:
+{% endfor %}
+
+
+
+
+ 
+
+
+{% endblock %}
