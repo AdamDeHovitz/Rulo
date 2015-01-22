@@ -25,6 +25,8 @@ Sophie: Second Consul
 <b> 1/22 </b> FB Api stuff principally, but as well as all dat junk in the extra trunk (Whoever Volunteers, or is selected by the First Consul) <br>
 <b> last </b> edit readme <br>
 
+WE NEED A VIDEO!!!!!!!!!! <br>
+
 Account
 * registration page (user/flask form stuff)
 * get reg info, check validity, create new user

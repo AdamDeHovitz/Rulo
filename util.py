@@ -1,6 +1,7 @@
 import pymongo, csv
 from pymongo import Connection, MongoClient
 import gridfs
+from bson.objectid import ObjectId
 
 picsDB = MongoClient().gridfs_example
 fs = gridfs.GridFS(picsDB)
@@ -124,10 +125,10 @@ def listEvents():
 
 def addPersonEvent(uname, eventid):
     #adding a person to an event
-    ev = events.find_one({'_id':eventid, 'peeps':{'$exists':True}}) 
+    ev = events.find_one({'_id':ObjectId( eventid ), 'peeps':{'$exists':True}}) 
     if ev == None:
         return None
-    ev['peeps'].add(uname);
+    ev['peeps'].append(uname);
 
 
 if __name__ == "__main__":
@@ -135,12 +136,15 @@ if __name__ == "__main__":
     #    users.remove(person)
     print listEvents()
     
-    '''
-    addPersonEvent('ssss','ObjectId(54b879a767a8a20cff85754c)')
-    for e in events.find():
-        print e['_id']
-    '''
+    #for e in events.find():
+    #    events.remove(e)
+    
+    #addPersonEvent('ssss','ObjectId(54b879a767a8a20cff85754c)')
 
+
+    print "-------"
+    for e in events.find( { "_id" : ObjectId("54bfddb60bdb820339ecba72")} ):
+        print e
 
     
 
