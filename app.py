@@ -119,17 +119,7 @@ def personal(thing = None):
     print "got to personal method"
     username = escape(session['username'])
     udict = util.getUser(username)
-    uname = request.form['uname']
-    pw = request.form['pw']
-    if change == "pw":
-        valid_msg = util.checkPword(uname,pw)
-        if valid_msg == '':
-            return render_template('personal.html', udict=udict, change=thing)
-        else:
-            session['username'] = uname
-        return redirect('/home')
-    else:
-        return render_template('personal.html', udict=udict, change=thing)
+    return render_template('personal.html', udict=udict, change=thing)
 
     
 @app.route('/create_events', methods=['GET','POST'])
