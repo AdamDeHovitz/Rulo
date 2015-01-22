@@ -116,7 +116,6 @@ def personal_process():
 
 @app.route('/personal/<thing>', methods=['GET', 'POST'])
 def personal(thing = None):
-    print "got to personal method"
     username = escape(session['username'])
     udict = util.getUser(username)
     return render_template('personal.html', udict=udict, change=thing)
