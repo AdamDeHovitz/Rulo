@@ -130,11 +130,25 @@ def addPersonEvent(uname, eventid):
         return None
     ev['peeps'].append(uname);
 
+def getEventAttribute(objectId, field):
+    ev = events.find_one({'_id':ObjectId( eventid ), 'peeps':{'$exists':True}}) 
+    
+    if ev == None:
+        return None
+    ret = ev.get(field)
+    return ret
 
+
+
+    
 if __name__ == "__main__":
     #for person in users.find():
     #    users.remove(person)
     print listEvents()
+
+
+
+    #|||||||||UNCOMMENT TO REMOVE ALL EVENTS|||||||||
     
     #for e in events.find():
     #    events.remove(e)

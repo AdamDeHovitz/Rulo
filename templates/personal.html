@@ -49,12 +49,12 @@ Name: {{udict['fname']}} {{udict['lname']}} <br>
    <button type="submit" name="submit" value="pw" 
 	   class="pure-button">submit</button>
    {% else %}
-   <font size="2"><a href="/personal/pword">Change</a></font>
+   Password: <font size="2"><a href="/personal/pword">Change</a></font>
 
    {% endif %}
-
+<br>
    {% if change == "age" %}
-   <label for="pw">Age</label>
+   <label for="age">Age</label>
    <input id="age" name="age" type="text" placeholder="age">
    <br>
 

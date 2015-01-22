@@ -175,11 +175,16 @@ def joinevent():
     if request.method=="POST":
         event = request.form["submit"]   
         print event
-        util.addPersonEvent(username, event)
-        return render_template('events.html', udict=udict, elist=elist)
+        valid_msg = util.addPersonEvent(username, event)
+        if valid_msg == '':
+            return render_template('events.html', udict=udict, elist=elist)
+        else:
+            flash(valid_msg)
+            return render_template('events.html', udict=udict, elist=elist)
     return render_template('events.html', udict=udict, elist=elist)
 
 
 if __name__ == '__main__':
     app.debug = True
     app.run()
+
