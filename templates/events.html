@@ -3,6 +3,11 @@
 
 {% block body %}
 <h1> Hey there {{udict['fname']}}! </h1>
+
+{% if name %}
+<font color="green">You have requested to join {{name}}</font><br>
+{% endif %}
+
 <h2>Check out your local Events </h2>
 
 <form action="/joinevent" method="post" class="pure-form pure-form-aligned">

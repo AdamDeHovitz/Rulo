@@ -35,11 +35,7 @@ def newUser(udict):
     pwcheck = (udict['pw'] == udict['rpw'])
     uname = udict['uname']
     email = udict['email']
-<<<<<<< HEAD
-    udict['pic'] = uploadPicture(udict['pic']) 
-=======
     udict['pic'] = uploadPicture(udict['pic'])
->>>>>>> 1c6a8fa4ff820641bf93a1a169f073bc4af24e7d
     age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
     emailcheck = users.find_one({'email':email}) == None
@@ -127,10 +123,11 @@ def addPersonEvent(uname, eventid):
     #adding a person to an event
     ev = events.find_one({'_id':ObjectId( eventid ), 'peeps':{'$exists':True}}) 
     if ev == None:
-        return None
+        return "This event doesn't exist"
     ev['peeps'].append(uname);
+    return ""
 
-def getEventAttribute(objectId, field):
+def getEventAttribute(eventid, field):
     ev = events.find_one({'_id':ObjectId( eventid ), 'peeps':{'$exists':True}}) 
     
     if ev == None:
