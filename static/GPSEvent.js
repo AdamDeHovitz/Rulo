@@ -24,19 +24,19 @@ var action = function () {
     var ahShit = function() {
       map.innerHTML = "We were unable to retrieve your location, our apologies.";
 	console.log("ah noes,its an error");
-      return new google.maps.LatLng(51.208317, 3.224883);
+	return new google.maps.LatLng(51.208317, 3.224883);
     };
-
+    
     
     var hellYeah = function(position) {
-        map = new google.maps.Map(map, mapOptions);
+        mappy = new google.maps.Map(map, mapOptions);
 	
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
 	var locationArray = [latitude, longitude];
 	
         var location = new google.maps.LatLng(latitude, longitude);
-        map.setCenter(location);
+        mappy.setCenter(location);
         console.log('map function finished. Latitude is: ' + latitude + " Longitude is: " + longitude);
 	console.log(location);
 	geocoder.geocode({'latLng': location}, function(results, status){
@@ -44,14 +44,16 @@ var action = function () {
 		if (results[0]) {
               marker = new google.maps.Marker({
 		position: geographicCoord,
-		map: map
+		map: mappy
               });
 		    console.log('assign address');
 		    address = results[0].formatted_address;
 		    console.log(results[0].formatted_address);
 		    var wordPlace = document.getElementById('map-location');
+		    var mapi = document.getElementById('map-test');
 		    console.log(address);
 		    wordPlace.innerHTML = address;
+		    console.log(map);
 		}
 	    } else {
 		alert("Geocoder failed due to: " + status);
@@ -67,6 +69,7 @@ var action = function () {
     console.log('locating complete.');
     console.log("button action complete");
 }
+
 /*var showPosition = function(position) {
     var lat = document.getElementById("lat");
     var long = document.getElementById("long");
