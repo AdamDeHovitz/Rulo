@@ -52,15 +52,10 @@ def user():
         newuser['rpw'] = request.form['rpw']
         newuser['age'] = request.form['age'] 
         newuser['email'] = request.form['email']
-<<<<<<< HEAD
         if request.form['pic'] == None:
-            newuser['pic'] = 
+            newuser['pic'] = None
         else:
             newuser['pic'] = request.form['pic']
-=======
-        newuser['pic'] = request.form['pic']
-        print type(newuser['pic'])
->>>>>>> e172b6d4e7b24e7cad50aa7b8a2d6831ee927abf
         valid_msg = util.newUser(newuser)
         print("Good?")
         if valid_msg == '':
@@ -177,7 +172,7 @@ def joinevent():
         print event
         valid_msg = util.addPersonEvent(username, event)
         if valid_msg == '':
-            return render_template('events.html', udict=udict, elist=elist)
+            return render_template('events.html', udict=udict, elist=elist, name = util.getEventAttribute(event, "ename"))
         else:
             flash(valid_msg)
             return render_template('events.html', udict=udict, elist=elist)
