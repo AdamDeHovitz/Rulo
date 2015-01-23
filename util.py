@@ -35,7 +35,7 @@ def newUser(udict):
     pwcheck = (udict['pw'] == udict['rpw'])
     uname = udict['uname']
     email = udict['email']
-    udict['pic'] = uploadPicture(udict['pic'])
+    #udict['pic'] = uploadPicture(udict['pic'])
     age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
     emailcheck = users.find_one({'email':email}) == None
@@ -79,7 +79,7 @@ def addPerson(pdict):
     # --> other stuff that needs to be initialized
     pdict['comments'] = []
     pdict['ratings'] = []
-    
+    pdict['uevents'] = []
     users.insert(pdict)
 
 def addField(uname, field, data):
@@ -93,6 +93,7 @@ def addField(uname, field, data):
         updatePicture (data, uname)
     else:
         users.update({"uname":uname},{'$set':{field:data}})
+        
 
 def getUser(uname):
     return users.find_one({'uname':uname})
@@ -105,13 +106,19 @@ def getAttribute(uname, field):
     #print(ret)
     return ret
 
+def addEventPerson(uname, eventid):
+    #adding an event id to a person
+    user = users.find_one({'uname':uname})
+
+    user['uevents'].append(eventid);
 
 
 #--------------------------EVENT STUFF------------------------#
 
 def createEvent(edict):
     edict['peeps'] = [edict['creator']] #list of people in event
-    events.insert(edict)
+    return events.insert(edict)
+    
 
 def listEvents():
     eventslist = []
@@ -139,9 +146,12 @@ def getEventAttribute(eventid, field):
 
     
 if __name__ == "__main__":
-    #for person in users.find():
-    #    users.remove(person)
-    print listEvents()
+    for person in users.find():
+        addField(person, "uevents", ["h"])
+        print person
+        print "\n"
+
+    #print listEvents()
 
 
 
@@ -154,8 +164,8 @@ if __name__ == "__main__":
 
 
     print "-------"
-    for e in events.find( { "_id" : ObjectId("54bfddb60bdb820339ecba72")} ):
-        print e
+    #for e in events.find( { "_id" : ObjectId("54bfddb60bdb820339ecba72")} ):
+    #    print e
 
     
 
