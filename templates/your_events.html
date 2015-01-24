@@ -1,12 +1,13 @@
 {% extends 'layout.html' %}
 
-
 {% block body %}
+
 <h1>Your Events</h1>
 
-{% if ulist %}
+{% if ulist %} <!-- what. hmm.. do we have to pass through the user's dict and all the different events stuff... ugh this seems not good cs stuffs -->
+
 {% for e in ulist %}
-   <h2> Name: {{e['ename']}} </h2> <br>   
+<h2> Name: {{e['ename']}} </h2> <br>
    Number of people: {{e['numb']}} <br>
    Description: {{e['desc']}} <br>
 Active Requests:
