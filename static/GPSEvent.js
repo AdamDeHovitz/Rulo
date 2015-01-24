@@ -70,8 +70,8 @@ var action = function () {
     console.log("button action complete");
 }
 
-<<<<<<< HEAD
-=======
+//HEAD
+
 var disctance = function (origin, destination){
     var service = google.maps.DistanceMatrixService();
 
@@ -104,7 +104,7 @@ var disctance = function (origin, destination){
     }
 }
 
->>>>>>> 872006ab3736bc76b914cc01d999aeef371cd1b7
+// 872006ab3736bc76b914cc01d999aeef371cd1b7
 /*var showPosition = function(position) {
     var lat = document.getElementById("lat");
     var long = document.getElementById("long");
