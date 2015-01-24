@@ -150,8 +150,11 @@ def process():
         lon = request.form["long"]
         edict['long'] = request.form["long"]    
         lat = request.form["lat"]
-        edict['lat'] = request.form["lat"]    
-        util.addEventPerson(username,  util.createEvent(edict))
+        edict['lat'] = request.form["lat"]
+        print "--> got here"
+        newevent = util.createEvent(edict)
+        print newevent
+        util.addEventPerson(username, newevent)
         
         return render_template('eventCreated.html', udict=util.getUser(username), lat = lat, lon = lon, ename = ename, numb = numb, desc = desc)
 
@@ -173,6 +176,7 @@ def joinevent():
         event = request.form["submit"]   
         print event
         valid_msg = util.addPersonEvent(username, event)
+        util.addEventPerson(event, username)
         if valid_msg == '':
             return render_template('events.html', udict=udict, elist=elist, name = util.getEventAttribute(event, "ename"))
         else:
