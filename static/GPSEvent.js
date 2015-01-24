@@ -10,7 +10,9 @@ var action = function () {
     var address;
 
     var mapOptions = {
-	     zoom: 14
+	center: new google.maps.LatLng(0,0),
+	zoom: 14,
+	mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
     map = document.getElementById('map-test');
@@ -26,15 +28,14 @@ var action = function () {
 	console.log("ah noes,its an error");
 	return new google.maps.LatLng(51.208317, 3.224883);
     };
-    
-    
+	
     var hellYeah = function(position) {
+	map = document.getElementById('map-test');
         mappy = new google.maps.Map(map, mapOptions);
 	
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
 	var locationArray = [latitude, longitude];
-	
         var location = new google.maps.LatLng(latitude, longitude);
         mappy.setCenter(location);
         console.log('map function finished. Latitude is: ' + latitude + " Longitude is: " + longitude);
@@ -42,18 +43,18 @@ var action = function () {
 	geocoder.geocode({'latLng': location}, function(results, status){
 	    if (status == google.maps.GeocoderStatus.OK){
 		if (results[0]) {
-              marker = new google.maps.Marker({
-		position: geographicCoord,
-		map: mappy
-              });
-		    console.log('assign address');
+		    var marker = new google.maps.Marker({
+			position: geographicCoord,
+			map: mappy
+		    });
+		    //console.log('assign address');
 		    address = results[0].formatted_address;
-		    console.log(results[0].formatted_address);
 		    var wordPlace = document.getElementById('map-location');
 		    var mapi = document.getElementById('map-test');
 		    console.log(address);
 		    wordPlace.innerHTML = address;
-		    console.log(map);
+		    map.innerHTML = new google.maps.LatLng(latitude,longitude);
+		    console.log(mappy);
 		}
 	    } else {
 		alert("Geocoder failed due to: " + status);
@@ -103,21 +104,3 @@ var disctance = function (origin, destination){
 	}
     }
 }
-
-// 872006ab3736bc76b914cc01d999aeef371cd1b7
-/*var showPosition = function(position) {
-    var lat = document.getElementById("lat");
-    var long = document.getElementById("long");
-
-    lat.value = position.coords.latitude;
-    console.log(lat.value + "Hellooooo");
-    long.value = position.coords.longitude;
-    console.log(long.value + "heyyyyyyyyy");}
-
-    function getLocation() {
-    if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-    }
-    }
-var x = showPosition(position)
-x()*/
