@@ -2,6 +2,7 @@ import pymongo, csv
 from pymongo import Connection, MongoClient
 import gridfs
 from bson.objectid import ObjectId
+import re
 
 picsDB = MongoClient().gridfs_example
 fs = gridfs.GridFS(picsDB)
@@ -38,12 +39,13 @@ def newUser(udict):
     #udict['pic'] = uploadPicture(udict['pic'])
     age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
-    emailcheck = users.find_one({'email':email}) == None
+    emailcheck1 = users.find_one({'email':email}) == None
+    emailcheck2 = checkEmail(email) #regex basic check
     agecheck = False
     validagecheck = True
     try:
         age = int(age)
-        agecheck = (age > 13)
+        agecheck = (age >= 13)
     except ValueError:
         validagecheck = False
     
@@ -51,14 +53,16 @@ def newUser(udict):
     if uncheck == False:
         s = "That username has already been used\n"
     elif not (len(udict['pw']) >= 5 and len(udict['pw']) <= 20):
-        s += "Password must be between 5 and 20 characters\n"
-    elif pwcheck == False:
+        s += "Password must be between 5 and 20 characters"
+    elif not pwcheck:
         s +=  "Passwords do not match"
-    elif emailcheck == False:
+    elif not emailcheck1:
         s += "Email has already been registered"
-    elif agecheck == False:
+    elif not emailcheck2:
+        s += "That is not a proper email address"
+    elif not agecheck:
         s += "You must be older than 13 years of age"
-    elif validagecheck == False:
+    elif not validagecheck:
         s += "Please enter a numerical age"
     else:
         addPerson(udict)
@@ -72,6 +76,12 @@ def checkPword(uname,pw):
         return ""
     else:
         return "Wrong password"
+
+def checkEmail(email):
+    e = re.compile("[^@]+@[A-z]+\..+")
+    check = e.findall(email)
+    print check
+    return check != [] 
 
 def addPerson(pdict):
     #pdict['picture'] = file; should be sent from form 
@@ -121,7 +131,7 @@ def addEventPerson(eventid, uname):
 def getUserEvents(uname):
     u = getUser(uname)
     es = u.get('uevents')
-    return events.find( '_id' { '$in' : es } )
+    return events.find( { '_id' : { '$in' : es } } )
 
 
 
@@ -165,7 +175,7 @@ def getEventAttribute(eventid, field):
 
     
 if __name__ == "__main__":
-    
+    '''
     for person in users.find():
         print person
         print "\n"
@@ -181,7 +191,9 @@ if __name__ == "__main__":
     #    events.remove(e)
     #for p in users.find():
     #    users.remove(p)
-   
+    '''
+    print checkEmail("SgS@GmG.c")
+    print checkEmail("s_2319@g.g.c")
 
 
 """
