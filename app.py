@@ -52,10 +52,12 @@ def user():
         newuser['rpw'] = request.form['rpw']
         newuser['age'] = request.form['age'] 
         newuser['email'] = request.form['email']
+        """
         if request.form['pic'] == None:
             newuser['pic'] = None
         else:
             newuser['pic'] = request.form['pic']
+        """
         valid_msg = util.newUser(newuser)
         print("Good?")
         if valid_msg == '':
@@ -149,8 +151,8 @@ def process():
         edict['long'] = request.form["long"]    
         lat = request.form["lat"]
         edict['lat'] = request.form["lat"]    
-        util.createEvent(edict)
-
+        util.addEventPerson(username,  util.createEvent(edict))
+        
         return render_template('eventCreated.html', udict=util.getUser(username), lat = lat, lon = lon, ename = ename, numb = numb, desc = desc)
 
     
@@ -177,6 +179,23 @@ def joinevent():
             flash(valid_msg)
             return render_template('events.html', udict=udict, elist=elist)
     return render_template('events.html', udict=udict, elist=elist)
+
+@app.route('/your_events', methods=['GET','POST'])
+def your_event():
+    username = escape(session['username'])
+    udict = util.getUser(username)
+    elist = util.listEvents();
+    if request.method=="POST":
+        event = request.form["submit"]   
+        print event
+        valid_msg = util.addPersonEvent(username, event)
+        if valid_msg == '':
+            return render_template('events.html', udict=udict, elist=elist, name = util.getEventAttribute(event, "ename"))
+        else:
+            flash(valid_msg)
+            return render_template('events.html', udict=udict, elist=elist)
+    return render_template('events.html', udict=udict, elist=elist)
+
 
 
 if __name__ == '__main__':
