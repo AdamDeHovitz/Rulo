@@ -4,17 +4,21 @@
 
 <h1>Your Events</h1>
 
-{% if ulist %} <!-- what. hmm.. do we have to pass through the user's dict and all the different events stuff... ugh this seems not good cs stuffs -->
+{% if hlist %} <!-- what. hmm.. do we have to pass through the user's dict and all the different events stuff... ugh this seems not good cs stuffs -->
 
-{% for e in ulist %}
-<h2> Name: {{e['ename']}} </h2> <br>
+{% for e in hlist %}
+<h2> Name: {{e['ename']}} </h2>
    Number of people: {{e['numb']}} <br>
    Description: {{e['desc']}} <br>
 Active Requests:
+<br>
+{% for u in e['requests'] %}
+{{u}} <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br>
+{% endfor %}
 Members:
-{% for u in ulist['peeps'] %}
-{{u}}
-|remove button here|
+<br>
+{% for u in e['members'] %}
+{{u}} *remove button here*<br>
 {% endfor %}
 
 |cancel/end event button here|

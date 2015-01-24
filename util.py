@@ -89,6 +89,7 @@ def addPerson(pdict):
     pdict['comments'] = []
     pdict['ratings'] = []
     pdict['uevents'] = []
+    pdict['hevents'] = []
     users.insert(pdict)
 
     
@@ -128,9 +129,18 @@ def addEventPerson(eventid, uname):
         { '$push' : { 'uevents' : eventid } }
     )
 
+def addHostPerson(eventid, uname):
+    users.update(
+        { 'uname' : uname },
+        { '$push' : { 'hevents' : eventid } }
+    )
 def getUserEvents(uname):
     u = getUser(uname)
     es = u.get('uevents')
+    return events.find( { '_id' : { '$in' : es } } )
+def getHostedEvents(uname):
+    u = getUser(uname)
+    es = u.get('hevents')
     return events.find( { '_id' : { '$in' : es } } )
 
 
@@ -138,7 +148,8 @@ def getUserEvents(uname):
 #--------------------------EVENT STUFF------------------------#
 
 def createEvent(edict):
-    edict['peeps'] = [edict['creator']] #list of people in event, including creator 
+    edict['requests'] = [] #Not including creator right now [edict['creator']] #list of people in event, including creator 
+    edict['members'] = []
     return events.insert(edict)
     
 
@@ -152,18 +163,32 @@ def addPersonEvent(uname, eventid):
     '''
     adding a person to an event
     '''
+    #'''
     events.update(
-        {'_id' : eventid },
-        { '$push' : { 'peeps' : uname } }
+        { '_id' : ObjectId(eventid) },
+        { '$push' : { 'requests' : uname } }
         )
+    #print(getEventAttribute(eventid, 'requests'))
     """
-    ev = events.find_one({'_id':ObjectId( eventid ), 'peeps':{'$exists':True}})    
+    ev = events.find_one({'_id':ObjectId( eventid ), 'requests':{'$exists':True}})    
     if ev == None:
         return "This event doesn't exist"
-    ev['peeps'].append(uname);
-    """
+    ev['requests'].append(uname);
+    for u in ev['requests']:
+        print(u)
+        """
     return ""
 
+def confirmPerson(uname, eventid):
+
+    events.update(
+        { '_id' : ObjectId(eventid) },
+        { '$pull' : { 'requests' : uname } }
+        )
+    events.update(
+        { '_id' : ObjectId(eventid) },
+        { '$push' : { 'members' : uname } }
+        )
 
 def getEventAttribute(eventid, field):
     ev = events.find_one( { '_id' : ObjectId( eventid ) } ) 
@@ -184,18 +209,16 @@ if __name__ == "__main__":
     print "-------"
     print listEvents()
     print "-------"
+    '''    
+
+    #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
+    #'''
+    for e in events.find():
+        events.remove(e)
+        #for p in users.find():
+        # users.remove(p)
+        #'''
     
-
-    #-----UNCOMMENT TO REMOVE ALL EVENTS/USERS-----#
-    #for e in events.find():
-    #    events.remove(e)
-    #for p in users.find():
-    #    users.remove(p)
-    '''
-    print checkEmail("SgS@GmG.c")
-    print checkEmail("s_2319@g.g.c")
-
-
 """
  people = db.people
  
