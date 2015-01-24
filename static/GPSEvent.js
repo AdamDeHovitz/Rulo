@@ -27,14 +27,14 @@ var action = function () {
       return new google.maps.LatLng(51.208317, 3.224883);
     };
 
-    
+
     var hellYeah = function(position) {
         map = new google.maps.Map(map, mapOptions);
-	
+
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
 	var locationArray = [latitude, longitude];
-	
+
         var location = new google.maps.LatLng(latitude, longitude);
         map.setCenter(location);
         console.log('map function finished. Latitude is: ' + latitude + " Longitude is: " + longitude);
@@ -62,7 +62,7 @@ var action = function () {
 	console.log('address actions completed');
         return locationArray
     };
-    
+
     var geographicCoord = navigator.geolocation.getCurrentPosition( hellYeah, ahShit);
     console.log('locating complete.');
     console.log("button action complete");
@@ -71,33 +71,37 @@ var action = function () {
 var disctance = function (origin, destination){
     var service = google.maps.DistanceMatrixService();
 
-    service.getDistanceMatrix(
+    var distance = service.getDistanceMatrix(
 	{
 	    origins: origin,
 	    destinations: destination,
 	    unitSystem: google.maps.UnitSystem.IMPERIAL
 	}, callback);
-    
+
     function callback (response, status) {
-	if (status == google.maps.GeocoderStatus.OK){
-	    var origins = response.originAddress;
-	    var destinations = response.destinationAddresses;
-	    
-	    for (var i = 0; i < origins.length; i++){
-		var results = response.rows[i].elements;
-		for (var j = 0; j < results.length; j++){
-		    var element = results[j];
-		    var distance = element.distance.text;
-		    var duration = element.duration.text;
-		    var from = origins[i];
-		    var to = origins[i];
-		}
+      var distance = [];
+      if (status == google.maps.GeocoderStatus.OK){
+	       var origins = response.originAddress;
+         var destinations = response.destinationAddresses;
+	       for (var i = 0; i < origins.length; i++){
+		         var results = response.rows[i].elements;
+		         for (var j = 0; j < results.length; j++){
+		             var element = results[j];
+		             var dist = element.distance.text;
+		             var dura = element.duration.text;
+		             var from = origins[i];
+		             var to = origins[i];
+                 distance[(i*results.length) + j] = dist;
+		             }
+	        }
+          return distance;
 	    }
-	}
-	else {
-	    alert("Distance Calculation failed due to: " + status);
-	}
+	    else {
+	       alert("Distance Calculation failed due to: " + status);
+         return distance;
+	    }
     }
+    return distance;
 }
 
 /*var showPosition = function(position) {
