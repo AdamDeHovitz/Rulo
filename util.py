@@ -74,7 +74,6 @@ def checkPword(uname,pw):
         return "Wrong password"
 
 def addPerson(pdict):
-    #pdict['events'] = []
     #pdict['picture'] = file; should be sent from form 
     # --> other stuff that needs to be initialized
     pdict['comments'] = []
@@ -82,6 +81,7 @@ def addPerson(pdict):
     pdict['uevents'] = []
     users.insert(pdict)
 
+    
 def addField(uname, field, data):
     '''
     add a new field or update an old one 
@@ -92,31 +92,43 @@ def addField(uname, field, data):
     if field == 'pic':
         updatePicture (data, uname)
     else:
-        users.update({"uname":uname},{'$set':{field:data}})
+        users.update( {"uname":uname} , { '$set': {field:data} } )
         
 
 def getUser(uname):
     return users.find_one({'uname':uname})
 
+
 def getAttribute(uname, field):
-    ret = users.find_one({'uname':uname, field:{'$exists':True}})
-    if ret == None:
+    #return getUser(uname).get(field) [field]
+    u = users.find_one(
+        { 'uname' : uname ,
+          field: { '$exists' : True } } )
+    if u == None:
         return None
-    ret = ret.get(field)
-    #print(ret)
-    return ret
+    return u.get(field)
 
-def addEventPerson(uname, eventid):
-    #adding an event id to a person
-    user = users.find_one({'uname':uname})
 
-    user['uevents'].append(eventid);
+def addEventPerson(eventid, uname):
+    '''
+    adding an event id to a person
+    '''
+    users.update(
+        { 'uname' : uname },
+        { '$push' : { 'uevents' : eventid } }
+    )
+
+def getUserEvents(uname):
+    u = getUser(uname)
+    es = u.get('uevents')
+    return events.find( '_id' { '$in' : es } )
+
 
 
 #--------------------------EVENT STUFF------------------------#
 
 def createEvent(edict):
-    edict['peeps'] = [edict['creator']] #list of people in event
+    edict['peeps'] = [edict['creator']] #list of people in event, including creator 
     return events.insert(edict)
     
 
@@ -127,47 +139,50 @@ def listEvents():
     return eventslist
 
 def addPersonEvent(uname, eventid):
-    #adding a person to an event
-    ev = events.find_one({'_id':ObjectId( eventid ), 'peeps':{'$exists':True}}) 
+    '''
+    adding a person to an event
+    '''
+    events.update(
+        {'_id' : eventid },
+        { '$push' : { 'peeps' : uname } }
+        )
+    """
+    ev = events.find_one({'_id':ObjectId( eventid ), 'peeps':{'$exists':True}})    
     if ev == None:
         return "This event doesn't exist"
     ev['peeps'].append(uname);
+    """
     return ""
 
+
 def getEventAttribute(eventid, field):
-    ev = events.find_one({'_id':ObjectId( eventid ), 'peeps':{'$exists':True}}) 
-    
+    ev = events.find_one( { '_id' : ObjectId( eventid ) } ) 
     if ev == None:
         return None
-    ret = ev.get(field)
-    return ret
+    return ev.get(field)
 
 
 
     
 if __name__ == "__main__":
+    
     for person in users.find():
-        addField(person, "uevents", ["h"])
         print person
         print "\n"
-
-    #print listEvents()
-
-
-
-    #|||||||||UNCOMMENT TO REMOVE ALL EVENTS|||||||||
+        
     
+    print "-------"
+    print listEvents()
+    print "-------"
+    
+
+    #-----UNCOMMENT TO REMOVE ALL EVENTS/USERS-----#
     #for e in events.find():
     #    events.remove(e)
-    
-    #addPersonEvent('ssss','ObjectId(54b879a767a8a20cff85754c)')
+    #for p in users.find():
+    #    users.remove(p)
+   
 
-
-    print "-------"
-    #for e in events.find( { "_id" : ObjectId("54bfddb60bdb820339ecba72")} ):
-    #    print e
-
-    
 
 """
  people = db.people

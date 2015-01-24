@@ -3,8 +3,8 @@ Rulo
 
 In this project we will harness the power of deals, specials, and bulk offers by uniting people in their quest for saving. 
 
-Napoleon: First Consul <br>
-Sophie: Second Consul
+First Consul: Napoleon  <br>
+Second Consul: Sophie
 
 ###Installation Instructions:
 
@@ -25,7 +25,14 @@ Sophie: Second Consul
 <b> 1/22 </b> FB Api stuff principally, but as well as all dat junk in the extra trunk (Whoever Volunteers, or is selected by the First Consul) <br>
 <b> last </b> edit readme <br>
 
-WE NEED A VIDEO!!!!!!!!!! <br>
+#### STUFF LEFT TO DO 
+* "My Events" page w/ list of your events, joined events, and local events
+* map stuff integrated with events pages, tracking people, etc
+* confirming people for events
+* rating people + profile page-type thing with your ratings+comments
+* pretty visual stuff + mobile formatting
+* FB Api stuff principally, but as well as all dat junk in the extra trunk (Whoever Volunteers, or is selected by the First Consul)
+* WE NEED A VIDEO!!!!!!!!!! 
 
 Account
 * registration page (user/flask form stuff)
