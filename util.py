@@ -124,6 +124,7 @@ def addEventPerson(eventid, uname):
     '''
     adding an event id to a person
     '''
+    
     users.update(
         { 'uname' : uname },
         { '$push' : { 'uevents' : eventid } }
@@ -138,6 +139,19 @@ def getUserEvents(uname):
     u = getUser(uname)
     es = u.get('uevents')
     return events.find( { '_id' : { '$in' : es } } )
+
+def getApprovedEvents(uname):
+    eventList = list(getUserEvents(uname))
+    approved = []
+    print(eventList)
+    for event in eventList:
+        print (event)
+        if uname in event["members"]:
+            approved.append(event)
+
+    return approved
+        
+    
 def getHostedEvents(uname):
     u = getUser(uname)
     es = u.get('hevents')
@@ -198,6 +212,8 @@ def getEventAttribute(eventid, field):
 
 def deleteEvent(eventid):
     ev = events.find_one( { '_id' : ObjectId( eventid ) } ) 
+
+    #Removing all of the types of people in the event
     people = []
     for user in ev.get("requests"):
         people.append(user)
@@ -208,10 +224,13 @@ def deleteEvent(eventid):
         { 'uname' : user },
         { '$pull' : { 'uevents' : eventid } }
     )
+        #Don't forget the host
     users.update(
         { 'uname' : ev.get("creator") },
         { '$pull' : { 'hevents' : eventid } }
     )
+
+    #Now let's remove the event itself
     events.remove(ev)
     
                 

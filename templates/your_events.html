@@ -12,14 +12,14 @@
    <b>Description:</b> {{e['desc']}} <br>
  <b>Active Requests:</b>
 <br>
-{% for u in e['requests'] %}
-{{u}} <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br>
+{% for u in e['requests'] %}<li>
+{{u}} <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br></li>
 {% endfor %}
  <b>Members:</b>
-<br><li>
-{% for u in e['members'] %}
-{{u}} <br>
-{% endfor %}</li>
+<br>
+{% for u in e['members'] %}<li>
+{{u}} <br></li>
+{% endfor %}
 <form action="/delete_event" method="post" class="pure-form pure-form-aligned">
 
 <button type="submit" name="submit" value='{{e['_id']}}'

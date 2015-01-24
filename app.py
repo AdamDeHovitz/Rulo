@@ -176,8 +176,8 @@ def joinevent():
         event = request.form["submit"]   
         print event
         valid_msg = util.addPersonEvent(username, event)
-        util.addEventPerson(event, username)
         if valid_msg == '':
+            util.addEventPerson(event, username)
             return render_template('events.html', udict=udict, elist=elist, name = util.getEventAttribute(event, "ename"))
         else:
             flash(valid_msg)
@@ -188,9 +188,9 @@ def joinevent():
 def your_event():
     username = escape(session['username'])
     udict = util.getUser(username)
-    jlist = util.getUserEvents(username);
+    jlist=util.getUserEvents(username)
+    #jlist = util.getApprovedEvents(username);
     hlist = util.getHostedEvents(username);
-    
 
     return render_template('your_events.html', udict = udict, hlist=hlist, jlist=jlist)
 
