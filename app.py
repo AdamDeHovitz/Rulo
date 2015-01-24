@@ -200,6 +200,12 @@ def confirm(event = None, uname = None):
     
     return redirect('/your_events')
 
+@app.route('/delete_event', methods=['GET', 'POST'])
+def delete():
+    util.deleteEvent(request.form["submit"])
+    
+    return redirect('/your_events')
+
 if __name__ == '__main__':
     app.debug = True
     app.run()

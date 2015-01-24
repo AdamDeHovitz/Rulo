@@ -8,21 +8,23 @@
 
 {% for e in hlist %}
 <h2> Name: {{e['ename']}} </h2>
-   Number of people: {{e['numb']}} <br>
-   Description: {{e['desc']}} <br>
-Active Requests:
+   <b>Number of people: </b> {{e['numb']}} <br>
+   <b>Description:</b> {{e['desc']}} <br>
+ <b>Active Requests:</b>
 <br>
 {% for u in e['requests'] %}
 {{u}} <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br>
 {% endfor %}
-Members:
-<br>
+ <b>Members:</b>
+<br><li>
 {% for u in e['members'] %}
-{{u}} *remove button here*<br>
-{% endfor %}
+{{u}} <br>
+{% endfor %}</li>
+<form action="/delete_event" method="post" class="pure-form pure-form-aligned">
 
-|cancel/end event button here|
-
+<button type="submit" name="submit" value='{{e['_id']}}'
+	   class="pure-button" color= "red"> Delete </button>
+</form>
 {% endfor %}
 {% endif %}
 <br>

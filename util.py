@@ -196,6 +196,25 @@ def getEventAttribute(eventid, field):
         return None
     return ev.get(field)
 
+def deleteEvent(eventid):
+    ev = events.find_one( { '_id' : ObjectId( eventid ) } ) 
+    people = []
+    for user in ev.get("requests"):
+        people.append(user)
+    for member in ev.get("members"):
+        people.append(member)
+    for user in people:
+        users.update(
+        { 'uname' : user },
+        { '$pull' : { 'uevents' : eventid } }
+    )
+    users.update(
+        { 'uname' : ev.get("creator") },
+        { '$pull' : { 'hevents' : eventid } }
+    )
+    events.remove(ev)
+    
+                
 
 
     
