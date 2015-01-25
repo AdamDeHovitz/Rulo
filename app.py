@@ -208,9 +208,12 @@ def delete():
 
 @app.route('/user/<uname>', methods=['GET', 'POST'])
 def user_page(uname = None):
+    
     username = escape(session['username'])
     udict = util.getUser(username)
     pdict = util.getUser(uname)
+    if request.method=="POST":
+        print(request.form["rating"])
     
     return render_template('user.html', udict = udict, pdict=pdict)
 
