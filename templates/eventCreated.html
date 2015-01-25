@@ -4,10 +4,13 @@
 
 <h1> You have created an event! </h1>
 <br>
-Event name: {{ename}}<br>
-Number of people needed: {{numb}}<br>
-Desc: {{desc}}<br>
-Longitude: {{lon}}<br>
-Latitude: {{lat}}<br>
+Event name: {{edict['ename']}} <br>
+Creator: {{edict['creator']}} <br>
+Number of people: {{edict['numb']}} <br>
+Total Price: {{edict['total']}} <br>
+Price Per Person: {{edict['price']}} <br>
+Description: {{edict['desc']}} <br>
+Lat: {{edict['lat']}} <br>
+Lon: {{edict['lon']}} <br>
 
 {% endblock %}
