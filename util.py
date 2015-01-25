@@ -256,8 +256,8 @@ if __name__ == "__main__":
     #'''
     for e in events.find():
         events.remove(e)
-        #for p in users.find():
-        # users.remove(p)
+    for p in users.find():
+        users.remove(p)
         #'''
     
 """
