@@ -227,7 +227,7 @@ def deleteEvent(eventid):
         { 'uname' : user },
         { '$pull' : { 'uevents' : eventid } }
     )
-        #Don't forget the host
+    #Don't forget the host
     users.update(
         { 'uname' : ev.get("creator") },
         { '$pull' : { 'hevents' : eventid } }
@@ -236,29 +236,39 @@ def deleteEvent(eventid):
     #Now let's remove the event itself
     events.remove(ev)
     
-                
-
+def eventsNotIn(uname):
+    '''
+    returns a list of the events uname is not already involved with
+    '''
+    evs = []
+    for e in events.find():
+        nc = e['creator'] != uname
+        nm = uname not in e['members']
+        nr = uname not in e['requests']
+        if nc and nm and nr:
+            evs.append(e)
+    return evs
 
     
 if __name__ == "__main__":
-    '''
-    for person in users.find():
-        print person
-        print "\n"
-        
+       
+    print eventsNotIn('s')
     
-    print "-------"
-    print listEvents()
-    print "-------"
-    '''    
-
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
     #'''
     for e in events.find():
         events.remove(e)
     for p in users.find():
         users.remove(p)
-        #'''
+    #'''
+    #------UNCOMMENT TO PRINT STUFF---------#
+    '''
+    for person in users.find():
+        print person
+        print "\n"
+    print "-------"
+    print listEvents()
+    '''
     
 """
  people = db.people

@@ -138,32 +138,26 @@ def process():
         username = escape(session['username'])
         edict = {}
         edict['creator'] = username
-
-        ename = request.form["ename"]  
-        edict['ename'] = request.form["ename"]  
-        numb = request.form["numb"]    
-        edict['numb'] = request.form["numb"]    
-
-        desc = request.form["desc"]  
-        edict['desc'] = request.form["desc"]    
-
-        lon = request.form["long"]
+        print edict['creator']
+        edict['ename'] = request.form["ename"]     
+        edict['numb'] = request.form["numb"]     
+        edict['desc'] = request.form["desc"]
+        edict['total'] = request.form["total"]
+        edict['price'] = request.form["price"]   
         edict['long'] = request.form["long"]    
-        lat = request.form["lat"]
         edict['lat'] = request.form["lat"]
-        print "--> got here"
         newevent = util.createEvent(edict)
-        print newevent
         #util.addEventPerson(username, newevent)
         util.addHostPerson(newevent, username)
-        return render_template('eventCreated.html', udict=util.getUser(username), lat = lat, lon = lon, ename = ename, numb = numb, desc = desc)
+        return render_template('eventCreated.html', udict=util.getUser(username), edict=edict)
 
     
 @app.route('/events', methods=['GET','POST'])  
 def events():
     username = escape(session['username'])
     udict = util.getUser(username)
-    elist = util.listEvents();
+    #elist = util.listEvents();
+    elist = util.eventsNotIn(username)
     return render_template('events.html', udict=udict, elist=elist)
 
 

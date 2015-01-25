@@ -16,12 +16,13 @@
 {% for e in elist %}
 
    <h2> Name: {{e['ename']}} </h2> <br>   
-   Creator: {{e['creator']}} <br> 
+   Creator: {{e['creator']}} <br>
    Number of people: {{e['numb']}} <br>
+   Total Price: {{e['total']}} <br>
+   Price Per Person: {{e['price']}} <br>
    Description: {{e['desc']}} <br>
    Lat: {{e['lat']}} <br>
    Lon: {{e['lon']}} <br>
-   
    
    <button type="submit" name="submit" value='{{e['_id']}}'
 	   class="pure-button"> join </button>

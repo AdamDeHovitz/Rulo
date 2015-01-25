@@ -9,6 +9,8 @@
 {% for e in hlist %}
 <h2> Name: <a href={{"/user/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
    <b>Number of people: </b> {{e['numb']}} <br>
+   <b>Total Price: </b> {{e['total']}} <br>
+   <b>Price Per Person: </b> {{e['price']}} <br>
    <b>Description:</b> {{e['desc']}} <br>
  <b>Active Requests:</b>
 <br>
