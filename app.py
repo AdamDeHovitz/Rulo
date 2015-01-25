@@ -188,8 +188,8 @@ def joinevent():
 def your_event():
     username = escape(session['username'])
     udict = util.getUser(username)
-    jlist=util.getUserEvents(username)
-    #jlist = util.getApprovedEvents(username);
+    #jlist=util.getUserEvents(username)
+    jlist = util.getApprovedEvents(username);
     hlist = util.getHostedEvents(username);
 
     return render_template('your_events.html', udict = udict, hlist=hlist, jlist=jlist)
