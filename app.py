@@ -1,5 +1,5 @@
 from flask import flash, Flask, g, render_template, session, redirect, url_for, \
-     escape, request
+escape, request
 import util #util.py
 
 app = Flask(__name__)
@@ -14,7 +14,7 @@ def authenticate(page):
                 session['nextpage']=page
                 flash("Incorrect access, please login")
                 return redirect("/login")
-            result = func(*args)
+                result = func(*args)
             return result
         return inner
     return yo
@@ -54,9 +54,9 @@ def user():
         newuser['email'] = request.form['email']
         """
         if request.form['pic'] == None:
-            newuser['pic'] = None
+        newuser['pic'] = None
         else:
-            newuser['pic'] = request.form['pic']
+        newuser['pic'] = request.form['pic']
         """
         valid_msg = util.newUser(newuser)
         print("Good?")
@@ -66,7 +66,7 @@ def user():
         else:
             flash(valid_msg)
             return redirect('/register')
-
+        
         
 @app.route('/login')
 def login():    
