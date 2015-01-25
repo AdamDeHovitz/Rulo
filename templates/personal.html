@@ -30,7 +30,7 @@ Name: {{udict['fname']}} {{udict['lname']}} <br>
    <label for="email">Email:</label>
    <input id="email" name="email" type="text"
 	  placeholder="example@gmail.com">
-
+   <br>
    <button type="submit" name="submit" value="email" 
 	   class="pure-button">submit</button>
    {% else %}
@@ -49,7 +49,7 @@ Name: {{udict['fname']}} {{udict['lname']}} <br>
    <button type="submit" name="submit" value="pw" 
 	   class="pure-button">submit</button>
    {% else %}
-   Password: <font size="2"><a href="/personal/pword">Change</a></font>
+   <font size="2"><a href="/personal/pword">Change</a></font>
 
    {% endif %}
 <br>

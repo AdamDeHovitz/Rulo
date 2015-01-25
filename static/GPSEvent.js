@@ -76,6 +76,7 @@ var distanceFunc = function (origin, destination){
     var service = google.maps.DistanceMatrixService();
     //var origin = location;
     console.log(origin);
+    console.log(service.getDistanceMatrix);
     var distance = service.getDistanceMatrix(
 	{
 	    origins: origin,
