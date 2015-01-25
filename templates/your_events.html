@@ -7,7 +7,7 @@
 {% if hlist %} <!-- what. hmm.. do we have to pass through the user's dict and all the different events stuff... ugh this seems not good cs stuffs -->
 
 {% for e in hlist %}
-<h2> Name: <a href={{"/user/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
+<h2> Name: <a href={{"/event_page/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
    <b>Number of people: </b> {{e['numb']}} <br>
    <b>Total Price: </b> {{e['total']}} <br>
    <b>Price Per Person: </b> {{e['price']}} <br>
@@ -38,7 +38,7 @@
 
 {% if jlist %}
 {% for e in jlist %}
-   <h2> Name:<a href={{"/user/" ~  e['ename']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2> <br> 
+   <h2> Name:<a href={{"/event_page/" ~  e['ename']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2> <br> 
    Description: {{e['desc']}} <br>
 Location:
 Members:

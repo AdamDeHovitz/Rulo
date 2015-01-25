@@ -2,11 +2,12 @@
 
 
 {% block body %}
-<h1> {{event['ename']</h1>
+<h1> name:{{event['ename']}}</h1>
 
 <b>Host:</b> {{event['creator']}}
+<br>
 <b>Members:</b>
-{% for u in e['members'] %}<li>
+{% for u in event['members'] %}<li>
 <a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <br></li>
 {% endfor %}
 <br><br>

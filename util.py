@@ -211,6 +211,8 @@ def getEventAttribute(eventid, field):
     return ev.get(field)
 
 def getEvent(eventid):
+    print("id:")
+    print(eventid)
     return events.find( { '_id' :  ObjectId(eventid)  } )
 
 def deleteEvent(eventid):
