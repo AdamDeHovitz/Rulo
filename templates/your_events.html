@@ -13,12 +13,12 @@
  <b>Active Requests:</b>
 <br>
 {% for u in e['requests'] %}<li>
-{{u}} <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br></li>
+<a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br></li>
 {% endfor %}
  <b>Members:</b>
 <br>
 {% for u in e['members'] %}<li>
-{{u}} <br></li>
+<a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <br></li>
 {% endfor %}
 <form action="/delete_event" method="post" class="pure-form pure-form-aligned">
 

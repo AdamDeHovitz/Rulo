@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<h1> {{pdict['fname']}} {{pdict['lname']}}'s Page</h1>
+
+<br><br>
+<form action="/personal_process" method="post" class="pure-form pure-form-aligned">
+<fieldset>
+<br><br>
+***Picture somewhere on this page***
+<br>
+<br>
+Rating:
+{% endblock %}
