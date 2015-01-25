@@ -33,24 +33,23 @@ def newUser(udict):
     '''
     dict: fname, lname, uname, email, pw + rpw, pic 
     '''
-    pwcheck = (udict['pw'] == udict['rpw'])
+    
     uname = udict['uname']
     email = udict['email']
     #udict['pic'] = uploadPicture(udict['pic'])
     age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
+    pwcheck = checkNewPW(udict['pw'], udict['rpw'])
     emailcheck1 = users.find_one({'email':email}) == None
     emailcheck2 = checkEmail(email) #regex basic check
     validagecheck = True
     agecheck = (age >= 13)
-    
+
     s = ""
     if uncheck == False:
         s = "That username has already been used\n"
-    elif not (len(udict['pw']) >= 5 and len(udict['pw']) <= 20):
-        s += "Password must be between 5 and 20 characters"
-    elif not pwcheck:
-        s +=  "Passwords do not match"
+    elif pwcheck != "":
+        return pwcheck
     elif not emailcheck1:
         s += "Email has already been registered"
     elif not emailcheck2:
@@ -63,6 +62,22 @@ def newUser(udict):
         addPerson(udict)
     return s
 
+def checkNewPW(pw, rpw):
+    if pw != rpw:
+        return "Passwords do not match"
+    elif not (len(pw) >= 5 and len(pw) <= 20):
+        return "Password must be between 5 and 20 characters"
+    else:
+        return ""
+
+def pwcheck(uname, old, new, check):
+    if checkPword(uname, old) != "":
+        return checkPword(uname, old)
+    elif checkNewPW(new, check) != "":
+        return checkNewPW(new, check)
+    else:
+        return ""
+    
 def checkPword(uname,pw):
     rpw = getAttribute(uname,"pw")
     if rpw == None:

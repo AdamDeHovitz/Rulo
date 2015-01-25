@@ -109,10 +109,21 @@ def personal_process():
     username = escape(session['username'])
     if request.method=="POST":
         submit = request.form['submit']
-        print submit
         if submit == 'name':
             util.addField(username,"fname",request.form["fname"])
-            util.addField(username,"lname",request.form["lname"]) 
+            util.addField(username,"lname",request.form["lname"])
+        elif submit == 'email':
+            if util.checkEmail(request.form['email']):
+                util.addField(username, submit, request.form[submit])
+        elif submit == 'pw':
+            old = request.form['oldpw']
+            new = request.form['pw']
+            ch = request.form['cpw']
+            msg = util.pwcheck(username,old,new,ch)
+            if msg != "":
+                flash(msg)
+            else:
+                util.addField(username, submit, new)
         else:
             util.addField(username, submit, request.form[submit])
     return redirect('/personal')
