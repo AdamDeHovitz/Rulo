@@ -138,7 +138,6 @@ def process():
         username = escape(session['username'])
         edict = {}
         edict['creator'] = username
-        print edict['creator']
         edict['ename'] = request.form["ename"]     
         edict['numb'] = request.form["numb"]     
         edict['desc'] = request.form["desc"]
@@ -146,9 +145,14 @@ def process():
         edict['price'] = request.form["price"]   
         edict['long'] = request.form["long"]    
         edict['lat'] = request.form["lat"]
+        if util.checkEvent(edict) != "":
+            flash(util.checkEvent(edict))
+            return redirect('/create_events')
         newevent = util.createEvent(edict)
+        print newevent
         #util.addEventPerson(username, newevent)
-        util.addHostPerson(newevent, username)
+        #util.addHostPerson(newevent, username)
+        util.updateUField(username, 'hevents', newevent)
         return render_template('eventCreated.html', udict=util.getUser(username), edict=edict)
 
     
@@ -165,28 +169,28 @@ def events():
 def joinevent():
     username = escape(session['username'])
     udict = util.getUser(username)
-    elist = util.listEvents();
+    #elist = util.listEvents(); # do we need this?
+    elist = util.eventsNotIn(username)
     if request.method=="POST":
-        event = request.form["submit"]   
-        print event
-        valid_msg = util.addPersonEvent(username, event)
-        if valid_msg == '':
-            util.addEventPerson(event, username)
-            return render_template('events.html', udict=udict, elist=elist, name = util.getEventAttribute(event, "ename"))
-        else:
-            flash(valid_msg)
-            return render_template('events.html', udict=udict, elist=elist)
-    return render_template('events.html', udict=udict, elist=elist)
+        event = request.form["submit"] # objectid
+        #print event
+        util.updateEField(event, 'requests', username)
+        #util.updateUField(username, 'requests', event) #event doesn't include objectid
+        util.addEventUserList(username, 'revents', event) 
+        #util.addEventPerson(event, username)
+        return render_template('events.html', udict=udict, elist=elist,
+                               name = util.getEventAttribute(event, "ename"))
 
 @app.route('/your_events', methods=['GET','POST'])
 def your_event():
     username = escape(session['username'])
     udict = util.getUser(username)
-    #jlist=util.getUserEvents(username)
     jlist = util.getApprovedEvents(username);
     hlist = util.getHostedEvents(username);
+    rlist = util.getRequestedEvents(username)
 
-    return render_template('your_events.html', udict = udict, hlist=hlist, jlist=jlist)
+    return render_template('your_events.html', udict = udict, hlist=hlist, jlist=jlist,
+                           rlist=rlist)
 
 @app.route('/confirm/<event>/<uname>', methods=['GET', 'POST'])
 def confirm(event = None, uname = None):
@@ -216,8 +220,13 @@ def event_page(id = None):
     username = escape(session['username'])
     udict = util.getUser(username)
     event = util.getEvent(id)
-    
     return render_template('event_page.html', udict = udict, event = event)
+
+@app.route('/event_page/<eventid>/<uname>', methods=['GET', 'POST'])
+def confirme(eventid = None, uname = None):
+    util.confirmPerson(uname, eventid)
+    
+    return redirect('/event_page/'+ eventid )
 
 if __name__ == '__main__':
     app.debug = True

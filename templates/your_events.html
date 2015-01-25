@@ -4,11 +4,13 @@
 
 <h1>Your Events</h1>
 
-{% if hlist %} <!-- what. hmm.. do we have to pass through the user's dict and all the different events stuff... ugh this seems not good cs stuffs -->
+{% if hlist %}
 
 {% for e in hlist %}
 <h2> Name: <a href={{"/event_page/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
+{% if e['numb'] %}
    <b>Number of people: </b> {{e['numb']}} <br>
+{% endif %}
    <b>Total Price: </b> {{e['total']}} <br>
    <b>Price Per Person: </b> {{e['price']}} <br>
    <b>Description:</b> {{e['desc']}} <br>
@@ -38,12 +40,23 @@
 
 {% if jlist %}
 {% for e in jlist %}
-   <h2> Name:<a href={{"/event_page/" ~  e['ename']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2> <br> 
+   <h2> Name:<a href={{"/event_page/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2> <br>
    Description: {{e['desc']}} <br>
-Location:
+Location: <br>
 Members:
 {% endfor %}
 {% endif %}
+
+<h1> Requested Events <h1>
+    
+    {% if rlist %}
+    {% for e in rlist %}
+    <h2> Name: {{e['ename']}}</a> </h2> <br>
+    Description: {{e['desc']}} <br>
+    Location: <br>
+    Members:
+    {% endfor %}
+    {% endif %}
 
 
 

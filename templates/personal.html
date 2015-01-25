@@ -40,19 +40,21 @@ Name: {{udict['fname']}} {{udict['lname']}} <br>
    <br><br>
 
   {% if change == "pw" %}
-   <label for="pw">Password</label>
-   <input id="oldpw" name="oldpw" type="text" placeholder="Old Password">
+   <label for="pw">Old Password</label>
+   <input id="oldpw" name="oldpw" type="text" placeholder="Old Password"><br>
    <!-- has to agree with old password-->
-   <input id="pw" name="pw" type="text" placeholder="Password">
+   New Password: <input id="pw" name="pw" type="text" placeholder="Password">
    <br>
+   Confirm New Password: <input id="cpw" name="cpw" type="text" placeholder="Password">
+       <br>
 
    <button type="submit" name="submit" value="pw" 
 	   class="pure-button">submit</button>
    {% else %}
-   Password: <font size="2"><a href="/personal/pword">Change</a></font>
+   Password: <font size="2"><a href="/personal/pw">Change</a></font>
 
    {% endif %}
-<br>
+<br><br>
    {% if change == "age" %}
    <label for="age">Age</label>
    <input id="age" name="age" type="text" placeholder="age">
@@ -61,7 +63,7 @@ Name: {{udict['fname']}} {{udict['lname']}} <br>
    <button type="submit" name="submit" value="age" 
 	   class="pure-button">submit</button>
    {% else %}
-   <font size="2"><a href="/personal/age">Change</a></font>
+   Age: <font size="2"><a href="/personal/age">Change</a></font>
 
    {% endif %}
  

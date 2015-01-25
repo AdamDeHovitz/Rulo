@@ -41,13 +41,8 @@ def newUser(udict):
     uncheck = users.find_one({'uname':uname}) == None
     emailcheck1 = users.find_one({'email':email}) == None
     emailcheck2 = checkEmail(email) #regex basic check
-    agecheck = False
     validagecheck = True
-    try:
-        age = int(age)
-        agecheck = (age >= 13)
-    except ValueError:
-        validagecheck = False
+    agecheck = (age >= 13)
     
     s = ""
     if uncheck == False:
@@ -80,7 +75,6 @@ def checkPword(uname,pw):
 def checkEmail(email):
     e = re.compile("[^@]+@[A-z]+\..+")
     check = e.findall(email)
-    print check
     return check != [] 
 
 def addPerson(pdict):
@@ -88,23 +82,42 @@ def addPerson(pdict):
     # --> other stuff that needs to be initialized
     pdict['comments'] = []
     pdict['ratings'] = []
-    pdict['uevents'] = []
-    pdict['hevents'] = []
+    pdict['hevents'] = [] #hosted events
+    pdict['revents'] = [] #requested events
+    pdict['aevents'] = [] #approved events
     users.insert(pdict)
 
     
 def addField(uname, field, data):
     '''
-    add a new field or update an old one 
+    add a new field or update an old one that isn't a list
     '''
-    #p = users.find_one({"fname":fname})
-    #p[field] = data
-    #users.save(p)
     if field == 'pic':
         updatePicture (data, uname)
     else:
         users.update( {"uname":uname} , { '$set': {field:data} } )
-        
+
+def updateUField(uname, field, data):
+    '''
+    add data to list field
+    ''' 
+    users.update(
+        { 'uname' : uname },
+        { '$push' : { field : data } }
+    )
+
+def addEventUserList(uname, field, eventid):
+    updateUField(uname, field, ObjectId(eventid))
+
+
+def removeField(uname, field, data):
+    '''
+    add data to list field
+    '''
+    users.update(
+        { 'uname' : uname },
+        { '$pull' : { field : data } }
+    )
 
 def getUser(uname):
     return users.find_one({'uname':uname})
@@ -131,26 +144,35 @@ def addEventPerson(eventid, uname):
     )
 
 def addHostPerson(eventid, uname):
+    '''
     users.update(
         { 'uname' : uname },
         { '$push' : { 'hevents' : eventid } }
-    )
-def getUserEvents(uname):
+    )'''
+    updateUField( uname, 'hevents', eventid)
+    
+    
+def getRequestedEvents(uname):
     u = getUser(uname)
-    es = u.get('uevents')
+    es = u.get('revents')
+    print "revents"
+    print es
     return events.find( { '_id' : { '$in' : es } } )
 
 def getApprovedEvents(uname):
-    eventList = list(getUserEvents(uname))
+    u = getUser(uname)
+    es = u.get('aevents')
+    return events.find( { '_id' : { '$in' : es } } )
+'''
+eventList = list(getUserEvents(uname))
     approved = []
     print(eventList)
     for event in eventList:
         print (event)
         if uname in event["members"]:
             approved.append(event)
-
     return approved
-        
+'''        
     
 def getHostedEvents(uname):
     u = getUser(uname)
@@ -162,47 +184,38 @@ def getHostedEvents(uname):
 #--------------------------EVENT STUFF------------------------#
 
 def createEvent(edict):
-    edict['requests'] = [] #Not including creator right now [edict['creator']] #list of people in event, including creator 
+    edict['requests'] = [] #Not including creator right now [edict['creator']]
+    #list of people in event, including creator 
     edict['members'] = []
-    return events.insert(edict)
-    
+    edict['msgs'] = [] # list of dictionaries, msgs should have: time, user, msg
+    e = events.insert(edict)
+    #print e
+    return e #returns w/o objectid( )
 
-def listEvents():
-    eventslist = []
-    for e in events.find():
-        eventslist.append(e)
-    return eventslist
 
-def addPersonEvent(uname, eventid):
+def checkEvent(edict):
+     # check for required inputs (name, description)
+    if edict['ename'] == "":
+        return "Input a name for your event"
+    if edict['desc'] == '    ' or edict['desc'] == '':
+        return "Input a description for your event"
+    else:
+        return ""
+
+def updateEField(eventid, field, data):
     '''
-    adding a person to an event
+    adds data to eventid's field array 
     '''
-    #'''
     events.update(
         { '_id' : ObjectId(eventid) },
-        { '$push' : { 'requests' : uname } }
-        )
-    #print(getEventAttribute(eventid, 'requests'))
-    """
-    ev = events.find_one({'_id':ObjectId( eventid ), 'requests':{'$exists':True}})    
-    if ev == None:
-        return "This event doesn't exist"
-    ev['requests'].append(uname);
-    for u in ev['requests']:
-        print(u)
-        """
-    return ""
+        { '$push' : { field : data }}
+    )
 
-def confirmPerson(uname, eventid):
-
+def pullEField(eventid, field, data):
     events.update(
         { '_id' : ObjectId(eventid) },
-        { '$pull' : { 'requests' : uname } }
-        )
-    events.update(
-        { '_id' : ObjectId(eventid) },
-        { '$push' : { 'members' : uname } }
-        )
+        { '$pull' : { field : data } }
+    )
 
 def getEventAttribute(eventid, field):
     ev = events.find_one( { '_id' : ObjectId( eventid ) } ) 
@@ -210,10 +223,25 @@ def getEventAttribute(eventid, field):
         return None
     return ev.get(field)
 
+
+def listEvents():
+    eventslist = []
+    for e in events.find():
+        eventslist.append(e)
+    return eventslist
+
+    
+
+def confirmPerson(uname, eventid):
+    pullEField(eventid, 'requests', uname)
+    updateEField(eventid, 'members', uname)
+
+
+
 def getEvent(eventid):
     print("id:")
     print(eventid)
-    return events.find( { '_id' :  ObjectId(eventid)  } )
+    return events.find_one( { '_id' :  ObjectId(eventid)  } )
 
 def deleteEvent(eventid):
     ev = events.find_one( { '_id' : ObjectId( eventid ) } ) 
@@ -251,28 +279,66 @@ def eventsNotIn(uname):
             evs.append(e)
     return evs
 
+#----------------------------------------#
+def setup():
+    newuser = {}
+    newuser['uname'] = 's'
+    newuser['fname'] = 's'
+    newuser['lname'] = 's'
+    newuser['pw'] = 'sssss'
+    newuser['rpw'] = 'sssss'
+    newuser['age'] = 18 
+    newuser['email'] = 's@g.c'
+    newUser(newuser)
+
+    edict = {}
+    edict['creator'] = 's'
+    edict['ename'] = '1st event'
+    edict['numb'] = 5
+    edict['desc'] = '1'
+    edict['total'] = 10
+    edict['price'] = 10 
+    edict['long'] = 0   
+    edict['lat'] = 0
+    newevent = createEvent(edict)
+    updateUField('s', 'hevents', newevent)
+
+
+
+#--------------------------------------------------------#
+
     
 if __name__ == "__main__":
        
-    print eventsNotIn('s')
+    #print eventsNotIn('s')
     
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
-    #'''
+    '''
     for e in events.find():
         events.remove(e)
     for p in users.find():
         users.remove(p)
-    #'''
-    #------UNCOMMENT TO PRINT STUFF---------#
+    setup()
     '''
+    #------UNCOMMENT TO PRINT STUFF---------#
+    #'''
     for person in users.find():
         print person
         print "\n"
     print "-------"
     print listEvents()
-    '''
+    #'''
     
 """
+Events:
+'ename', u'desc', 'total', 'numb', 'price', u'long', 'lat'
+'creator', u'members': [], 'requests': [],
+u'_id': ObjectId('54c51e6067a8a20244124da7')
+
+Users:
+'uname', 'hevents', 'revents', 'aevents'
+
+    
  people = db.people
  
  to insert
