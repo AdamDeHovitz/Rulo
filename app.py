@@ -154,8 +154,8 @@ def process():
         print "--> got here"
         newevent = util.createEvent(edict)
         print newevent
-        util.addEventPerson(username, newevent)
-        
+        #util.addEventPerson(username, newevent)
+        util.addHostPerson(newevent, username)
         return render_template('eventCreated.html', udict=util.getUser(username), lat = lat, lon = lon, ename = ename, numb = numb, desc = desc)
 
     
@@ -176,8 +176,8 @@ def joinevent():
         event = request.form["submit"]   
         print event
         valid_msg = util.addPersonEvent(username, event)
-        util.addEventPerson(event, username)
         if valid_msg == '':
+            util.addEventPerson(event, username)
             return render_template('events.html', udict=udict, elist=elist, name = util.getEventAttribute(event, "ename"))
         else:
             flash(valid_msg)
@@ -188,19 +188,23 @@ def joinevent():
 def your_event():
     username = escape(session['username'])
     udict = util.getUser(username)
-    elist = util.listEvents();
-    if request.method=="POST":
-        event = request.form["submit"]   
-        print event
-        valid_msg = util.addPersonEvent(username, event)
-        if valid_msg == '':
-            return render_template('events.html', udict=udict, elist=elist, name = util.getEventAttribute(event, "ename"))
-        else:
-            flash(valid_msg)
-            return render_template('events.html', udict=udict, elist=elist)
-    return render_template('events.html', udict=udict, elist=elist)
+    jlist=util.getUserEvents(username)
+    #jlist = util.getApprovedEvents(username);
+    hlist = util.getHostedEvents(username);
 
+    return render_template('your_events.html', udict = udict, hlist=hlist, jlist=jlist)
 
+@app.route('/confirm/<event>/<uname>', methods=['GET', 'POST'])
+def confirm(event = None, uname = None):
+    util.confirmPerson(uname, event)
+    
+    return redirect('/your_events')
+
+@app.route('/delete_event', methods=['GET', 'POST'])
+def delete():
+    util.deleteEvent(request.form["submit"])
+    
+    return redirect('/your_events')
 
 if __name__ == '__main__':
     app.debug = True

@@ -4,21 +4,27 @@
 
 <h1>Your Events</h1>
 
-{% if ulist %} <!-- what. hmm.. do we have to pass through the user's dict and all the different events stuff... ugh this seems not good cs stuffs -->
+{% if hlist %} <!-- what. hmm.. do we have to pass through the user's dict and all the different events stuff... ugh this seems not good cs stuffs -->
 
-{% for e in ulist %}
-<h2> Name: {{e['ename']}} </h2> <br>
-   Number of people: {{e['numb']}} <br>
-   Description: {{e['desc']}} <br>
-Active Requests:
-Members:
-{% for u in ulist['peeps'] %}
-{{u}}
-|remove button here|
+{% for e in hlist %}
+<h2> Name: {{e['ename']}} </h2>
+   <b>Number of people: </b> {{e['numb']}} <br>
+   <b>Description:</b> {{e['desc']}} <br>
+ <b>Active Requests:</b>
+<br>
+{% for u in e['requests'] %}<li>
+{{u}} <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br></li>
 {% endfor %}
+ <b>Members:</b>
+<br>
+{% for u in e['members'] %}<li>
+{{u}} <br></li>
+{% endfor %}
+<form action="/delete_event" method="post" class="pure-form pure-form-aligned">
 
-|cancel/end event button here|
-
+<button type="submit" name="submit" value='{{e['_id']}}'
+	   class="pure-button" color= "red"> Delete </button>
+</form>
 {% endfor %}
 {% endif %}
 <br>
