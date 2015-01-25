@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<h1> {{event['ename']</h1>
+
+<b>Host:</b> {{event['creator']}}
+<b>Members:</b>
+{% for u in e['members'] %}<li>
+<a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <br></li>
+{% endfor %}
+<br><br>
+Stuff this page needs:<br>
+map of location<br>
+some kind of message board with commenting<br>
+time<br>
+
+
+<br>
+<br>
+Rating:
+{% endblock %}

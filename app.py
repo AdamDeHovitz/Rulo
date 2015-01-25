@@ -214,6 +214,14 @@ def user_page(uname = None):
     
     return render_template('user.html', udict = udict, pdict=pdict)
 
+@app.route('/event_page/<id>', methods=['GET', 'POST'])
+def event_page(id = None):
+    username = escape(session['username'])
+    udict = util.getUser(username)
+    event = util.getEvent(id)
+    
+    return render_template('event_page.html', udict = udict, event = event)
+
 if __name__ == '__main__':
     app.debug = True
     app.run()

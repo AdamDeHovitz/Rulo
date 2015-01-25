@@ -124,7 +124,7 @@ def addEventPerson(eventid, uname):
     '''
     adding an event id to a person
     '''
-    
+    eventid = ObjectId(eventid)
     users.update(
         { 'uname' : uname },
         { '$push' : { 'uevents' : eventid } }
@@ -209,6 +209,9 @@ def getEventAttribute(eventid, field):
     if ev == None:
         return None
     return ev.get(field)
+
+def getEvent(eventid):
+    return events.find( { '_id' :  ObjectId(eventid)  } )
 
 def deleteEvent(eventid):
     ev = events.find_one( { '_id' : ObjectId( eventid ) } ) 
