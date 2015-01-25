@@ -1,6 +1,7 @@
 console.log("is this working?");
 
 var map;
+var mappy;
 var geocoder;
 var marker;
 var action = function () {
@@ -27,14 +28,14 @@ var action = function () {
 	console.log("ah noes,its an error");
 	return new google.maps.LatLng(51.208317, 3.224883);
     };
-
+    
     var hellYeah = function(position) {
-	      map = document.getElementById('map-test');
+	map = document.getElementById('map-test');
         mappy = new google.maps.Map(map, mapOptions);
-
+	
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
-	      var locationArray = [latitude, longitude];
+	var locationArray = [latitude, longitude];
         var location = new google.maps.LatLng(latitude, longitude);
         mappy.setCenter(location);
         console.log('map function finished. Latitude is: ' + latitude + " Longitude is: " + longitude);
@@ -44,12 +45,11 @@ var action = function () {
 		if (results[0]) {
 		    var marker = new google.maps.Marker({
 			position: geographicCoord,
+			title: "this is a marker",
 			map: mappy
 		    });
-		    //console.log('assign address');
 		    address = results[0].formatted_address;
 		    var wordPlace = document.getElementById('map-location');
-		    var mapi = document.getElementById('map-test');
 		    console.log(address);
 		    wordPlace.innerHTML = address;
 		    map.innerHTML = new google.maps.LatLng(latitude,longitude);
