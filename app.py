@@ -1,6 +1,10 @@
 from flask import flash, Flask, g, render_template, session, redirect, url_for, \
-     escape, request
+     escape, request, send_from_directory
 import util #util.py
+import os
+
+ALLOWED_FILES = set(['jpg', 'gif', 'png', 'jpeg', 'tif', 'tiff', 'jif', 'jfif', 'fpx'])
+
 
 app = Flask(__name__)
 app.secret_key = 'a'
@@ -18,6 +22,9 @@ def authenticate(page):
             return result
         return inner
     return yo
+
+def isFileAllowed (filename):
+  return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_FILES
 
 
 @app.route('/')
@@ -40,7 +47,7 @@ def home():
     return render_template('home.html', udict = udict)
 
 
-@app.route('/user', methods=['POST'])
+@app.route('/user', methods=['POST', 'GET'])
 def user():
     #print("user!");
     if request.method=="POST":
@@ -50,14 +57,14 @@ def user():
         newuser['lname'] = request.form['lname']
         newuser['pw'] = request.form['pw']
         newuser['rpw'] = request.form['rpw']
-        newuser['age'] = request.form['age'] 
+        newuser['age'] = request.form['age']
         newuser['email'] = request.form['email']
-        """
-        if request.form['pic'] == None:
-            newuser['pic'] = None
-        else:
-            newuser['pic'] = request.form['pic']
-        """
+        print type(send_from_directory('static', 'ewokPing.jpg'))
+        img = send_from_directory('static', 'ewokPing.jpg')
+        print img
+        print '\n\nDefault image assigned to newuser'
+        print type(img)
+        newuser['pic'] = img
         valid_msg = util.newUser(newuser)
         print("Good?")
         if valid_msg == '':
@@ -66,10 +73,19 @@ def user():
         else:
             flash(valid_msg)
             return redirect('/register')
+@app.route('/proPic', methods=['GET', 'POST'])
+def changePic():
+  if request.method == "POST":
+    img = request.files['pic']
+    if img and isFileAllowed(img.filename):
+      success = util.addField(session['username'], 'pic', data)
+      if success:
+        return redirect('/user', upload = True)
+      else:
+        return redirect('/user', upload = False)
 
-        
 @app.route('/login')
-def login():    
+def login():
     return render_template('login.html', udict={'uname':False})
 
 
@@ -80,7 +96,7 @@ def logout():
 
 
 @app.route('/register')
-def register():   
+def register():
     return render_template('register.html', udict={'uname':False})
 
 
@@ -97,22 +113,22 @@ def verify():
             flash(valid_msg)
             return redirect('/login')
 
-        
+
 @app.route('/personal', methods=['GET','POST'])
 def p():
     username = escape(session['username'])
     return render_template('personal.html', udict=util.getUser(username), change = "Null")
-        
+
 
 @app.route('/personal_process', methods=['GET','POST'])
-def personal_process():    
+def personal_process():
     username = escape(session['username'])
     if request.method=="POST":
         submit = request.form['submit']
         print submit
         if submit == 'name':
             util.addField(username,"fname",request.form["fname"])
-            util.addField(username,"lname",request.form["lname"]) 
+            util.addField(username,"lname",request.form["lname"])
         else:
             util.addField(username, submit, request.form[submit])
     return redirect('/personal')
@@ -124,31 +140,31 @@ def personal(thing = None):
     udict = util.getUser(username)
     return render_template('personal.html', udict=udict, change=thing)
 
-    
+
 @app.route('/create_events', methods=['GET','POST'])
-def event_create():    
+def event_create():
     username = escape(session['username'])
 
     return render_template('eventCreate.html', udict=util.getUser(username))
 
 
 @app.route('/create_event_process', methods=['GET','POST'])
-def process(): 
-    if request.method=="POST":                       
+def process():
+    if request.method=="POST":
         username = escape(session['username'])
         edict = {}
         edict['creator'] = username
 
-        ename = request.form["ename"]  
-        edict['ename'] = request.form["ename"]  
-        numb = request.form["numb"]    
-        edict['numb'] = request.form["numb"]    
+        ename = request.form["ename"]
+        edict['ename'] = request.form["ename"]
+        numb = request.form["numb"]
+        edict['numb'] = request.form["numb"]
 
-        desc = request.form["desc"]  
-        edict['desc'] = request.form["desc"]    
+        desc = request.form["desc"]
+        edict['desc'] = request.form["desc"]
 
         lon = request.form["long"]
-        edict['long'] = request.form["long"]    
+        edict['long'] = request.form["long"]
         lat = request.form["lat"]
         edict['lat'] = request.form["lat"]
         print "--> got here"
@@ -158,8 +174,8 @@ def process():
         util.addHostPerson(newevent, username)
         return render_template('eventCreated.html', udict=util.getUser(username), lat = lat, lon = lon, ename = ename, numb = numb, desc = desc)
 
-    
-@app.route('/events', methods=['GET','POST'])  
+
+@app.route('/events', methods=['GET','POST'])
 def events():
     username = escape(session['username'])
     udict = util.getUser(username)
@@ -167,13 +183,13 @@ def events():
     return render_template('events.html', udict=udict, elist=elist)
 
 
-@app.route('/joinevent', methods=['GET','POST']) #does order matter? 
+@app.route('/joinevent', methods=['GET','POST']) #does order matter?
 def joinevent():
     username = escape(session['username'])
     udict = util.getUser(username)
     elist = util.listEvents();
     if request.method=="POST":
-        event = request.form["submit"]   
+        event = request.form["submit"]
         print event
         valid_msg = util.addPersonEvent(username, event)
         if valid_msg == '':
@@ -197,24 +213,24 @@ def your_event():
 @app.route('/confirm/<event>/<uname>', methods=['GET', 'POST'])
 def confirm(event = None, uname = None):
     util.confirmPerson(uname, event)
-    
+
     return redirect('/your_events')
 
 @app.route('/delete_event', methods=['GET', 'POST'])
 def delete():
     util.deleteEvent(request.form["submit"])
-    
+
     return redirect('/your_events')
 
 @app.route('/user/<uname>', methods=['GET', 'POST'])
 def user_page(uname = None):
-    
+
     username = escape(session['username'])
     udict = util.getUser(username)
     pdict = util.getUser(uname)
     if request.method=="POST":
         print(request.form["rating"])
-    
+
     return render_template('user.html', udict = udict, pdict=pdict)
 
 @app.route('/event_page/<id>', methods=['GET', 'POST'])
@@ -222,10 +238,9 @@ def event_page(id = None):
     username = escape(session['username'])
     udict = util.getUser(username)
     event = util.getEvent(id)
-    
+
     return render_template('event_page.html', udict = udict, event = event)
 
 if __name__ == '__main__':
     app.debug = True
     app.run()
-

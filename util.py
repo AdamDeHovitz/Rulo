@@ -15,13 +15,19 @@ events = db.events
 #----------------------PIC STUFF---------------------#
 
 def uploadPicture (picture):
+    print "in upload"
+    print picture
     _id = fs.put(picture)
     return _id
 
 def updatePicture (picture, user):
+    print "in update"
+    print type(picture)
     _id = uploadPicture(picture)
     users.update({"uname":user},{'$set':{'pic':_id}})
-    
+    print users.find_one({'uname':user})['pic']
+    return _id == users.find_one({'uname':user})['pic']
+
 def getPicture (user):
     p = users.find_one({"uname":user})
     _id = p['pic']
@@ -31,12 +37,12 @@ def getPicture (user):
 #----------------------USER STUFF--------------------#
 def newUser(udict):
     '''
-    dict: fname, lname, uname, email, pw + rpw, pic 
+    dict: fname, lname, uname, email, pw + rpw, pic
     '''
     pwcheck = (udict['pw'] == udict['rpw'])
     uname = udict['uname']
     email = udict['email']
-    #udict['pic'] = uploadPicture(udict['pic'])
+    udict['pic'] = uploadPicture(udict['pic'])
     age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
     emailcheck1 = users.find_one({'email':email}) == None
@@ -48,7 +54,7 @@ def newUser(udict):
         agecheck = (age >= 13)
     except ValueError:
         validagecheck = False
-    
+
     s = ""
     if uncheck == False:
         s = "That username has already been used\n"
@@ -81,10 +87,10 @@ def checkEmail(email):
     e = re.compile("[^@]+@[A-z]+\..+")
     check = e.findall(email)
     print check
-    return check != [] 
+    return check != []
 
 def addPerson(pdict):
-    #pdict['picture'] = file; should be sent from form 
+    #pdict['picture'] = file; should be sent from form
     # --> other stuff that needs to be initialized
     pdict['comments'] = []
     pdict['ratings'] = []
@@ -92,19 +98,22 @@ def addPerson(pdict):
     pdict['hevents'] = []
     users.insert(pdict)
 
-    
+
 def addField(uname, field, data):
     '''
-    add a new field or update an old one 
+    add a new field or update an old one
     '''
     #p = users.find_one({"fname":fname})
     #p[field] = data
     #users.save(p)
     if field == 'pic':
-        updatePicture (data, uname)
+        print "in add"
+        print type(picture)
+        test = updatePicture (data, uname)
+        return test
     else:
         users.update( {"uname":uname} , { '$set': {field:data} } )
-        
+
 
 def getUser(uname):
     return users.find_one({'uname':uname})
@@ -150,8 +159,8 @@ def getApprovedEvents(uname):
             approved.append(event)
 
     return approved
-        
-    
+
+
 def getHostedEvents(uname):
     u = getUser(uname)
     es = u.get('hevents')
@@ -162,10 +171,10 @@ def getHostedEvents(uname):
 #--------------------------EVENT STUFF------------------------#
 
 def createEvent(edict):
-    edict['requests'] = [] #Not including creator right now [edict['creator']] #list of people in event, including creator 
+    edict['requests'] = [] #Not including creator right now [edict['creator']] #list of people in event, including creator
     edict['members'] = []
     return events.insert(edict)
-    
+
 
 def listEvents():
     eventslist = []
@@ -184,7 +193,7 @@ def addPersonEvent(uname, eventid):
         )
     #print(getEventAttribute(eventid, 'requests'))
     """
-    ev = events.find_one({'_id':ObjectId( eventid ), 'requests':{'$exists':True}})    
+    ev = events.find_one({'_id':ObjectId( eventid ), 'requests':{'$exists':True}})
     if ev == None:
         return "This event doesn't exist"
     ev['requests'].append(uname);
@@ -205,7 +214,7 @@ def confirmPerson(uname, eventid):
         )
 
 def getEventAttribute(eventid, field):
-    ev = events.find_one( { '_id' : ObjectId( eventid ) } ) 
+    ev = events.find_one( { '_id' : ObjectId( eventid ) } )
     if ev == None:
         return None
     return ev.get(field)
@@ -216,7 +225,7 @@ def getEvent(eventid):
     return events.find( { '_id' :  ObjectId(eventid)  } )
 
 def deleteEvent(eventid):
-    ev = events.find_one( { '_id' : ObjectId( eventid ) } ) 
+    ev = events.find_one( { '_id' : ObjectId( eventid ) } )
 
     #Removing all of the types of people in the event
     people = []
@@ -237,22 +246,22 @@ def deleteEvent(eventid):
 
     #Now let's remove the event itself
     events.remove(ev)
-    
-                
 
 
-    
+
+
+
 if __name__ == "__main__":
     '''
     for person in users.find():
         print person
         print "\n"
-        
-    
+
+
     print "-------"
     print listEvents()
     print "-------"
-    '''    
+    '''
 
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
     #'''
@@ -261,12 +270,12 @@ if __name__ == "__main__":
     for p in users.find():
         users.remove(p)
         #'''
-    
+
 """
  people = db.people
- 
+
  to insert
-     people.insert(dict)       
+     people.insert(dict)
  to update:
      person = people.find_one({"food":"ham"})
      person["food"] = "eggs"

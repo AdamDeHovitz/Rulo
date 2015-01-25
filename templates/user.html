@@ -33,12 +33,29 @@ href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
    <div class="pure-u-1-5"></div>
    <div class="pure-u-3-5">
 <font face ="Baskerville" size ="6" style="text-align:center">Rulo</font>
- 
+
 <h1> {{pdict['fname']}} {{pdict['lname']}}'s Page</h1>
 
 <br><br>
 <br><br>
 ***Picture somewhere on this page***
+***Picture Here***
+Change Your Picture
+<form action="/proPic" method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned">
+  <div class="pure-control-group">
+    <label for="pic">Picture</label>
+    <input id="pic" name="pic"  type="file" accept="image/*"></div><br>
+    <button type="submit" class="pure-button">Use This Picture</button>
+</form>
+{% if upload %}
+<div>
+  Picture Upload Successful, You have changed your profile picture
+</div>
+{% elif upload == false%}
+<div>
+  There was an error in uploading your picture, please try again
+</div>
+{% endif %}
 <br>
 <br>
 
@@ -82,4 +99,3 @@ DO NOT PRESS THIS BUTTON
 
 <script src="../static/stars.js"></script>
 </body> </html>
-
