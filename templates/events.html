@@ -11,9 +11,16 @@
 <h2>Check out your local Events </h2>
 
 <form action="/joinevent" method="post" class="pure-form pure-form-aligned">
-
-<hr>
-{% for e in elist %}
+  
+  <hr>
+  window.onload= functioning(){
+  action();
+  } <!-- need to figure out how to get GPS to run -->
+  
+  {% for e in elist %}
+  <!--
+      if (distanceFunce(location, e) < 100){
+      -->
 
    <h2> Name: {{e['ename']}} </h2> <br>   
    Creator: {{e['creator']}} <br>
