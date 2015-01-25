@@ -7,18 +7,18 @@
 {% if hlist %} <!-- what. hmm.. do we have to pass through the user's dict and all the different events stuff... ugh this seems not good cs stuffs -->
 
 {% for e in hlist %}
-<h2> Name: {{e['ename']}} </h2>
+<h2> Name: <a href={{"/user/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
    <b>Number of people: </b> {{e['numb']}} <br>
    <b>Description:</b> {{e['desc']}} <br>
  <b>Active Requests:</b>
 <br>
 {% for u in e['requests'] %}<li>
-{{u}} <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br></li>
+<a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br></li>
 {% endfor %}
  <b>Members:</b>
 <br>
 {% for u in e['members'] %}<li>
-{{u}} <br></li>
+<a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <br></li>
 {% endfor %}
 <form action="/delete_event" method="post" class="pure-form pure-form-aligned">
 
@@ -33,7 +33,7 @@
 <h1> Joined Events <h1>
 
 {% for e in jlist %}
-   <h2> Name: {{e['ename']}} </h2> <br> 
+   <h2> Name:<a href={{"/user/" ~  e['ename']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2> <br> 
    Description: {{e['desc']}} <br>
 Location:
 Members:

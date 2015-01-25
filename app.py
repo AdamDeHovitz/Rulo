@@ -188,8 +188,8 @@ def joinevent():
 def your_event():
     username = escape(session['username'])
     udict = util.getUser(username)
-    jlist=util.getUserEvents(username)
-    #jlist = util.getApprovedEvents(username);
+    #jlist=util.getUserEvents(username)
+    jlist = util.getApprovedEvents(username);
     hlist = util.getHostedEvents(username);
 
     return render_template('your_events.html', udict = udict, hlist=hlist, jlist=jlist)
@@ -205,6 +205,22 @@ def delete():
     util.deleteEvent(request.form["submit"])
     
     return redirect('/your_events')
+
+@app.route('/user/<uname>', methods=['GET', 'POST'])
+def user_page(uname = None):
+    username = escape(session['username'])
+    udict = util.getUser(username)
+    pdict = util.getUser(uname)
+    
+    return render_template('user.html', udict = udict, pdict=pdict)
+
+@app.route('/event_page/<id>', methods=['GET', 'POST'])
+def event_page(id = None):
+    username = escape(session['username'])
+    udict = util.getUser(username)
+    event = util.getEvent(id)
+    
+    return render_template('event_page.html', udict = udict, event = event)
 
 if __name__ == '__main__':
     app.debug = True
