@@ -1,16 +1,12 @@
 from flask import flash, Flask, g, render_template, session, redirect, url_for, \
-<<<<<<< HEAD
      escape, request, send_from_directory
-=======
-escape, request
->>>>>>> ed46dc2bd50c37842d351770b2b2e2009ec1c4e5
 import util #util.py
 import os
 
 ALLOWED_FILES = set(['jpg', 'gif', 'png', 'jpeg', 'tif', 'tiff', 'jif', 'jfif', 'fpx'])
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.secret_key = 'a'
 
 
@@ -63,7 +59,7 @@ def user():
         newuser['rpw'] = request.form['rpw']
         newuser['age'] = request.form['age']
         newuser['email'] = request.form['email']
-        print type(send_from_directory('static', 'ewokPing.jpg'))
+        print type(send_from_directory(app.static_folder, 'ewokPing.jpg'))
         img = send_from_directory('static', 'ewokPing.jpg')
         print img
         print '\n\nDefault image assigned to newuser'
