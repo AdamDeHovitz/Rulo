@@ -76,7 +76,7 @@ def user():
         #stepOne = Image.open('static/ewokPing.jpg')
         #img = stepOne.load()
         #print img.read()
-        #img = "default"
+        img = "default"
         '''
         DEAD CODE IGNORE
         print type(send_from_directory(app.static_folder, 'ewokPing.jpg'))
@@ -177,7 +177,7 @@ def personal_process():
 def personal(thing = None):
     username = escape(session['username'])
     udict = util.getUser(username)
-    pic = getPicture (udict['uname'])
+    pic = util.getPicture (udict['uname'])
     print pic
     return render_template('personal.html', udict=udict, change=thing, profile = pic)
 
@@ -272,7 +272,7 @@ def user_page(uname = None):
         username = escape(session['username'])
         udict = util.getUser(username)
         pdict = util.getUser(uname)
-        pic = getPicture (udict['uname'])
+        pic = util.getPicture (udict['uname'])
 
     if request.method=="POST":
             print(request.form["rating"])
