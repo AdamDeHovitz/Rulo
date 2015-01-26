@@ -345,22 +345,22 @@ def setup():
 if __name__ == "__main__":
     
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
-    '''
+    #'''
     for e in events.find():
         events.remove(e)
     for p in users.find():
         users.remove(p)
     setup()
-    '''
-    #------UNCOMMENT TO PRINT STUFF---------#
     #'''
+    #------UNCOMMENT TO PRINT STUFF---------#
+'''
     for person in users.find():
         print person
         print "\n"
     print "-------"
     print listEvents()
-    #'''
-    
+    '''
+    #print getUser('ergoijergo')
     
 """
 Events:

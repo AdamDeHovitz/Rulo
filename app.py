@@ -238,13 +238,19 @@ def delete():
 
 @app.route('/user/<uname>', methods=['GET', 'POST'])
 def user_page(uname = None):
+
     #if util. ---this will check if the uname exists
-    username = escape(session['username'])
-    udict = util.getUser(username)  
-    pdict = util.getUser(uname)
-    #if pdict
+    if util.getUser(name) == None:
+        flash("That's not a user")
+        return redirect('/events')
+    else:
+        username = escape(session['username'])
+        udict = util.getUser(username)  
+        pdict = util.getUser(uname)
+        
     if request.method=="POST":
-        print(request.form["rating"])
+            print(request.form["rating"])
+            
 
     return render_template('user.html', udict = udict, pdict=pdict)
 
