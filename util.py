@@ -196,11 +196,12 @@ updateUField(uname, 'reviews', {dictionary of user, rating, comment}
 
 def addEventUserList(uname, field, eventid):
     updateUField(uname, field, ObjectId(eventid))
+def removeEventUserList(uname, field, eventid):
+    removeUField(uname, field, ObjectId(eventid))
 
-
-def removeField(uname, field, data):
+def removeUField(uname, field, data):
     '''
-    add data to list field
+    remove data to list field
     '''
     users.update(
         { 'uname' : uname },
@@ -326,6 +327,10 @@ def listEvents():
 def confirmPerson(uname, eventid):
     pullEField(eventid, 'requests', uname)
     updateEField(eventid, 'members', uname)
+    updateUField(uname, 'aevents', ObjectId(eventid))
+    removeUField(uname, 'revents', ObjectId(eventid))
+
+
 
 
 

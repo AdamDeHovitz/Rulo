@@ -56,6 +56,7 @@
 
 {% if jlist %}
 {% for e in jlist %}
+<h2> Name: <a href={{"/event_page/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
 {% if e['numb'] %}
    <b>Number of people: </b> {{e['numb']}} <br>
 {% endif %}
@@ -93,6 +94,7 @@
     
     {% if rlist %}
     {% for e in rlist %}
+<h2> Name: <a href={{"/event_page/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
     {% if e['numb'] %}
    <b>Number of people: </b> {{e['numb']}} <br>
 {% endif %}
