@@ -242,7 +242,7 @@ def user_page(uname = None):
     username = escape(session['username'])
     udict = util.getUser(username)  
     pdict = util.getUser(uname)
-    if pdict
+    #if pdict
     if request.method=="POST":
         print(request.form["rating"])
 

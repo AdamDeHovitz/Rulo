@@ -15,7 +15,7 @@ events = db.events
 #----------------------PIC STUFF---------------------#
 
 def uploadPicture (picture):
-print "in upload"
+    print "in upload"
     print picture
     _id = fs.put(picture)
     return _id
