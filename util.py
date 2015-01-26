@@ -15,13 +15,19 @@ events = db.events
 #----------------------PIC STUFF---------------------#
 
 def uploadPicture (picture):
+    print "in upload"
+    print picture
     _id = fs.put(picture)
     return _id
 
 def updatePicture (picture, user):
+    print "in update"
+    print type(picture)
     _id = uploadPicture(picture)
     users.update({"uname":user},{'$set':{'pic':_id}})
-    
+    print users.find_one({'uname':user})['pic']
+    return _id == users.find_one({'uname':user})['pic']
+
 def getPicture (user):
     p = users.find_one({"uname":user})
     _id = p['pic']
@@ -31,7 +37,7 @@ def getPicture (user):
 #----------------------USER STUFF--------------------#
 def newUser(udict):
     '''
-    dict: fname, lname, uname, email, pw + rpw, pic 
+    dict: fname, lname, uname, email, pw + rpw, pic
     '''
     uname = udict['uname']
     email = udict['email']
@@ -90,10 +96,11 @@ def checkEmail(email):
     if users.find_one({'email':email}) != None:
         return "Email has already been registered"
     else:
-        return ""
+        return "" 
+
 
 def addPerson(pdict):
-    #pdict['picture'] = file; should be sent from form 
+    #pdict['picture'] = file; should be sent from form
     # --> other stuff that needs to be initialized
     pdict['comments'] = []
     pdict['ratings'] = []
@@ -102,7 +109,7 @@ def addPerson(pdict):
     pdict['aevents'] = [] #approved events
     users.insert(pdict)
 
-    
+
 def addField(uname, field, data):
     '''
     add a new field or update an old one that isn't a list
@@ -227,8 +234,9 @@ def updateEField(eventid, field, data):
     '''
     events.update(
         { '_id' : ObjectId(eventid) },
-        { '$push' : { field : data }}
+        { '$push' : { field : data } }
     )
+
 
 def pullEField(eventid, field, data):
     events.update(
@@ -237,7 +245,7 @@ def pullEField(eventid, field, data):
     )
 
 def getEventAttribute(eventid, field):
-    ev = events.find_one( { '_id' : ObjectId( eventid ) } ) 
+    ev = events.find_one( { '_id' : ObjectId( eventid ) } )
     if ev == None:
         return None
     return ev.get(field)
@@ -263,7 +271,7 @@ def getEvent(eventid):
     return events.find_one( { '_id' :  ObjectId(eventid)  } )
 
 def deleteEvent(eventid):
-    ev = events.find_one( { '_id' : ObjectId( eventid ) } ) 
+    ev = events.find_one( { '_id' : ObjectId( eventid ) } )
 
     #Removing all of the types of people in the event
     people = []
@@ -284,6 +292,7 @@ def deleteEvent(eventid):
 
     #Now let's remove the event itself
     events.remove(ev)
+
     
 def eventsNotIn(uname):
     '''
@@ -326,10 +335,10 @@ def setup():
 
 #--------------------------------------------------------#
 
-    
+
+
+
 if __name__ == "__main__":
-       
-    #print eventsNotIn('s')
     
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
     '''
@@ -348,10 +357,12 @@ if __name__ == "__main__":
     print listEvents()
     #'''
     
+    
 """
 Events:
 'ename', u'desc', 'total', 'numb', 'price', u'long', 'lat'
-'creator', u'members': [], 'requests': [], 'msgs'
+'creator', u'members': [], 'requests': [], 
+'msgs' { 'user', 'msg' }
 u'_id': ObjectId('54c51e6067a8a20244124da7')
 
 Users:
@@ -359,9 +370,9 @@ Users:
 
     
  people = db.people
- 
+
  to insert
-     people.insert(dict)       
+     people.insert(dict)
  to update:
      person = people.find_one({"food":"ham"})
      person["food"] = "eggs"
