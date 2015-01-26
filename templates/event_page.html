@@ -2,7 +2,7 @@
 
 
 {% block body %}
-<h1> name:{{event['ename']}}</h1>
+<h1> {{event['ename']}}</h1>
 
 <b>Host:</b> {{event['creator']}}
 <br>
@@ -18,29 +18,27 @@
 {% endfor %}
 {% endif %}
 <br><br>
-Stuff this page needs:<br>
-map of location<br>
-some kind of message board with commenting<br>
-time<br>
-
-<!-- msg board prototype -->
-
-messages from event, mongostuff
+- Stuff this page needs:<br>
+- map of location<br>
+- time<br>
+- messages from event, mongostuff
 
 <h3> Messages: </h3>
 {% for msg in event['msgs'] %}
-{{msg['user']}} wrote: {{msg['msg']}} <br>
+	<font size="3.25">{{msg['msg']}}<br> </font>
+		<font size="2">&nbsp;-  <a href={{"/user/" ~ msg['user']}} style="text-decoration:none;">{{msg['user']}}</a> </font> <font size="2.5">(4:20)</font><br><br>
+<!-- Still needs time --!>
 {% endfor %}
 
 
 <form action={{"/newmsg/" ~ event["_id"]}} method="post" class="pure-form pure-form-aligned">
     
     <fieldset>
-        <div class="pure-control-group">
-            <label for="desc">New Message</label><textarea name="msg" id="msg" placeholder="Hello friends." cols="40" rows="5"></textarea></div><br>
+        <div class="pure-control-group"><textarea name="msg"
+        id="msg" placeholder="Feel free to leave a comment" cols="40" rows="5"></textarea></div>
         
         
-        <button type="submit" onclick="action()" class="pure-button">Go!</button>
+        <button type="submit" onclick="action()" class="pure-button">Submit</button>
         <input name="long" value=latitude id="long" type="hidden">
             <input name="lat" value=longitude id="lat" type="hidden">
                 
