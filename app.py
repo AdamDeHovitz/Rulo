@@ -59,12 +59,14 @@ def user():
         newuser['rpw'] = request.form['rpw']
         newuser['age'] = request.form['age']
         newuser['email'] = request.form['email']
+        '''
         print type(send_from_directory(app.static_folder, 'ewokPing.jpg'))
         img = send_from_directory('static', 'ewokPing.jpg')
         print img
         print '\n\nDefault image assigned to newuser'
         print type(img)
         newuser['pic'] = img
+        '''
         valid_msg = util.newUser(newuser)
         print("Good?")
         if valid_msg == '':
