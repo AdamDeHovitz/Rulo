@@ -15,7 +15,7 @@ events = db.events
 #----------------------PIC STUFF---------------------#
 
 def uploadPicture (picture):
-    print "in upload"
+print "in upload"
     print picture
     _id = fs.put(picture)
     return _id
@@ -91,12 +91,14 @@ def checkPword(uname,pw):
 
 def checkEmail(email):
     e = re.compile("[^@]+@[A-z]+\..+")
+
     if e.findall(email) == []:
         return "That is not a proper email address" 
     if users.find_one({'email':email}) != None:
         return "Email has already been registered"
     else:
         return "" 
+
 
 
 def addPerson(pdict):
@@ -112,7 +114,9 @@ def addPerson(pdict):
 
 def addField(uname, field, data):
     '''
+
     add a new field or update an old one that isn't a list
+
     '''
     if field == 'pic':
         print "in add"
