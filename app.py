@@ -3,11 +3,16 @@ from flask import flash, Flask, g, render_template, session, redirect, url_for, 
 import util #util.py
 import os
 import Image
+import platform
 from werkzeug import secure_filename
 
 ALLOWED_FILES = set(['jpg', 'gif', 'png', 'jpeg', 'tif', 'tiff', 'jif', 'jfif', 'fpx'])
 
-UPLOAD_LOC = '/static/profilePictures'
+#UPLOAD_LOC = R'C:\Users\Mr.Something\Documents\GitHub\Rulo\static\profilePictures'
+if platform.system == 'Windows':
+  UPLOAD_LOC = R'static\profilePictures/'
+else:
+  UPLOAD_LOC = R'static/profilePicture/'
 
 
 app = Flask(__name__, static_folder='static')
@@ -79,9 +84,9 @@ def user():
         print img
 >>>>>>> 6049dc3f7c9cd18e8cbcd176061c971514dd78b8
         print '\n\nDefault image assigned to newuser'
-        print type(img)
+        print type(img)'''
         newuser['pic'] = img
-        '''
+
         valid_msg = util.newUser(newuser)
         print("Good?")
         if valid_msg == '':

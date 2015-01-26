@@ -4,9 +4,15 @@ import gridfs
 from bson.objectid import ObjectId
 import re
 import os
+import platform
 from werkzeug import secure_filename
 
-UPLOAD_LOC = '/static/profilePictures'
+#UPLOAD_LOC = R'C:\Users\Mr.Something\Documents\GitHub\Rulo\static\profilePictures'
+if platform.system() == 'Windows':
+  UPLOAD_LOC = R'static\profilePictures/'
+else:
+  UPLOAD_LOC = R'static/profilePicture/'
+
 
 picsDB = MongoClient().gridfs_example
 fs = gridfs.GridFS(picsDB)
@@ -65,11 +71,14 @@ def updatePicture (picture, user):
     return picture'''
 
 def getPicture(user):
+  print platform.system()
+  print UPLOAD_LOC
   p = users.find_one({"uname":user})
   filename = p['pic']
   print type(filename)
   print filename
-  path = ".." + UPLOAD_LOC + "/" + filename
+  path = os.path.join(UPLOAD_LOC, filename)
+  path = os.path.join('..', path)
   return path
 
 #----------------------USER STUFF--------------------#
@@ -409,7 +418,6 @@ if __name__ == "__main__":
     print "-------"
     print listEvents()
     '''
-    print getUser('ergoijergo')
 
     #print getUser('ergoijergo')
 
