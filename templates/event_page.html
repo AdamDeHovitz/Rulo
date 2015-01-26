@@ -27,12 +27,17 @@ time<br>
 
 messages from event, mongostuff
 
-<form action="/newmsg???" method="post" class="pure-form pure-form-aligned">
+<h3> Messages: </h3>
+{% for msg in event['msgs'] %}
+{{msg['user']}} wrote: {{msg['msg']}} <br>
+{% endfor %}
+
+
+<form action={{"/newmsg/" ~ event["_id"]}} method="post" class="pure-form pure-form-aligned">
     
     <fieldset>
         <div class="pure-control-group">
-            <label for="desc">New Message</label><textarea name="msg" id="msg" placeholder="Hello friends." cols="40" rows="5">
-            </textarea></div><br>
+            <label for="desc">New Message</label><textarea name="msg" id="msg" placeholder="Hello friends." cols="40" rows="5"></textarea></div><br>
         
         
         <button type="submit" onclick="action()" class="pure-button">Go!</button>

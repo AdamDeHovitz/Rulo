@@ -113,8 +113,10 @@ def personal_process():
             util.addField(username,"fname",request.form["fname"])
             util.addField(username,"lname",request.form["lname"])
         elif submit == 'email':
-            if util.checkEmail(request.form['email']):
+            if util.checkEmail(request.form['email']) == "":
                 util.addField(username, submit, request.form[submit])
+            else:
+                flash(util.checkEmail(request.form['email']))
         elif submit == 'pw':
             old = request.form['oldpw']
             new = request.form['pw']
@@ -124,6 +126,7 @@ def personal_process():
                 flash(msg)
             else:
                 util.addField(username, submit, new)
+                flash("Successfully updated password")
         else:
             util.addField(username, submit, request.form[submit])
     return redirect('/personal')
@@ -217,10 +220,11 @@ def delete():
 
 @app.route('/user/<uname>', methods=['GET', 'POST'])
 def user_page(uname = None):
-    
+    if util.
     username = escape(session['username'])
-    udict = util.getUser(username)
+    udict = util.getUser(username)  
     pdict = util.getUser(uname)
+    if pdict
     if request.method=="POST":
         print(request.form["rating"])
     
@@ -236,7 +240,17 @@ def event_page(id = None):
 @app.route('/event_page/<eventid>/<uname>', methods=['GET', 'POST'])
 def confirme(eventid = None, uname = None):
     util.confirmPerson(uname, eventid)
-    
+    return redirect('/event_page/'+ eventid )
+
+@app.route('/newmsg/<eventid>', methods=['GET', 'POST'])
+def newmsg(eventid = None):
+    username = escape(session['username'])
+    udict = util.getUser(username)
+    msg = {}
+    msg['user'] = username
+    msg['msg'] = request.form["msg"]
+    # msg['time'] = ???? how do we do time 
+    util.updateEField(eventid, 'msgs', msg)
     return redirect('/event_page/'+ eventid )
 
 if __name__ == '__main__':

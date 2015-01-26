@@ -33,15 +33,13 @@ def newUser(udict):
     '''
     dict: fname, lname, uname, email, pw + rpw, pic 
     '''
-    
     uname = udict['uname']
     email = udict['email']
     #udict['pic'] = uploadPicture(udict['pic'])
     age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
     pwcheck = checkNewPW(udict['pw'], udict['rpw'])
-    emailcheck1 = users.find_one({'email':email}) == None
-    emailcheck2 = checkEmail(email) #regex basic check
+    emailcheck = checkEmail(email)
     validagecheck = True
     agecheck = (age >= 13)
 
@@ -50,10 +48,8 @@ def newUser(udict):
         s = "That username has already been used\n"
     elif pwcheck != "":
         return pwcheck
-    elif not emailcheck1:
-        s += "Email has already been registered"
-    elif not emailcheck2:
-        s += "That is not a proper email address"
+    elif emailcheck != "":
+        return emailcheck
     elif not agecheck:
         s += "You must be older than 13 years of age"
     elif not validagecheck:
@@ -89,8 +85,12 @@ def checkPword(uname,pw):
 
 def checkEmail(email):
     e = re.compile("[^@]+@[A-z]+\..+")
-    check = e.findall(email)
-    return check != [] 
+    if e.findall(email) == []:
+        return "That is not a proper email address" 
+    if users.find_one({'email':email}) != None:
+        return "Email has already been registered"
+    else:
+        return ""
 
 def addPerson(pdict):
     #pdict['picture'] = file; should be sent from form 
@@ -108,10 +108,14 @@ def addField(uname, field, data):
     add a new field or update an old one that isn't a list
     '''
     if field == 'pic':
-        updatePicture (data, uname)
+        print "in add"
+        print type(picture)
+        test = updatePicture (data, uname)
+        return test
     else:
         users.update( {"uname":uname} , { '$set': {field:data} } )
 
+        
 def updateUField(uname, field, data):
     '''
     add data to list field
@@ -347,7 +351,7 @@ if __name__ == "__main__":
 """
 Events:
 'ename', u'desc', 'total', 'numb', 'price', u'long', 'lat'
-'creator', u'members': [], 'requests': [],
+'creator', u'members': [], 'requests': [], 'msgs'
 u'_id': ObjectId('54c51e6067a8a20244124da7')
 
 Users:
