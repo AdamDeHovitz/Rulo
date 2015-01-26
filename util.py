@@ -3,6 +3,10 @@ from pymongo import Connection, MongoClient
 import gridfs
 from bson.objectid import ObjectId
 import re
+import os
+from werkzeug import secure_filename
+
+UPLOAD_LOC = '/static/profilePictures'
 
 picsDB = MongoClient().gridfs_example
 fs = gridfs.GridFS(picsDB)
@@ -14,25 +18,59 @@ events = db.events
 
 #----------------------PIC STUFF---------------------#
 
-def uploadPicture (picture):
+"""def uploadPicture (picture):
     print "in upload"
     print picture
     _id = fs.put(picture)
-    return _id
+    print "uploaded"
+    return _id"""
 
-def updatePicture (picture, user):
+def uploadPicture (picture):
+  try:
+    filename = secure_filename(picture.filename)
+  except AttributeError:
+    filename = secure_filename(picture.name)
+  if not(os.path.exists(UPLOAD_LOC + "/" + filename)):
+    print filename
+    print UPLOAD_LOC
+    print(type(picture))
+    print (os.path.join(UPLOAD_LOC, filename))
+    picture.save(os.path.join(UPLOAD_LOC, filename))
+  return filename
+
+
+"""def updatePicture (picture, user):
     print "in update"
     print type(picture)
     _id = uploadPicture(picture)
     users.update({"uname":user},{'$set':{'pic':_id}})
     print users.find_one({'uname':user})['pic']
-    return _id == users.find_one({'uname':user})['pic']
+    print "update complete"
+    return _id == users.find_one({'uname':user})['pic']"""
 
-def getPicture (user):
+def updatePicture (picture, user):
+    print "in update"
+    #print type(picture)
+    filename = uploadPicture(picture)
+    users.update({"uname":user},{'$set':{'pic':filename}})
+    print users.find_one({'uname':user})['pic']
+    print "update complete"
+    return filename == users.find_one({'uname':user})['pic']
+
+
+'''def getPicture (user):
     p = users.find_one({"uname":user})
     _id = p['pic']
     picture = fs.get(_id)
-    return picture
+    return picture'''
+
+def getPicture(user):
+  p = users.find_one({"uname":user})
+  filename = p['pic']
+  print type(filename)
+  print filename
+  path = ".." + UPLOAD_LOC + "/" + filename
+  return path
 
 #----------------------USER STUFF--------------------#
 def newUser(udict):
@@ -41,7 +79,10 @@ def newUser(udict):
     '''
     uname = udict['uname']
     email = udict['email']
-    #udict['pic'] = uploadPicture(udict['pic'])
+    if udict['pic'] == "default":
+      udict['pic'] = "ewokPing.jpg"
+    else:
+      udict['pic'] = uploadPicture(udict['pic'])
     age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
     pwcheck = checkNewPW(udict['pw'], udict['rpw'])
@@ -80,7 +121,7 @@ def pwcheck(uname, old, new, check):
         return checkNewPW(new, check)
     else:
         return ""
-    
+
 def checkPword(uname,pw):
     rpw = getAttribute(uname,"pw")
     if rpw == None:
@@ -94,11 +135,11 @@ def checkEmail(email):
     e = re.compile("[^@]+@[A-z]+\..+")
 
     if e.findall(email) == []:
-        return "That is not a proper email address" 
+        return "That is not a proper email address"
     if users.find_one({'email':email}) != None:
         return "Email has already been registered"
     else:
-        return "" 
+        return ""
 
 
 
@@ -120,27 +161,27 @@ def addField(uname, field, data):
     '''
     if field == 'pic':
         print "in add"
-        print type(picture)
+        print type(data)
         test = updatePicture (data, uname)
         return test
     else:
         users.update( {"uname":uname} , { '$set': {field:data} } )
 
-        
+
 def updateUField(uname, field, data):
     '''
     add data to list field
-    ''' 
+    '''
     users.update(
         { 'uname' : uname },
         { '$push' : { field : data } }
     )
 
-'''    
+'''
 to add a comment to a user:
 updateUField(uname, 'reviews', {dictionary of user, rating, comment}
 '''
-    
+
 
 def addEventUserList(uname, field, eventid):
     updateUField(uname, field, ObjectId(eventid))
@@ -186,8 +227,8 @@ def addHostPerson(eventid, uname):
         { '$push' : { 'hevents' : eventid } }
     )'''
     updateUField( uname, 'hevents', eventid)
-    
-    
+
+
 def getRequestedEvents(uname):
     u = getUser(uname)
     es = u.get('revents')
@@ -208,8 +249,8 @@ eventList = list(getUserEvents(uname))
         if uname in event["members"]:
             approved.append(event)
     return approved
-'''        
-    
+'''
+
 def getHostedEvents(uname):
     u = getUser(uname)
     es = u.get('hevents')
@@ -221,7 +262,7 @@ def getHostedEvents(uname):
 
 def createEvent(edict):
     edict['requests'] = [] #Not including creator right now [edict['creator']]
-    #list of people in event, including creator 
+    #list of people in event, including creator
     edict['members'] = []
     edict['msgs'] = [] # list of dictionaries, msgs should have: time, user, msg
     e = events.insert(edict)
@@ -240,7 +281,7 @@ def checkEvent(edict):
 
 def updateEField(eventid, field, data):
     '''
-    adds data to eventid's field array 
+    adds data to eventid's field array
     '''
     events.update(
         { '_id' : ObjectId(eventid) },
@@ -269,7 +310,7 @@ def listEvents():
         eventslist.append(e)
     return eventslist
 
-    
+
 
 def confirmPerson(uname, eventid):
     pullEField(eventid, 'requests', uname)
@@ -305,7 +346,7 @@ def deleteEvent(eventid):
     #Now let's remove the event itself
     events.remove(ev)
 
-    
+
 def eventsNotIn(uname):
     '''
     returns a list of the events uname is not already involved with
@@ -327,7 +368,7 @@ def setup():
     newuser['lname'] = 's'
     newuser['pw'] = 'sssss'
     newuser['rpw'] = 'sssss'
-    newuser['age'] = 18 
+    newuser['age'] = 18
     newuser['email'] = 's@g.c'
     newUser(newuser)
 
@@ -337,8 +378,8 @@ def setup():
     edict['numb'] = 5
     edict['desc'] = '1'
     edict['total'] = 10
-    edict['price'] = 10 
-    edict['long'] = 0   
+    edict['price'] = 10
+    edict['long'] = 0
     edict['lat'] = 0
     newevent = createEvent(edict)
     updateUField('s', 'hevents', newevent)
@@ -351,7 +392,7 @@ def setup():
 
 
 if __name__ == "__main__":
-    
+
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
     #'''
     for e in events.find():
@@ -368,19 +409,21 @@ if __name__ == "__main__":
     print "-------"
     print listEvents()
     '''
+    print getUser('ergoijergo')
+
     #print getUser('ergoijergo')
-    
+
 """
 Events:
 'ename', u'desc', 'total', 'numb', 'price', u'long', 'lat'
-'creator', u'members': [], 'requests': [], 
+'creator', u'members': [], 'requests': [],
 'msgs' { 'user', 'msg' }
 u'_id': ObjectId('54c51e6067a8a20244124da7')
 
 Users:
 'uname', 'hevents', 'revents', 'aevents'
 
-    
+
  people = db.people
 
  to insert

@@ -2,12 +2,17 @@ from flask import flash, Flask, g, render_template, session, redirect, url_for, 
      escape, request, send_from_directory
 import util #util.py
 import os
+import Image
+from werkzeug import secure_filename
 
 ALLOWED_FILES = set(['jpg', 'gif', 'png', 'jpeg', 'tif', 'tiff', 'jif', 'jfif', 'fpx'])
+
+UPLOAD_LOC = '/static/profilePictures'
 
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = 'a'
+app.config['UPLOAD_LOC'] = UPLOAD_LOC
 
 
 def authenticate(page):
@@ -47,6 +52,7 @@ def home():
     return render_template('home.html', udict = udict)
 
 
+
 @app.route('/user', methods=['POST', 'GET'])
 def user():
     #print("user!");
@@ -59,10 +65,19 @@ def user():
         newuser['rpw'] = request.form['rpw']
         newuser['age'] = request.form['age']
         newuser['email'] = request.form['email']
+        #print type(send_from_directory("/static/profilePictures", 'ewokPing.jpg'))
+        #img = send_from_directory("/static/profilePictures", 'ewokPing.jpg')
+        #img = file('static/profilePictures/ewokPing.jpg')
+        #stepOne = Image.open('static/ewokPing.jpg')
+        #img = stepOne.load()
+        #print img.read()
+        img = "default"
         '''
+        DEAD CODE IGNORE
         print type(send_from_directory(app.static_folder, 'ewokPing.jpg'))
         img = send_from_directory('static', 'ewokPing.jpg')
         print img
+>>>>>>> 6049dc3f7c9cd18e8cbcd176061c971514dd78b8
         print '\n\nDefault image assigned to newuser'
         print type(img)
         newuser['pic'] = img
@@ -81,11 +96,11 @@ def changePic():
   if request.method == "POST":
     img = request.files['pic']
     if img and isFileAllowed(img.filename):
-      success = util.addField(session['username'], 'pic', data)
+      success = util.addField(session['username'], 'pic', img)
       if success:
-        return redirect('/user', upload = True)
+        return redirect('/personal')
       else:
-        return redirect('/user', upload = False)
+        return redirect('/personal')
 
 
 @app.route('/login')
@@ -121,7 +136,8 @@ def verify():
 @app.route('/personal', methods=['GET','POST'])
 def p():
     username = escape(session['username'])
-    return render_template('personal.html', udict=util.getUser(username), change = "Null")
+    picture = util.getPicture (session['username'])
+    return render_template('personal.html', udict=util.getUser(username), change = "Null", profile = picture)
 
 
 @app.route('/personal_process', methods=['GET','POST'])
@@ -156,7 +172,9 @@ def personal_process():
 def personal(thing = None):
     username = escape(session['username'])
     udict = util.getUser(username)
-    return render_template('personal.html', udict=udict, change=thing)
+    pic = getPicture (udict['uname'])
+    print pic
+    return render_template('personal.html', udict=udict, change=thing, proPic = pic)
 
 
 @app.route('/create_events', methods=['GET','POST'])
@@ -247,12 +265,12 @@ def user_page(uname = None):
         return redirect('/events')
     else:
         username = escape(session['username'])
-        udict = util.getUser(username)  
+        udict = util.getUser(username)
         pdict = util.getUser(uname)
-        
+
     if request.method=="POST":
             print(request.form["rating"])
-            
+
 
     return render_template('user.html', udict = udict, pdict=pdict)
 
@@ -275,7 +293,7 @@ def newmsg(eventid = None):
     msg = {}
     msg['user'] = username
     msg['msg'] = request.form["msg"]
-    # msg['time'] = ???? how do we do time 
+    # msg['time'] = ???? how do we do time
     util.updateEField(eventid, 'msgs', msg)
 
     return redirect('/event_page/'+ eventid )
