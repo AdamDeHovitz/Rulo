@@ -242,7 +242,7 @@ def delete():
 def user_page(uname = None):
 
     #if util. ---this will check if the uname exists
-    if util.getUser(name) == None:
+    if util.getUser(uname) == None:
         flash("That's not a user")
         return redirect('/events')
     else:
