@@ -2,47 +2,48 @@
 
 {% block body %}
             
-            <h1> {{pdict['fname']}} {{pdict['lname']}}'s Page</h1>
+<h1> {{pdict['fname']}} {{pdict['lname']}}'s Page</h1>
             
-            <br><br>
-            <br><br>
-            ***Picture somewhere on this page***
-            ***Picture Here***
-            Change Your Picture
-            <form action="/proPic" method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned">
-                <div class="pure-control-group">
-                    <label for="pic">Picture</label>
-                    <input id="pic" name="pic"  type="file" accept="image/*"></div><br>
-                <button type="submit" class="pure-button">Use This Picture</button>
-            </form>
-            {% if upload %}
-            <div>
-                Picture Upload Successful, You have changed your profile picture
-            </div>
-            {% elif upload == false%}
-            <div>
-                There was an error in uploading your picture, please try again
-            </div>
-            {% endif %}
-            <br>
-            <br>
+    <br><br>
+
+***Picture somewhere on this page***
+ ***Picture Here***
+ <br>
             
-            Rate your experience with {{pdict['fname']}}
-            {% if pdict['uname'] != udict['pname'] %}
+
+
+<h3> Ratings: </h3>
+{% if pdict['reviews'] %}
+
+    {% for r in pdict['reviews'] %}
+
+    {{r['user']}} gave a {{r['rating']}}, said:<br>
+    <div style="margin-left:3em"> {{r['comment']}} </div> <br>
+
+    {% endfor %}
+{% else %}
+    <div style="margin-left:3em"> There are currently no reviews. </div>
+{% endif %}
+
+{% if pdict['uname'] != udict['uname'] %}
+Rate your experience with {{pdict['fname']}}: <br>
+<form action= {{"/addreview/"~ pdict['uname']}} method="post" class="pure-form pure-form-aligned">
+    <span class="star-rating">
+        <input type="radio" name="rating" value="1"/><i></i>
+        <input type="radio" name="rating" value="2"/><i></i>
+        <input type="radio" name="rating" value="3"/><i></i>
+        <input type="radio" name="rating" value="4"/><i></i>
+        <input type="radio" name="rating" value="5"/><i></i>
+    </span>
+    
+    <div class="pure-control-group">
+        <label for="comment">Comment</label><textarea name="comment" id="comment" placeholder="Leave a comment." cols="40" rows="5"></textarea></div><br>
+    <button type="submit" onclick="action()" class="pure-button">Submit</button>
+</form>
+
+{% endif %}
             
-            <!-- source: http://rog.ie/blog/css-star-rater !-->
-            <form action= {{"/user/" ~ pdict['uname']}} method="post" class="pure-form pure-form-aligned">
-                <span class="star-rating">
-                    <input type="radio" name="rating" value="1"><i></i>
-                        <input type="radio" name="rating" value="2"><i></i>
-                            <input type="radio" name="rating" value="3"><i></i>
-                                <input type="radio" name="rating" value="4"><i></i>
-                                    <input type="radio" name="rating" value="5"><i></i>
-                </span>
-                <button type="submit" name="submit" value='submit'
-                    class="pure-button"> join </button>
-                
-            </form>
-            {% endif %}
-            
-            {% endblock %}
+
+
+
+{% endblock %}

@@ -80,8 +80,8 @@ def user():
 >>>>>>> 6049dc3f7c9cd18e8cbcd176061c971514dd78b8
         print '\n\nDefault image assigned to newuser'
         print type(img)
-        newuser['pic'] = img
         '''
+        newuser['pic'] = img
         valid_msg = util.newUser(newuser)
         print("Good?")
         if valid_msg == '':
@@ -274,6 +274,17 @@ def user_page(uname = None):
 
     return render_template('user.html', udict = udict, pdict=pdict)
 
+@app.route('/addreview/<uname>', methods=['GET', 'POST'])
+def addreview(uname = None):
+    username = escape(session['username'])
+    udict = util.getUser(username)
+    review = {}
+    review['user'] = username
+    review['rating'] = request.form["rating"]
+    review['comment'] = request.form["comment"]
+    util.updateUField(uname, 'reviews', review)
+    return redirect('/user/'+ uname)
+
 @app.route('/event_page/<id>', methods=['GET', 'POST'])
 def event_page(id = None):
     username = escape(session['username'])
@@ -297,6 +308,8 @@ def newmsg(eventid = None):
     util.updateEField(eventid, 'msgs', msg)
 
     return redirect('/event_page/'+ eventid )
+
+
 
 if __name__ == '__main__':
     app.debug = True
