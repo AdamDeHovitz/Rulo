@@ -107,8 +107,8 @@ function callback(response, status) {
     if (status != google.maps.DistanceMatrixStatus.OK) {
 	alert('Error was: ' + status);
     } else {
-	var origins = response.originAddresses;
-	var destinations = response.destinationAddresses;
+	var origins = origin;
+	var destinations = destination;
 	var outputDiv = document.getElementById('map-test');
 	outputDiv.innerHTML = '';
 	deleteOverlays();
@@ -122,12 +122,12 @@ function callback(response, status) {
 		    + ': ' + results[j].distance.text + ' in '
 		    + results[j].duration.text + '<br>';
 	    }
-	}
+	} 
     }
 }
 
 function distanceFunc(){
-    google.maps.event.addDomListener(window,"load", thisFunc());
+    google.maps.event.addDomListener(window, "load", thisFunc());
 }
 
 function addMarker(location, isDestination) {
