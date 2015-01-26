@@ -88,10 +88,12 @@ def newUser(udict):
     '''
     uname = udict['uname']
     email = udict['email']
+    '''
     if udict['pic'] == "default":
       udict['pic'] = "ewokPing.jpg"
     else:
       udict['pic'] = uploadPicture(udict['pic'])
+      '''
     age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
     pwcheck = checkNewPW(udict['pw'], udict['rpw'])
