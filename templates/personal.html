@@ -3,7 +3,15 @@
 
 {% block body %}
 <h1>Personal Information</h1>
-
+<!-- <img src="../static/profilePictures/ewokPing.jpg" height="50" width="50"> -->
+<img src="{{ profile }}" height = "75" width="75">
+Change Your Picture
+<form action="/proPic" method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned">
+  <div class="pure-control-group">
+    <label for="pic">Picture</label>
+    <input id="pic" name="pic"  type="file" accept="image/*"></div><br>
+    <button type="submit" class="pure-button">Use This Picture</button>
+</form>
 <br><br>
 <form action="/personal_process" method="post" class="pure-form pure-form-aligned">
 <fieldset>
@@ -16,7 +24,7 @@ Name: {{udict['fname']}} {{udict['lname']}} <br>
    <label for="lname">Last Name</label>
    <input id="lname" name="lname" type="text" placeholder="Last Name"><br>
 
-   <button type="submit" name="submit" value="name" 
+   <button type="submit" name="submit" value="name"
 	   class="pure-button">submit</button>
    {% else %}
    <font size="2"><a href="/personal/name">Change</a></font>
@@ -31,7 +39,7 @@ Name: {{udict['fname']}} {{udict['lname']}} <br>
    <input id="email" name="email" type="text"
 	  placeholder="example@gmail.com">
    <br>
-   <button type="submit" name="submit" value="email" 
+   <button type="submit" name="submit" value="email"
 	   class="pure-button">submit</button>
    {% else %}
    <font size="2"><a href="/personal/email">Change</a></font>
@@ -48,7 +56,7 @@ Name: {{udict['fname']}} {{udict['lname']}} <br>
    Confirm New Password: <input id="cpw" name="cpw" type="text" placeholder="Password">
        <br>
 
-   <button type="submit" name="submit" value="pw" 
+   <button type="submit" name="submit" value="pw"
 	   class="pure-button">submit</button>
    {% else %}
    Password: <font size="2"><a href="/personal/pw">Change</a></font>
@@ -62,13 +70,13 @@ Name: {{udict['fname']}} {{udict['lname']}} <br>
    <input id="age" name="age" type="text" placeholder="age">
    <br>
 
-   <button type="submit" name="submit" value="age" 
+   <button type="submit" name="submit" value="age"
 	   class="pure-button">submit</button>
    {% else %}
    Age: <font size="2"><a href="/personal/age">Change</a></font>
 
    {% endif %}
- 
+
 </fieldset>
 </form>
 {% endblock %}
