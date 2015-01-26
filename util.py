@@ -39,35 +39,23 @@ def newUser(udict):
     '''
     dict: fname, lname, uname, email, pw + rpw, pic
     '''
-    
     uname = udict['uname']
     email = udict['email']
-    udict['pic'] = uploadPicture(udict['pic'])
+    #udict['pic'] = uploadPicture(udict['pic'])
     age = udict['age']
     uncheck = users.find_one({'uname':uname}) == None
     pwcheck = checkNewPW(udict['pw'], udict['rpw'])
-    emailcheck1 = users.find_one({'email':email}) == None
-    emailcheck2 = checkEmail(email) #regex basic check
+    emailcheck = checkEmail(email)
     validagecheck = True
-<<<<<<< HEAD
-    try:
-        age = int(age)
-        agecheck = (age >= 13)
-    except ValueError:
-        validagecheck = False
-=======
     agecheck = (age >= 13)
->>>>>>> ed46dc2bd50c37842d351770b2b2e2009ec1c4e5
 
     s = ""
     if uncheck == False:
         s = "That username has already been used\n"
     elif pwcheck != "":
         return pwcheck
-    elif not emailcheck1:
-        s += "Email has already been registered"
-    elif not emailcheck2:
-        s += "That is not a proper email address"
+    elif emailcheck != "":
+        return emailcheck
     elif not agecheck:
         s += "You must be older than 13 years of age"
     elif not validagecheck:
@@ -103,13 +91,13 @@ def checkPword(uname,pw):
 
 def checkEmail(email):
     e = re.compile("[^@]+@[A-z]+\..+")
-    check = e.findall(email)
-<<<<<<< HEAD
-    print check
-    return check != []
-=======
-    return check != [] 
->>>>>>> ed46dc2bd50c37842d351770b2b2e2009ec1c4e5
+    if e.findall(email) == []:
+        return "That is not a proper email address" 
+    if users.find_one({'email':email}) != None:
+        return "Email has already been registered"
+    else:
+        return "" 
+
 
 def addPerson(pdict):
     #pdict['picture'] = file; should be sent from form
@@ -124,11 +112,7 @@ def addPerson(pdict):
 
 def addField(uname, field, data):
     '''
-<<<<<<< HEAD
-    add a new field or update an old one
-=======
     add a new field or update an old one that isn't a list
->>>>>>> ed46dc2bd50c37842d351770b2b2e2009ec1c4e5
     '''
     if field == 'pic':
         print "in add"
@@ -138,8 +122,7 @@ def addField(uname, field, data):
     else:
         users.update( {"uname":uname} , { '$set': {field:data} } )
 
-<<<<<<< HEAD
-=======
+
 def updateUField(uname, field, data):
     '''
     add data to list field
@@ -161,7 +144,6 @@ def removeField(uname, field, data):
         { 'uname' : uname },
         { '$pull' : { field : data } }
     )
->>>>>>> ed46dc2bd50c37842d351770b2b2e2009ec1c4e5
 
 def getUser(uname):
     return users.find_one({'uname':uname})
@@ -216,13 +198,8 @@ eventList = list(getUserEvents(uname))
         if uname in event["members"]:
             approved.append(event)
     return approved
-<<<<<<< HEAD
-
-
-=======
 '''        
     
->>>>>>> ed46dc2bd50c37842d351770b2b2e2009ec1c4e5
 def getHostedEvents(uname):
     u = getUser(uname)
     es = u.get('hevents')
@@ -233,18 +210,6 @@ def getHostedEvents(uname):
 #--------------------------EVENT STUFF------------------------#
 
 def createEvent(edict):
-<<<<<<< HEAD
-    edict['requests'] = [] #Not including creator right now [edict['creator']] #list of people in event, including creator
-    edict['members'] = []
-    return events.insert(edict)
-
-
-def listEvents():
-    eventslist = []
-    for e in events.find():
-        eventslist.append(e)
-    return eventslist
-=======
     edict['requests'] = [] #Not including creator right now [edict['creator']]
     #list of people in event, including creator 
     edict['members'] = []
@@ -262,7 +227,6 @@ def checkEvent(edict):
         return "Input a description for your event"
     else:
         return ""
->>>>>>> ed46dc2bd50c37842d351770b2b2e2009ec1c4e5
 
 def updateEField(eventid, field, data):
     '''
@@ -270,25 +234,9 @@ def updateEField(eventid, field, data):
     '''
     events.update(
         { '_id' : ObjectId(eventid) },
-<<<<<<< HEAD
-        { '$push' : { 'requests' : uname } }
-        )
-    #print(getEventAttribute(eventid, 'requests'))
-    """
-    ev = events.find_one({'_id':ObjectId( eventid ), 'requests':{'$exists':True}})
-    if ev == None:
-        return "This event doesn't exist"
-    ev['requests'].append(uname);
-    for u in ev['requests']:
-        print(u)
-        """
-    return ""
-
-def confirmPerson(uname, eventid):
-=======
-        { '$push' : { field : data }}
+        { '$push' : { field : data } }
     )
->>>>>>> ed46dc2bd50c37842d351770b2b2e2009ec1c4e5
+
 
 def pullEField(eventid, field, data):
     events.update(
@@ -344,9 +292,7 @@ def deleteEvent(eventid):
 
     #Now let's remove the event itself
     events.remove(ev)
-<<<<<<< HEAD
 
-=======
     
 def eventsNotIn(uname):
     '''
@@ -388,14 +334,11 @@ def setup():
 
 
 #--------------------------------------------------------#
->>>>>>> ed46dc2bd50c37842d351770b2b2e2009ec1c4e5
 
 
 
 
 if __name__ == "__main__":
-       
-    #print eventsNotIn('s')
     
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
     '''
@@ -410,32 +353,16 @@ if __name__ == "__main__":
     for person in users.find():
         print person
         print "\n"
-<<<<<<< HEAD
-
-
-    print "-------"
-    print listEvents()
-    print "-------"
-    '''
-
-    #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
-    #'''
-    for e in events.find():
-        events.remove(e)
-    for p in users.find():
-        users.remove(p)
-        #'''
-
-=======
     print "-------"
     print listEvents()
     #'''
     
->>>>>>> ed46dc2bd50c37842d351770b2b2e2009ec1c4e5
+    
 """
 Events:
 'ename', u'desc', 'total', 'numb', 'price', u'long', 'lat'
-'creator', u'members': [], 'requests': [],
+'creator', u'members': [], 'requests': [], 
+'msgs' { 'user', 'msg' }
 u'_id': ObjectId('54c51e6067a8a20244124da7')
 
 Users:
