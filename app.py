@@ -238,6 +238,7 @@ def delete():
 
 @app.route('/user/<uname>', methods=['GET', 'POST'])
 def user_page(uname = None):
+<<<<<<< HEAD
     #if util. ---this will check if the uname exists
     if util.getUser(name) == None:
         flash("wtf that aint a user yo")
@@ -249,6 +250,16 @@ def user_page(uname = None):
     #if pdict
     #if request.method=="POST":
      #   print(request.form["rating"])
+=======
+    if util.getUser(uname) == None:
+        flash("wtf thats not a user")
+        return redirect('/events')
+    username = escape(session['username'])
+    udict = util.getUser(username)  
+    pdict = util.getUser(uname)
+    if request.method=="POST":
+        print(request.form["rating"])
+>>>>>>> 0148bbac90b96e54a16e618634e427c182999e25
 
     return render_template('user.html', udict = udict, pdict=pdict)
 
