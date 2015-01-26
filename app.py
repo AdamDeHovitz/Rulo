@@ -72,9 +72,16 @@ def user():
         #img = stepOne.load()
         #print img.read()
         img = "default"
+        '''
+        DEAD CODE IGNORE
+        print type(send_from_directory(app.static_folder, 'ewokPing.jpg'))
+        img = send_from_directory('static', 'ewokPing.jpg')
+        print img
+>>>>>>> 6049dc3f7c9cd18e8cbcd176061c971514dd78b8
         print '\n\nDefault image assigned to newuser'
         print type(img)
         newuser['pic'] = img
+        '''
         valid_msg = util.newUser(newuser)
         print("Good?")
         if valid_msg == '':
@@ -251,14 +258,19 @@ def delete():
 
 @app.route('/user/<uname>', methods=['GET', 'POST'])
 def user_page(uname = None):
+
+    #if util. ---this will check if the uname exists
     if util.getUser(uname) == None:
-        flash("wtf thats not a user")
+        flash("That's not a user")
         return redirect('/events')
-    username = escape(session['username'])
-    udict = util.getUser(username)
-    pdict = util.getUser(uname)
+    else:
+        username = escape(session['username'])
+        udict = util.getUser(username)
+        pdict = util.getUser(uname)
+
     if request.method=="POST":
-        print(request.form["rating"])
+            print(request.form["rating"])
+
 
     return render_template('user.html', udict = udict, pdict=pdict)
 

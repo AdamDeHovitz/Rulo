@@ -102,6 +102,7 @@ def newUser(udict):
     elif not validagecheck:
         s += "Please enter a numerical age"
     else:
+        print udict
         addPerson(udict)
     return s
 
@@ -145,8 +146,7 @@ def checkEmail(email):
 def addPerson(pdict):
     #pdict['picture'] = file; should be sent from form
     # --> other stuff that needs to be initialized
-    pdict['comments'] = []
-    pdict['ratings'] = []
+    pdict['reviews'] = [] # 'user', 'rating', 'comment'
     pdict['hevents'] = [] #hosted events
     pdict['revents'] = [] #requested events
     pdict['aevents'] = [] #approved events
@@ -176,6 +176,12 @@ def updateUField(uname, field, data):
         { 'uname' : uname },
         { '$push' : { field : data } }
     )
+
+'''
+to add a comment to a user:
+updateUField(uname, 'reviews', {dictionary of user, rating, comment}
+'''
+
 
 def addEventUserList(uname, field, eventid):
     updateUField(uname, field, ObjectId(eventid))
@@ -283,6 +289,8 @@ def updateEField(eventid, field, data):
     )
 
 
+
+
 def pullEField(eventid, field, data):
     events.update(
         { '_id' : ObjectId(eventid) },
@@ -386,15 +394,15 @@ def setup():
 if __name__ == "__main__":
 
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
-    '''
+    #'''
     for e in events.find():
         events.remove(e)
     for p in users.find():
         users.remove(p)
     setup()
-    '''
+    #'''
     #------UNCOMMENT TO PRINT STUFF---------#
-    '''
+'''
     for person in users.find():
         print person
         print "\n"
@@ -402,6 +410,8 @@ if __name__ == "__main__":
     print listEvents()
     '''
     print getUser('ergoijergo')
+
+    #print getUser('ergoijergo')
 
 """
 Events:
