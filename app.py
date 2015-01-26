@@ -2,12 +2,8 @@ from flask import flash, Flask, g, render_template, session, redirect, url_for, 
      escape, request, send_from_directory
 import util #util.py
 import os
-<<<<<<< HEAD
-import Image
 import platform
-=======
 #import Image
->>>>>>> f0e4c84bcc4ac22dd84bee88739a4b3d58fe1fe3
 from werkzeug import secure_filename
 
 ALLOWED_FILES = set(['jpg', 'gif', 'png', 'jpeg', 'tif', 'tiff', 'jif', 'jfif', 'fpx'])
