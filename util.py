@@ -15,7 +15,7 @@ events = db.events
 #----------------------PIC STUFF---------------------#
 
 def uploadPicture (picture):
-print "in upload"
+    print "in upload"
     print picture
     _id = fs.put(picture)
     return _id
@@ -353,14 +353,14 @@ if __name__ == "__main__":
     setup()
     '''
     #------UNCOMMENT TO PRINT STUFF---------#
-    #'''
+    '''
     for person in users.find():
         print person
         print "\n"
     print "-------"
     print listEvents()
-    #'''
-    
+    '''
+    print getUser('ergoijergo')
     
 """
 Events:
