@@ -31,21 +31,17 @@
      </div>
      
     {% for notification in udict['notifications'] %}
-     <center>{% for part in notification | reverse%}
-     {% if loop.index == 2 %}    
+     <center>
+     {{notification['ename']}} is Starting!
      <br>
-     <form class="pure-form pure-form-aligned" method="POST" action={{"/confirm_notification/" ~ part}}>
-     <button type="submit"  href ={{"/confirm_notification/" ~ part}}
+     <form class="pure-form pure-form-aligned" method="POST" action={{"/confirm_notification/" ~ notification['id'}}}>
+     <button type="submit"  
 	   class="pure-button pure-button-primary"> Confirm </button>
      <form>
-      <br>
-     {% else %}
-     {{part}} is Starting!
+      <br><br>
+ 
      
-   
-      {% endif %}
-     {% endfor %}</center>
-    {% endfor %}
+    {% endfor %} </center>
     {% else %}
     <li><a href="/home"><img src="../static/RuloPic.png" width="50" height="50"></a></li>
     <li><a href="/home">Home</a></li>

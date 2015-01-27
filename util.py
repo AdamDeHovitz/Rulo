@@ -277,12 +277,14 @@ def getHostedEvents(uname):
     return events.find( { '_id' : { '$in' : es } } )
 
 def confirmNotification(uname, eventid):
-    notification = []
-    notification.append(eventid)
-    notification.append(getEventAttribute(eventid, "uname"))
+
+    '''
     users.update(
         { 'uname' : uname },
-        { '$pull' : { 'notifications' : notification } })
+        { '$pull' : { 'notifications' : notification['id']=eventid }
+    #<< pseudo code
+    })  
+        '''
     
 
 
@@ -382,9 +384,9 @@ def deleteEvent(eventid):
 
 def startEvent(eventid):
     ev = events.find_one( { '_id' : ObjectId( eventid ) } )
-    notification = []
-    notification.append(eventid)
-    notification.append(ev.get("ename"))
+    notification = {}
+    notification["id"] = eventid
+    notification["ename"]= ev.get("ename")
     for member in ev.get("members"):
         print(member + " getting the notification")
         users.update(
