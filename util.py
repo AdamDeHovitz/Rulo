@@ -160,6 +160,7 @@ def addPerson(pdict):
     pdict['hevents'] = [] #hosted events
     pdict['revents'] = [] #requested events
     pdict['aevents'] = [] #approved events
+    pdict['avrate'] = 0.0
     users.insert(pdict)
 
 
@@ -187,10 +188,13 @@ def updateUField(uname, field, data):
         { '$push' : { field : data } }
     )
 
-'''
-to add a comment to a user:
-updateUField(uname, 'reviews', {dictionary of user, rating, comment}
-'''
+def updateReview(uname, review):
+    updateUField(uname, 'reviews', review)
+    u = getUser(uname)
+    a = 0.0;
+    for r in u['reviews']:
+        a += r['rating']
+    addField(uname, 'avrate', a/len(u['reviews']))
 
 
 def addEventUserList(uname, field, eventid):
@@ -303,6 +307,7 @@ def updateEField(eventid, field, data):
     )
 
 
+   
 
 
 def pullEField(eventid, field, data):
@@ -324,7 +329,8 @@ def listEvents():
         eventslist.append(e)
     return eventslist
 
-
+def updateEventField(eventid, field,value):
+    events.update( {"_id":ObjectId(eventid)} , { '$set': {field:value} } )
 
 def confirmPerson(uname, eventid):
     pullEField(eventid, 'requests', uname)
@@ -333,9 +339,8 @@ def confirmPerson(uname, eventid):
     removeUField(uname, 'revents', ObjectId(eventid))
     ev = events.find_one( { '_id' : ObjectId( eventid ) } )
     print("Length: "+str(len(list(ev['members']))))
-    if (int(ev['numb'] ) <= (len(list(ev['members'])) + 1)):
-        print("Closing thing")
-        events.update( {"_id":ObjectId(eventid)} , { '$set': {"open":False} } )
+    if (ev['numb'] != None and int(ev['numb'] ) <= (len(list(ev['members'])) + 1)):
+        updateEventField(eventid, "open", False)
 
         
 
@@ -429,13 +434,13 @@ if __name__ == "__main__":
     setup()
     '''
     #------UNCOMMENT TO PRINT STUFF---------#
-    '''
+    #'''
     for person in users.find():
         print person
         print "\n"
     print "-------"
     print listEvents()
-    '''
+    #'''
     d = datetime.today()
     print type(d)
 

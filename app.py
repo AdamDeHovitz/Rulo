@@ -211,8 +211,7 @@ def process():
         #util.addHostPerson(newevent, username)
         util.updateUField(username, 'hevents', newevent)
         return redirect('/events')
-    #return render_template('eventCreated.html', udict=util.getUser(username), edict=edict)
-
+        
 
 @app.route('/events', methods=['GET','POST'])
 @authenticate
@@ -265,7 +264,6 @@ def confirm(event = None, uname = None):
 @authenticate
 def delete():
     util.deleteEvent(request.form["submit"])
-
     return redirect('/your_events')
 
 @authenticate
@@ -294,14 +292,16 @@ def addreview(uname = None):
     udict = util.getUser(username)
     review = {}
     review['user'] = username
-    review['rating'] = request.form["rating"]
+    review['rating'] = int(request.form["rating"])
     review['comment'] = request.form["comment"]
-    util.updateUField(uname, 'reviews', review)
+    util.updateReview(uname, review)
     return redirect('/user/'+ uname)
 
 @authenticate
 @app.route('/event_page/<id>', methods=['GET', 'POST'])
 def event_page(id = None):
+    if request.method=="POST":
+        util.updateEventField(id, "open", False)
     username = escape(session['username'])
     udict = util.getUser(username)
     event = util.getEvent(id)

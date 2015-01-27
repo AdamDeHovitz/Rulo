@@ -26,25 +26,25 @@ var action = function () {
 
 
     var ahNo = function() {
-      map.innerHTML = "We were unable to retrieve your location, our apologies.";
-	     console.log("ah noes,its an error");
-	      return new google.maps.LatLng(36.112666, -115.176293);
+	map.innerHTML = "We were unable to retrieve your location, our apologies.";
+	console.log("ah noes,its an error");
+	return new google.maps.LatLng(36.112666, -115.176293);
     };
 
     var hellYeah = function(position) {
-	      map = document.getElementById('map-test');
+	map = document.getElementById('map-test');
         mappy = new google.maps.Map(map, mapOptions);
 
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
-	      var locationArray = [latitude, longitude];
+	var locationArray = [latitude, longitude];
         var location = new google.maps.LatLng(latitude, longitude);
         console.log(location)
         currentLoc = location
         console.log(currentLoc)
         mappy.setCenter(location);
         console.log('map function finished. Latitude is: ' + latitude + " Longitude is: " + longitude);
-	      console.log(location);
+	console.log(location);
 	geocoder.geocode({'latLng': location}, function(results, status){
 	    if (status == google.maps.GeocoderStatus.OK){
 		if (results[0]) {
@@ -90,36 +90,37 @@ var distanceFunc = function (origin, destination, div){
     console.log(origin);
     console.log(destination);
     service.getDistanceMatrix(
-	     {
-	         origins: [origin],
-	         destinations: [destination],
-           travelMode: google.maps.TravelMode.DRIVING,
-	         unitSystem: google.maps.UnitSystem.IMPERIAL,
-           avoidHighways: false,
-           avoidTolls: false
-	     }, callback);
+	{
+	    origins: [origin],
+	    destinations: [destination],
+            travelMode: google.maps.TravelMode.WALKING,
+	    unitSystem: google.maps.UnitSystem.IMPERIAL,
+            avoidHighways: false,
+            avoidTolls: false
+	}, callback);
 }
 
 
 function callback (response, status) {
-       console.log("in callback")
-	     if (status != google.maps.DistanceMatrixStatus.OK){
-          alert("Error with Distance:" + status);
-        } else {
-              console.log(response);
-	            var origins = response.originAddresses;
-              console.log(origins);
-	            var destinations = response.destinationAddresses;
-              console.log(destinations);
-              var output = document.getElementById(distanceDiv);
-              output.InnerHTML = '';
-  	          for (var i = 0; i < origins.length; i++){
-  		            var results = response.rows[i].elements;
-  		            for (var j = 0; j < results.length; j++){
-                      output.innerHTML += results[j].distance.text + ", which would take " + results[j].duration.text + " to complete.<br>";
-                  }
-              }
-          }
+    console.log("in callback")
+    if (status != google.maps.DistanceMatrixStatus.OK){
+        alert("Error with Distance:" + status);
+    } else {
+        console.log(response);
+	var origins = response.originAddresses;
+        console.log(origins);
+	var destinations = response.destinationAddresses;
+        console.log(destinations);
+        var output = document.getElementById(distanceDiv);
+        output.InnerHTML = '';
+  	for (var i = 0; i < origins.length; i++){
+  	    var results = response.rows[i].elements;
+  	    for (var j = 0; j < results.length; j++){
+                output.innerHTML = "";
+		output.innerHTML += results[j].distance.text + ", which would take " + results[j].duration.text + " to complete.<br>";
+            }
+        }
+    }
 }
 
 window.addEventListener("load", function getGeoLoc() {

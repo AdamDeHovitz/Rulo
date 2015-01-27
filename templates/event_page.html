@@ -17,12 +17,31 @@
 
 {% endfor %}
 {% endif %}
+<br>
+<b>Event Created:</b> {{event['datetime'].strftime()}} <br>
 <br><br>
+Event is
+	{% if event['open']%}
+	open
+	{% else %}
+	closed
+	{% endif %}
+<br>
+{% if udict['uname'] == event['creator'] and event['open'] %}
+<form method="post" class="pure-form pure-form-aligned">
+    <fieldset>  
+        <button type="submit" 
+        class="pure-button">Close Event</button>
+        </fieldset>
+</form>
+{% endif %}
+	
 - Stuff this page needs:<br>
 - map of location<br>
 - time<br>
 - messages from event, mongostuff
 
+	
 <h3> Messages: </h3>
 {% for msg in event['msgs'] %}
 <font size="3.25">{{msg['msg']}}<br> </font>
