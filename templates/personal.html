@@ -22,20 +22,23 @@
   <fieldset>
     Name: {{udict['fname']}} {{udict['lname']}} <br>
 
-    {% if change == "name" %}
-    <label for="fname">First Name</label>
-    <input id="fname" name="fname" type="text" placeholder="First Name">
-    <br>
-    <label for="lname">Last Name</label>
-    <input id="lname" name="lname" type="text" placeholder="Last Name"><br>
+  {% if change == "name" %}
+    <div class="pure-control-group">
+        <label for="fname">First Name</label>
+        <input id="fname" name="fname" type="text"
+            placeholder="First Name"></div><br>
+    <div class="pure-control-group">
+        <label for="lname">Last Name</label>
+        <input id="lname" name="lname" type="text"
+            placeholder="Last Name"></div><br>
 
     <button type="submit" name="submit" value="name"
 	    class="pure-button">submit</button>
-    {% else %}
+  {% else %}
     <div class="change">
     <font size="2"><a href="/personal/name">Change</a></font>
-  </div>
-    {% endif %}
+    </div>
+  {% endif %}
     <br><br>
 
     Email: {{udict['email']}} <br>
@@ -55,12 +58,19 @@
     <br><br>
 
     {% if change == "pw" %}
-    <label for="pw">Old Password</label>
-    <input id="oldpw" name="oldpw" type="text" placeholder="Old Password"><br>
-    <!-- has to agree with old password-->
-    New Password: <input id="pw" name="pw" type="text" placeholder="Password">
-    <br>
-    Confirm New Password: <input id="cpw" name="cpw" type="text" placeholder="Password">
+    <div class="pure-control-group">
+        <label for="oldpw">Old Password</label>
+        <input id="oldpw" name="oldpw" type="text"
+            placeholder="Old Password"></div><br>
+    <div class="pure-control-group">
+        <label for="ename">New Password</label>
+        <input id="pw" name="pw" type="text"
+            placeholder="New Password"></div><br>
+    <div class="pure-control-group">
+        <label for="cpw">Confirm New Password</label>
+        <input id="cpw" name="cpw" type="text"
+            placeholder="Confirm Password"></div><br>
+    
     <br>
 
     <button type="submit" name="submit" value="pw"

@@ -3,7 +3,7 @@
 {% block body %}
 
 <h1> {{pdict['fname']}} {{pdict['lname']}} </h1>
-<img src="{{ profile }}" height = "75" width="75">
+<img src= {{ url_for('static', filename = "profilePictures/"~profile) }} height = "75" width="75">
 <br><br>
 <br><br>
 <br>

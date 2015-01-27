@@ -8,14 +8,16 @@ import platform
 from werkzeug import secure_filename
 from datetime import datetime
 
+
+
+#---------pic stuff------#
 ALLOWED_FILES = set(['jpg', 'gif', 'png', 'jpeg', 'tif', 'tiff', 'jif', 'jfif', 'fpx'])
 
 #UPLOAD_LOC = R'C:\Users\Mr.Something\Documents\GitHub\Rulo\static\profilePictures'
 if platform.system == 'Windows':
   UPLOAD_LOC = R'static\profilePictures/'
 else:
-  UPLOAD_LOC = R'static/profilePicture/'
-
+  UPLOAD_LOC = R'static/profilePictures/'
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = 'a'
@@ -94,7 +96,8 @@ def user():
 
 @app.route('/proPic', methods=['GET', 'POST'])
 @authenticate
-def changePic():  
+def changePic():
+  username = session['username']
   if request.method == "POST":
     img = request.files['pic']
     if img and isFileAllowed(img.filename):

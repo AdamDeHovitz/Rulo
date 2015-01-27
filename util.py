@@ -12,7 +12,7 @@ from datetime import datetime
 if platform.system() == 'Windows':
   UPLOAD_LOC = R'static\profilePictures/'
 else:
-  UPLOAD_LOC = R'../static/profilePicture/'
+  UPLOAD_LOC = R'static/profilePictures/'
 
 
 picsDB = MongoClient().gridfs_example
@@ -42,7 +42,9 @@ def uploadPicture (picture):
     print UPLOAD_LOC
     print(type(picture))
     print (os.path.join(UPLOAD_LOC, filename))
+    print "have not saved yet..."
     picture.save(os.path.join(UPLOAD_LOC, filename))
+    print "saved the pic"
   return filename
 
 
