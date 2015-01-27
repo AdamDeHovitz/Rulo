@@ -61,7 +61,6 @@ def home():
 
 
 @app.route('/user', methods=['POST', 'GET'])
-@authenticate
 def user():
     #print("user!");
     if request.method=="POST":
@@ -218,7 +217,8 @@ def process():
         #util.addEventPerson(username, newevent)
         #util.addHostPerson(newevent, username)
         util.updateUField(username, 'hevents', newevent)
-        return render_template('eventCreated.html', udict=util.getUser(username), edict=edict)
+        return redirect('/events')
+    #return render_template('eventCreated.html', udict=util.getUser(username), edict=edict)
 
 
 @app.route('/events', methods=['GET','POST'])
@@ -227,7 +227,7 @@ def events():
     username = escape(session['username'])
     udict = util.getUser(username)
     #elist = util.listEvents();
-    elist = util.eventsNotIn(username)
+    elist = util.validEvents(username)
     return render_template('events.html', udict=udict, elist=elist)
 
 
@@ -237,7 +237,7 @@ def joinevent():
     username = escape(session['username'])
     udict = util.getUser(username)
     #elist = util.listEvents(); # do we need this?
-    elist = util.eventsNotIn(username)
+    elist = util.validEvents(username)
     if request.method=="POST":
         event = request.form["submit"] # objectid
         #print event

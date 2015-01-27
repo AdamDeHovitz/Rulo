@@ -97,7 +97,7 @@ def newUser(udict):
     pwcheck = checkNewPW(udict['pw'], udict['rpw'])
     emailcheck = checkEmail(email)
     validagecheck = True
-    agecheck = (age >= 13)
+    agecheck = (int(age) >= 13)
 
     s = ""
     if uncheck == False:
@@ -276,6 +276,7 @@ def createEvent(edict):
     #list of people in event, including creator
     edict['members'] = []
     edict['msgs'] = [] # list of dictionaries, msgs should have: time, user, msg
+    edict['open'] = True
     e = events.insert(edict)
     #print e
     return e #returns w/o objectid( )
@@ -328,10 +329,10 @@ def confirmPerson(uname, eventid):
     updateEField(eventid, 'members', uname)
     updateUField(uname, 'aevents', ObjectId(eventid))
     removeUField(uname, 'revents', ObjectId(eventid))
-
-
-
-
+    ev = events.find_one( { '_id' : ObjectId( eventid ) } )
+    if (int(ev['numb'] ) <= len(ev['members']) + 1):
+        ev['open'] = False
+        
 
 def getEvent(eventid):
     print("id:")
@@ -362,16 +363,19 @@ def deleteEvent(eventid):
     events.remove(ev)
 
 
-def eventsNotIn(uname):
+def validEvents(uname):
     '''
-    returns a list of the events uname is not already involved with
+    returns a list of the events uname can join based on
+    - Not already in
+    - Open
+    - GEOLOCATION********************!!!!!!
     '''
     evs = []
     for e in events.find():
         nc = e['creator'] != uname
         nm = uname not in e['members']
         nr = uname not in e['requests']
-        if nc and nm and nr:
+        if nc and nm and nr and e['open']:
             evs.append(e)
     return evs
 
