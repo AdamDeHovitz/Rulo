@@ -80,7 +80,7 @@ def getPicture(user):
   print filename
   path = os.path.join(UPLOAD_LOC, filename)
   path = os.path.join('..', path)
-  return path
+return path
 
 #----------------------USER STUFF--------------------#
 def newUser(udict):
@@ -102,27 +102,27 @@ def newUser(udict):
 
     s = ""
     if uncheck == False:
-        s = "That username has already been used\n"
+      s = "That username has already been used\n"
     elif pwcheck != "":
-        return pwcheck
+      return pwcheck
     elif emailcheck != "":
-        return emailcheck
+      return emailcheck
     elif not agecheck:
-        s += "You must be older than 13 years of age"
+      s += "You must be older than 13 years of age"
     elif not validagecheck:
-        s += "Please enter a numerical age"
+      s += "Please enter a numerical age"
     else:
-        print udict
-        addPerson(udict)
+      print udict
+      addPerson(udict)
     return s
 
 def checkNewPW(pw, rpw):
     if pw != rpw:
-        return "Passwords do not match"
+      return "Passwords do not match"
     elif not (len(pw) >= 5 and len(pw) <= 20):
-        return "Password must be between 5 and 20 characters"
+      return "Password must be between 5 and 20 characters"
     else:
-        return ""
+      return ""
 
 def pwcheck(uname, old, new, check):
     if checkPword(uname, old) != "":
@@ -393,28 +393,28 @@ def validEvents(uname):
 
 #----------------------------------------#
 def setup():
-    newuser = {}
-    newuser['uname'] = 's'
-    newuser['fname'] = 's'
-    newuser['lname'] = 's'
-    newuser['pw'] = 'sssss'
-    newuser['rpw'] = 'sssss'
-    newuser['age'] = 18
-    newuser['email'] = 's@g.c'
-    newuser['pic'] = "default"
-    newUser(newuser)
-
-    edict = {}
-    edict['creator'] = 's'
-    edict['ename'] = '1st event'
-    edict['numb'] = 5
-    edict['desc'] = '1'
-    edict['total'] = 10
-    edict['price'] = 10
-    edict['long'] = 0
-    edict['lat'] = 0
-    newevent = createEvent(edict)
-    updateUField('s', 'hevents', newevent)
+  newuser = {}
+  newuser['uname'] = 's'
+  newuser['fname'] = 's'
+  newuser['lname'] = 's'
+  newuser['pw'] = 'sssss'
+  newuser['rpw'] = 'sssss'
+  newuser['age'] = 18
+  newuser['email'] = 's@g.c'
+  newuser['pic'] = "default"
+  newUser(newuser)
+  
+  edict = {}
+  edict['creator'] = 's'
+  edict['ename'] = '1st event'
+  edict['numb'] = 5
+  edict['desc'] = '1'
+  edict['total'] = 10
+  edict['price'] = 10
+  edict['long'] = 0
+  edict['lat'] = 0
+  newevent = createEvent(edict)
+  updateUField('s', 'hevents', newevent)
 
 
 
