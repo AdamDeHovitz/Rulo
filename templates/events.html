@@ -18,9 +18,9 @@
 } --><!-- need to figure out how to get GPS to run -->
 
   {% for e in elist %}
-  <!--
-      if (distanceFunce(location, e) < 100){
-    -->
+
+  {% if distTest() < .5 %}
+  
   {% if e['datetime'] < datetime.today() %}
 			deleteEvent(e)
 			{% endif %}
