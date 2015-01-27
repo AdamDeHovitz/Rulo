@@ -6,7 +6,7 @@ import os
 import platform
 #import Image
 from werkzeug import secure_filename
-from datetime import datetime
+import datetime
 
 
 
@@ -101,7 +101,7 @@ def changePic():
   if request.method == "POST":
     img = request.files['pic']
     if img and isFileAllowed(img.filename):
-      success = util.addField(username, 'pic', img)
+      success = util.addField(session['username'], 'pic', img)
       if success:
         return redirect('/personal')
       else:
@@ -203,19 +203,25 @@ def process():
         edict['desc'] = request.form["desc"]
         edict['total'] = request.form["total"]
         edict['price'] = request.form["price"]
-        edict['loc'] = request.form["loc"]
         edict['long'] = request.form["long"]
         edict['lat'] = request.form["lat"]
+        print('looking for location')
+        edict['location'] = request.form['loc']
+        print('got location')
+        print('looking for address')
+        edict['address'] = request.form['address']
+        print('got address')
         if util.checkEvent(edict) != "":
             flash(util.checkEvent(edict))
             return redirect('/create_events')
         newevent = util.createEvent(edict)
-        #print newevent
+        print newevent
         #util.addEventPerson(username, newevent)
         #util.addHostPerson(newevent, username)
         util.updateUField(username, 'hevents', newevent)
         return redirect('/events')
-        
+    #return render_template('eventCreated.html', udict=util.getUser(username), edict=edict)
+
 
 @app.route('/events', methods=['GET','POST'])
 @authenticate
@@ -268,6 +274,7 @@ def confirm(event = None, uname = None):
 @authenticate
 def delete():
     util.deleteEvent(request.form["submit"])
+
     return redirect('/your_events')
 
 @authenticate
@@ -284,8 +291,8 @@ def user_page(uname = None):
         pdict = util.getUser(uname)
         pic = util.getPicture (udict['uname'])
 
-    #if request.method=="POST":
-            #print(request.form["rating"])
+    if request.method=="POST":
+            print(request.form["rating"])
 
 
     return render_template('user.html', udict = udict, pdict=pdict, profile = pic)
@@ -296,9 +303,9 @@ def addreview(uname = None):
     udict = util.getUser(username)
     review = {}
     review['user'] = username
-    review['rating'] = int(request.form["rating"])
+    review['rating'] = request.form["rating"]
     review['comment'] = request.form["comment"]
-    util.updateReview(uname, review)
+    util.updateUField(uname, 'reviews', review)
     return redirect('/user/'+ uname)
 
 @authenticate
@@ -340,7 +347,7 @@ def newmsg(eventid = None):
     msg = {}
     msg['user'] = username
     msg['msg'] = request.form["msg"]
-    msg['time'] = datetime.today()
+    # msg['time'] = ???? how do we do time
     util.updateEField(eventid, 'msgs', msg)
 
     return redirect('/event_page/'+ eventid )
