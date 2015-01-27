@@ -94,11 +94,11 @@ def user():
 
 @app.route('/proPic', methods=['GET', 'POST'])
 @authenticate
-def changePic():
+def changePic():  
   if request.method == "POST":
     img = request.files['pic']
     if img and isFileAllowed(img.filename):
-      success = util.addField(session['username'], 'pic', img)
+      success = util.addField(username, 'pic', img)
       if success:
         return redirect('/personal')
       else:
@@ -207,7 +207,7 @@ def process():
             flash(util.checkEvent(edict))
             return redirect('/create_events')
         newevent = util.createEvent(edict)
-        print newevent
+        #print newevent
         #util.addEventPerson(username, newevent)
         #util.addHostPerson(newevent, username)
         util.updateUField(username, 'hevents', newevent)
@@ -281,8 +281,8 @@ def user_page(uname = None):
         pdict = util.getUser(uname)
         pic = util.getPicture (udict['uname'])
 
-    if request.method=="POST":
-            print(request.form["rating"])
+    #if request.method=="POST":
+            #print(request.form["rating"])
 
 
     return render_template('user.html', udict = udict, pdict=pdict, profile = pic)
@@ -323,7 +323,6 @@ def newmsg(eventid = None):
     msg['user'] = username
     msg['msg'] = request.form["msg"]
     msg['time'] = datetime.today()
-    print type(msg['time'])
     util.updateEField(eventid, 'msgs', msg)
 
     return redirect('/event_page/'+ eventid )
