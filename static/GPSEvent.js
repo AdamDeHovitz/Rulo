@@ -125,6 +125,10 @@ function callback (response, status) {
 
 window.addEventListener("load", function getGeoLoc() {
   action()
+  var storage = document.getElementById('loc')
+  if (storage != null){
+    storage.value = currentLoc;
+  }
 }, false);
 
 /*
