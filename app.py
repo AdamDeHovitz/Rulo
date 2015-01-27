@@ -178,9 +178,8 @@ def personal_process():
             util.addField(username, submit, request.form[submit])
     return redirect('/personal')
 
-
-@app.route('/personal/<thing>', methods=['GET', 'POST'])
 @authenticate
+@app.route('/personal/<thing>', methods=['GET', 'POST'])
 def personal(thing = None):
     username = escape(session['username'])
     udict = util.getUser(username)
@@ -218,7 +217,8 @@ def process():
         #util.addEventPerson(username, newevent)
         #util.addHostPerson(newevent, username)
         util.updateUField(username, 'hevents', newevent)
-        return render_template('eventCreated.html', udict=util.getUser(username), edict=edict)
+        return redirect('/events')
+    #return render_template('eventCreated.html', udict=util.getUser(username), edict=edict)
 
 
 @app.route('/events', methods=['GET','POST'])
@@ -227,7 +227,7 @@ def events():
     username = escape(session['username'])
     udict = util.getUser(username)
     #elist = util.listEvents();
-    elist = util.eventsNotIn(username)
+    elist = util.validEvents(username)
     return render_template('events.html', udict=udict, elist=elist)
 
 
@@ -237,7 +237,7 @@ def joinevent():
     username = escape(session['username'])
     udict = util.getUser(username)
     #elist = util.listEvents(); # do we need this?
-    elist = util.eventsNotIn(username)
+    elist = util.validEvents(username)
     if request.method=="POST":
         event = request.form["submit"] # objectid
         #print event
@@ -254,15 +254,15 @@ def joinevent():
 def your_event():
     username = escape(session['username'])
     udict = util.getUser(username)
-    jlist = util.getApprovedEvents(username);
-    hlist = util.getHostedEvents(username);
-    rlist = util.getRequestedEvents(username)
+    all_lists =[]
+    all_lists.append(util.getHostedEvents(username))
+    all_lists.append(util.getApprovedEvents(username))
+    all_lists.append(util.getRequestedEvents(username))
 
-    return render_template('your_events.html', udict = udict, hlist=hlist, jlist=jlist,
-                           rlist=rlist)
+    return render_template('your_events.html', udict = udict, alist = all_lists)
 
-@app.route('/confirm/<event>/<uname>', methods=['GET', 'POST'])
 @authenticate
+@app.route('/confirm/<event>/<uname>', methods=['GET', 'POST'])
 def confirm(event = None, uname = None):
     util.confirmPerson(uname, event)
 
@@ -275,8 +275,8 @@ def delete():
 
     return redirect('/your_events')
 
-@app.route('/user/<uname>', methods=['GET', 'POST'])
 @authenticate
+@app.route('/user/<uname>', methods=['GET', 'POST'])
 def user_page(uname = None):
 
     #if util. ---this will check if the uname exists
@@ -295,22 +295,22 @@ def user_page(uname = None):
 
     return render_template('user.html', udict = udict, pdict=pdict, profile = pic)
 
-@app.route('/event_page/<id>', methods=['GET', 'POST'])
 @authenticate
+@app.route('/event_page/<id>', methods=['GET', 'POST'])
 def event_page(id = None):
     username = escape(session['username'])
     udict = util.getUser(username)
     event = util.getEvent(id)
     return render_template('event_page.html', udict = udict, event = event)
 
-@app.route('/event_page/<eventid>/<uname>', methods=['GET', 'POST'])
 @authenticate
+@app.route('/event_page/<eventid>/<uname>', methods=['GET', 'POST'])
 def confirme(eventid = None, uname = None):
     util.confirmPerson(uname, eventid)
     return redirect('/event_page/'+ eventid )
 
-@app.route('/newmsg/<eventid>', methods=['GET', 'POST'])
 @authenticate
+@app.route('/newmsg/<eventid>', methods=['GET', 'POST'])
 def newmsg(eventid = None):
     username = escape(session['username'])
     udict = util.getUser(username)
