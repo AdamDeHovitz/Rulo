@@ -21,9 +21,11 @@
   <!--
       if (distanceFunce(location, e) < 100){
     -->
-  {% if e['datetime'] < datetime.today() %}
-			deleteEvent(e)
-			{% endif %}
+  <!-- {% raw %}
+{% if e['datetime'] < datetime.today() %}
+			deleteEvent(e);
+			{% endif % }{% endraw %}
+-->
 
   <h2> Name: {{e['ename']}} </h2> <br>
   Creator: {{e['creator']}} <br>

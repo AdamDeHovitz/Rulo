@@ -6,6 +6,15 @@
 created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['datetime'].hour}}:{{event['datetime'].minute}}<br>
 <b>Host:</b> {{event['creator']}}
 <br>
+{% if udict['uname'] == event['creator'] and False == event['open'] %}
+<form method="post" class="pure-form pure-form-aligned">
+    <fieldset>  
+        <button type="submit" id="submit" name="submit" value = "start"
+        class="pure-button pure-button-primary">Start Event</button>
+        </fieldset>
+</form>
+{% endif %}
+<br>
 <b>Members:</b> <br>
 {% for u in event['members'] %}<li>
   <a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <br></li>
@@ -30,7 +39,7 @@ Event is
 {% if udict['uname'] == event['creator'] and event['open'] %}
 <form method="post" class="pure-form pure-form-aligned">
     <fieldset>  
-        <button type="submit" 
+        <button type="submit" id="submit" name="submit" value = "close"
         class="pure-button">Close Event</button>
         </fieldset>
 </form>

@@ -305,17 +305,31 @@ def addreview(uname = None):
 @app.route('/event_page/<id>', methods=['GET', 'POST'])
 def event_page(id = None):
     if request.method=="POST":
-        util.updateEventField(id, "open", False)
+        value = request.form["submit"]
+        if (value == "close"):
+            util.updateEventField(id, "open", False)
+        elif (value == "start"):
+            util.startEvent(id);
     username = escape(session['username'])
     udict = util.getUser(username)
     event = util.getEvent(id)
     return render_template('event_page.html', udict = udict, event = event)
+
+
 
 @authenticate
 @app.route('/event_page/<eventid>/<uname>', methods=['GET', 'POST'])
 def confirme(eventid = None, uname = None):
     util.confirmPerson(uname, eventid)
     return redirect('/event_page/'+ eventid )
+
+@authenticate
+@app.route('/confirm_notification/<eventid>', methods=['GET', 'POST'])
+def confirm_event(eventid = None):
+    username = escape(session['username'])
+    util.confirmNotification(username, eventid)
+    return redirect('/event_page/'+ eventid )
+
 
 @authenticate
 @app.route('/newmsg/<eventid>', methods=['GET', 'POST'])

@@ -25,15 +25,37 @@
     <li><a href="/create_events">Create Events</a></li>
     <li><a href="/personal">Personal Settings</a></li>
     <li><a href="/logout" style="align:right">Logout</a></li>
+    {% if udict['notifications'] %}
+    <li><a href="/logout" style="align:right">Logout</a></li>
+    {% endif %}
+     </div>
+     
+    {% for notification in udict['notifications'] %}
+     <center>{% for part in notification | reverse%}
+     {% if loop.index == 2 %}    
+     <br>
+     <form class="pure-form pure-form-aligned" method="POST" action={{"/confirm_notification/" ~ part}}>
+     <button type="submit"  href ={{"/confirm_notification/" ~ part}}
+	   class="pure-button pure-button-primary"> Confirm </button>
+     <form>
+      <br>
+     {% else %}
+     {{part}} is Starting!
+     
+   
+      {% endif %}
+     {% endfor %}</center>
+    {% endfor %}
     {% else %}
     <li><a href="/home"><img src="../static/RuloPic.png" width="50" height="50"></a></li>
     <li><a href="/home">Home</a></li>
     <li><a href="/register">Register</a></li>
     <li><a href="/login" style="text-align:right">Login</a></li>
+     </div>
     {% endif %}
     <!-- put in whichever tabs we want -->
 
-  </div>
+ 
 
   <!--
       <div class="pure-u-1-5">
