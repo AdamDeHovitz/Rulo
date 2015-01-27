@@ -80,6 +80,10 @@ def user():
         #img = stepOne.load()
         #print img.read()
         img = "default"
+<<<<<<< HEAD
+=======
+        print '\n\nDefault image assigned to newuser'
+>>>>>>> 7bdf39aa8c816f49762d7e0b518e30d9f1e39318
         newuser['pic'] = img
 
         valid_msg = util.newUser(newuser)
@@ -299,6 +303,8 @@ def addreview(uname = None):
 @authenticate
 @app.route('/event_page/<id>', methods=['GET', 'POST'])
 def event_page(id = None):
+    if request.method=="POST":
+        util.updateEventField(id, "open", False)
     username = escape(session['username'])
     udict = util.getUser(username)
     event = util.getEvent(id)

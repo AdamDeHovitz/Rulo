@@ -1,12 +1,10 @@
 console.log("is this working?");
 
 var map;
-var mappy;
 var geocoder;
 var marker;
-var myAddress;
-var bounds = new google.maps.LatLngBounds();
-var markersArray = [];
+var currentLoc;
+var distanceDiv;
 
 var action = function () {
     console.log("button action begun");
@@ -29,35 +27,38 @@ var action = function () {
 
     var ahNo = function() {
       map.innerHTML = "We were unable to retrieve your location, our apologies.";
-	console.log("ah noes,its an error");
-	return new google.maps.LatLng(51.208317, 3.224883);
+	     console.log("ah noes,its an error");
+	      return new google.maps.LatLng(36.112666, -115.176293);
     };
-    
+
     var hellYeah = function(position) {
-	map = document.getElementById('map-test');
+	      map = document.getElementById('map-test');
         mappy = new google.maps.Map(map, mapOptions);
-	
+
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
-	var locationArray = [latitude, longitude];
+	      var locationArray = [latitude, longitude];
         var location = new google.maps.LatLng(latitude, longitude);
+        console.log(location)
+        currentLoc = location
+        console.log(currentLoc)
         mappy.setCenter(location);
-        //console.log('map function finished. Latitude is: ' + latitude + " Longitude is: " + longitude);
-	      //console.log(location);
+        console.log('map function finished. Latitude is: ' + latitude + " Longitude is: " + longitude);
+	      console.log(location);
 	geocoder.geocode({'latLng': location}, function(results, status){
 	    if (status == google.maps.GeocoderStatus.OK){
 		if (results[0]) {
 		    var marker = new google.maps.Marker({
 			position: geographicCoord,
-			title: "this is a marker",
 			map: mappy
-		    }); 
+		    });
+		    //console.log('assign address');
 		    address = results[0].formatted_address;
-		    myAddress = address;
 		    var wordPlace = document.getElementById('map-location');
-		    //console.log(address);
+		    var mapi = document.getElementById('map-test');
+		    console.log(address);
 		    wordPlace.innerHTML = address;
-		    map.innerHTML = mappy;
+		    map.innerHTML = new google.maps.LatLng(latitude,longitude);
 		    console.log(mappy);
 		}
 	    } else {
@@ -66,137 +67,76 @@ var action = function () {
 	    }
 	});
 
-	//console.log('address actions completed');
-        return locationArray
+	console.log('address actions completed');
+        return location
     };
 
     var geographicCoord = navigator.geolocation.getCurrentPosition( hellYeah, ahNo);
-    //console.log('locating complete.');
-    //console.log("button action complete");
-}
+    console.log('locating complete.');
+    console.log("button action complete");
 
-var origin = myAddress;
-var destination = myAddress; // need to get the event's location
-
-var destinationIcon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=D|FF0000|000000';
-var originIcon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=O|FFFF00|000000';
-
-function initialize() {
-    var opts = {
-	center: new google.maps.LatLng(55.53, 9.4),
-	zoom: 10
-    };
-    map = new google.maps.Map(document.getElementById('map-test'), opts);
-    geocoder = new google.maps.Geocoder();
-}
-
-function thisFunc() {
-    var service = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
-	{
-	    origins: [origin],
-	    destinations: [destination],
-	    travelMode: google.maps.TravelMode.WALKING,
-	    unitSystem: google.maps.UnitSystem.METRIC,
-	    avoidHighways: false,
-	    avoidTolls: false
-	}, callback);
-}
-
-function callback(response, status) {
-    if (status != google.maps.DistanceMatrixStatus.OK) {
-	alert('Error was: ' + status);
-    } else {
-	var origins = origin;
-	var destinations = destination;
-	var outputDiv = document.getElementById('map-test');
-	outputDiv.innerHTML = '';
-	deleteOverlays();
-	
-	for (var i = 0; i < origins.length; i++) {
-	    var results = response.rows[i].elements;
-	    addMarker(origins[i], false);
-	    for (var j = 0; j < results.length; j++) {
-		addMarker(destinations[j], true);
-		outputDiv.innerHTML += origins[i] + ' to ' + destinations[j]
-		    + ': ' + results[j].distance.text + ' in '
-		    + results[j].duration.text + '<br>';
-	    }
-	} 
-    }
-}
-
-function distanceFunc(){
-    google.maps.event.addDomListener(window, "load", thisFunc());
-}
-
-function addMarker(location, isDestination) {
-    var icon;
-    if (isDestination) {
-      icon = destinationIcon;
-  } else {
-      icon = originIcon;
-  }
-    geocoder.geocode({'address': location}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-	bounds.extend(results[0].geometry.location);
-	map.fitBounds(bounds);
-	var marker = new google.maps.Marker({
-          map: mappy,
-          position: results[0].geometry.location,
-          icon: icon
-      });
-	markersArray.push(marker);
-    } else {
-	alert('Geocode was not successful for the following reason: '
-            + status);
-    }
-  });
-}
-
-function deleteOverlays() {
-    for (var i = 0; i < markersArray.length; i++) {
-      markersArray[i].setMap(null);
-  }
-    markersArray = [];
 }
 
 
-/* var distanceFunc = function (origin, destination){
+var distTest = function() {
+    distance = distanceFunc(currentLoc, new google.maps.LatLng(25.7877, -80.2241), 'dist-test')
+}
+
+var distanceFunc = function (origin, destination, div){
     console.log("in distanceFunc");
-    var service = google.maps.DistanceMatrixService();
+    var service = new google.maps.DistanceMatrixService();
     //var origin = location;
+    distanceDiv = div;
     console.log(origin);
-    console.log(service.getDistanceMatrix);
-    var distance = service.getDistanceMatrix(
-	{
-	    origins: origin,
-	    destinations: destination,
-	    travelMode: google.maps.TravelMode.WALKING,
-	    unitSystem: google.maps.UnitSystem.IMPERIAL
-	}, callback);
-    
-    function callback (response, status) {
-	var distance = [];
-	if (status == google.maps.GeocoderStatus.OK){
-	    var origins = response.originAddress;
-	    var destinations = response.destinationAddresses;
-	    for (var i = 0; i < origins.length; i++){
-		var results = response.rows[i].elements;
-		for (var j = 0; j < results.length; j++){
-		    var element = results[j];
-		    var dist = element.distance.text;
-		    var dura = element.duration.text;
-		    var from = origins[i];
-		    var to = origins[i];
-		    distance[(i*results.length) + j] = dist;
-		}
-	    }
-	    return distance;
-	} else {
-	    alert("Distance Calculation failed due to: " + status);
-	    return distance;
-	}
-    }
-    return distance[0];
+    console.log(destination);
+    service.getDistanceMatrix(
+	     {
+	         origins: [origin],
+	         destinations: [destination],
+           travelMode: google.maps.TravelMode.DRIVING,
+	         unitSystem: google.maps.UnitSystem.IMPERIAL,
+           avoidHighways: false,
+           avoidTolls: false
+	     }, callback);
+}
+
+
+function callback (response, status) {
+       console.log("in callback")
+	     if (status != google.maps.DistanceMatrixStatus.OK){
+          alert("Error with Distance:" + status);
+        } else {
+              console.log(response);
+	            var origins = response.originAddresses;
+              console.log(origins);
+	            var destinations = response.destinationAddresses;
+              console.log(destinations);
+              var output = document.getElementById(distanceDiv);
+              output.InnerHTML = '';
+  	          for (var i = 0; i < origins.length; i++){
+  		            var results = response.rows[i].elements;
+  		            for (var j = 0; j < results.length; j++){
+                      output.innerHTML += results[j].distance.text + ", which would take " + results[j].duration.text + " to complete.<br>";
+                  }
+              }
+          }
+}
+/*
+                DEAD CODE (Could be used in future for storing distance variables) CAN IGNORE
+  		          var element = results[j];
+  		          var dist = element.distance.text;
+                console.log (dist)
+  		          var dura = element.duration.text;
+  		          var from = origins[i];
+  		          var to = origins[i];
+  		          answer[0] = dist;
+  		       }
+  	    }
+
+  	    return answer;
+  	} else {
+  	    alert("Distance Calculation failed due to: " + status);
+  	    return answer;
+  	}
+  }
 } */
