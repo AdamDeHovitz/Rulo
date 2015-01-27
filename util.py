@@ -324,7 +324,8 @@ def listEvents():
         eventslist.append(e)
     return eventslist
 
-
+def updateEventField(eventid, field,value):
+    events.update( {"_id":ObjectId(eventid)} , { '$set': {field:value} } )
 
 def confirmPerson(uname, eventid):
     pullEField(eventid, 'requests', uname)
@@ -333,9 +334,8 @@ def confirmPerson(uname, eventid):
     removeUField(uname, 'revents', ObjectId(eventid))
     ev = events.find_one( { '_id' : ObjectId( eventid ) } )
     print("Length: "+str(len(list(ev['members']))))
-    if (int(ev['numb'] ) <= (len(list(ev['members'])) + 1)):
-        print("Closing thing")
-        events.update( {"_id":ObjectId(eventid)} , { '$set': {"open":False} } )
+    if (ev['numb'] != None and int(ev['numb'] ) <= (len(list(ev['members'])) + 1)):
+        updateEventField(eventid, "open", False)
 
         
 
