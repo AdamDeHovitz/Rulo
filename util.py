@@ -12,7 +12,7 @@ from datetime import datetime
 if platform.system() == 'Windows':
   UPLOAD_LOC = R'static\profilePictures/'
 else:
-  UPLOAD_LOC = R'static/profilePicture/'
+  UPLOAD_LOC = R'../static/profilePicture/'
 
 
 picsDB = MongoClient().gridfs_example
@@ -76,10 +76,12 @@ def getPicture(user):
     print UPLOAD_LOC
     p = users.find_one({"uname":user})
     filename = p['pic']
+    return p['pic']
     print type(filename)
     print filename
     path = os.path.join(UPLOAD_LOC, filename)
     path = os.path.join('..', path)
+    print path
     return path
 
 #----------------------USER STUFF--------------------#

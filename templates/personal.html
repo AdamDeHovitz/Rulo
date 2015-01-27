@@ -3,8 +3,10 @@
 
 {% block body %}
 <h1>Personal Information</h1>
-<!-- <img src="../static/profilePictures/ewokPing.jpg" height="50" width="50"> -->
-<img src="{{ profile }}" height = "75" width="75">
+<!-- <img src="../static/profilePictures/ewokPing.jpg" height="50" width="50">
+<img src="{{profile}}" height = "75" width="75"> -->
+<img src= {{ url_for('static', filename = "profilePictures/"~profile) }} height = "75" width="75">
+    
 Change Your Picture
 <form action="/proPic" method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned">
   <div class="pure-control-group">
