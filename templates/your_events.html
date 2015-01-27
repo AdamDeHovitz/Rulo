@@ -57,6 +57,7 @@
 	  class="pure-button" color= "red"> Delete </button>
 </form>
 {% endif %}
+created {{e['datetime'].month}}/{{e['datetime'].day}} at {{e['datetime'].hour}}:{{e['datetime'].minute}} <br>
 {% endfor %}
 {% else %}  
 <i>Not Available</i>

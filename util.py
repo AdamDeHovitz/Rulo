@@ -72,15 +72,15 @@ def updatePicture (picture, user):
     return picture'''
 
 def getPicture(user):
-  print platform.system()
-  print UPLOAD_LOC
-  p = users.find_one({"uname":user})
-  filename = p['pic']
-  print type(filename)
-  print filename
-  path = os.path.join(UPLOAD_LOC, filename)
-  path = os.path.join('..', path)
-return path
+    print platform.system()
+    print UPLOAD_LOC
+    p = users.find_one({"uname":user})
+    filename = p['pic']
+    print type(filename)
+    print filename
+    path = os.path.join(UPLOAD_LOC, filename)
+    path = os.path.join('..', path)
+    return path
 
 #----------------------USER STUFF--------------------#
 def newUser(udict):
@@ -426,13 +426,13 @@ def setup():
 if __name__ == "__main__":
 
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
-    #'''
+    '''
     for e in events.find():
         events.remove(e)
     for p in users.find():
         users.remove(p)
     setup()
-    #'''
+    '''
     #------UNCOMMENT TO PRINT STUFF---------#
     #'''
     for person in users.find():
