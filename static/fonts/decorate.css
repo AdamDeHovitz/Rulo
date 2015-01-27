@@ -8,6 +8,10 @@ color: black;
 background: #DFE7F2;
 }
 
+.button-small {
+  font-size: 85%
+}
+
 /*Good Colors:
 Mint: #FF944D
 Orange: #FF944D
