@@ -6,7 +6,7 @@ import re
 import os
 import platform
 from werkzeug import secure_filename
-import datetime
+from datetime import datetime
 
 #UPLOAD_LOC = R'C:\Users\Mr.Something\Documents\GitHub\Rulo\static\profilePictures'
 if platform.system() == 'Windows':
@@ -278,6 +278,7 @@ def createEvent(edict):
     edict['members'] = []
     edict['msgs'] = [] # list of dictionaries, msgs should have: time, user, msg
     edict['open'] = True
+    edict['datetime'] = datetime.today()
     e = events.insert(edict)
     #print e
     return e #returns w/o objectid( )
@@ -331,7 +332,8 @@ def confirmPerson(uname, eventid):
     updateUField(uname, 'aevents', ObjectId(eventid))
     removeUField(uname, 'revents', ObjectId(eventid))
     ev = events.find_one( { '_id' : ObjectId( eventid ) } )
-    if (int(ev['numb'] ) <= len(ev['members']) + 1):
+    if ( ev['numb'] <= len(ev['members']) + 1):
+        print ev['numb']
         ev['open'] = False
         
 
@@ -370,6 +372,7 @@ def validEvents(uname):
     - Not already in
     - Open
     - GEOLOCATION********************!!!!!!
+      - we could do some cool cs list organizing things with like a insertion sort
     '''
     evs = []
     for e in events.find():
@@ -415,24 +418,26 @@ def setup():
 if __name__ == "__main__":
 
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
-    #'''
+    '''
     for e in events.find():
         events.remove(e)
     for p in users.find():
         users.remove(p)
     setup()
-    #'''
+    '''
     #------UNCOMMENT TO PRINT STUFF---------#
-'''
+    '''
     for person in users.find():
         print person
         print "\n"
     print "-------"
     print listEvents()
     '''
+    d = datetime.today()
+    print type(d)
 
-    #print getUser('ergoijergo')
 
+    
 """
 Events:
 'ename', u'desc', 'total', 'numb', 'price', u'long', 'lat'

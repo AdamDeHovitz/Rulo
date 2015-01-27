@@ -295,6 +295,17 @@ def user_page(uname = None):
 
     return render_template('user.html', udict = udict, pdict=pdict, profile = pic)
 
+@app.route('/addreview/<uname>', methods=['GET', 'POST'])
+def addreview(uname = None):
+    username = escape(session['username'])
+    udict = util.getUser(username)
+    review = {}
+    review['user'] = username
+    review['rating'] = request.form["rating"]
+    review['comment'] = request.form["comment"]
+    util.updateUField(uname, 'reviews', review)
+    return redirect('/user/'+ uname)
+
 @authenticate
 @app.route('/event_page/<id>', methods=['GET', 'POST'])
 def event_page(id = None):
