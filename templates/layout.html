@@ -10,9 +10,9 @@
       .flashes {color: red; text-indent: 50px}
     </style>
   </head>
-  
+
   <div class="pure-menu pure-menu-open pure-menu-horizontal">
-    
+
     {% if username or udict['uname'] %}
     <li><a href="/your_events">Your Event(s)</a></li>
     <li><a href="/events">Events</a></li>
@@ -25,9 +25,9 @@
     <li><a href="/login" style="text-align:right">Login</a></li>
     {% endif %}
     <!-- put in whichever tabs we want -->
-    
+
   </div>
-  
+
   <!--
       <div class="pure-u-1-5">
 	<div class="pure-menu pure-menu-open pure-menu-horizontal">
@@ -41,7 +41,7 @@
 	</div>
       </div>
       -->
-  
+
   {% with messages = get_flashed_messages() %}
   {% if messages %}
   <div class=flashes>
@@ -51,37 +51,38 @@
   </div>
   {% endif %}
   {% endwith %}
-  
+
   <body style="height:100% width:50%">
     <div class="pure-g">
       <div class="pure-u-1-5"></div>
       <div class="pure-u-3-5">
 	<font face ="Baskerville" size ="6" style="text-align:center">Rulo</font>
-	
+
 	{% block body %}
 	{% endblock %}
-	
+
       </div>
-      
-      
+
+
     </div>
-    
+
     {% block gps %}
     <address></address>
     DO NOT PRESS THIS BUTTON
     <button onclick="action()">Get Coordinates!</button>
-    <button onclick="distanceFunc()">Get Distance!</button>
+    <button onclick="distTest()">Get Distance!</button>
     <p id="map-location"></p>
     <div id="map-test" style="height:50% width:50%">
     </div>
-   
-    
+    <div id="dist-test"></div>
+
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2ie2fjoFfkQMGGPZotTg1rxsEcaYuDHY"></script>
-    
+
     <script src="../static/GPSEvent.js"></script>
-    
+
     {% endblock %}
-    
-    
+
+
   </body>
 </html>
