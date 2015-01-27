@@ -1,6 +1,7 @@
 from flask import flash, Flask, g, render_template, session, redirect, url_for, \
      escape, request, send_from_directory
 import util #util.py
+from functools import wraps
 import os
 import platform
 #import Image
@@ -20,18 +21,19 @@ app.secret_key = 'a'
 app.config['UPLOAD_LOC'] = UPLOAD_LOC
 
 
-def authenticate(page):
-    def yo(func):
-        @wraps(func)
-        def inner(*args):
-            if 'username' not in session:
-                session['nextpage']=page
-                flash("Incorrect access, please login")
-                return redirect("/login")
-                result = func(*args)
-            return result
-        return inner
-    return yo
+
+def authenticate(func):
+    @wraps(func)
+    def inner(*args):
+        if 'username' not in session:
+            session['nextpage']='/'
+            flash("Incorrect access, please login")
+            return redirect("/login")
+        username = escape(session['username'])
+        result = func(*args)
+        return result
+    return inner
+
 
 def isFileAllowed (filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_FILES
@@ -59,6 +61,7 @@ def home():
 
 
 @app.route('/user', methods=['POST', 'GET'])
+@authenticate
 def user():
     #print("user!");
     if request.method=="POST":
@@ -97,6 +100,7 @@ def user():
             return redirect('/register')
 
 @app.route('/proPic', methods=['GET', 'POST'])
+@authenticate
 def changePic():
   if request.method == "POST":
     img = request.files['pic']
@@ -139,13 +143,15 @@ def verify():
 
 
 @app.route('/personal', methods=['GET','POST'])
+@authenticate
 def p():
     username = escape(session['username'])
     picture = util.getPicture (session['username'])
     return render_template('personal.html', udict=util.getUser(username), change = "Null", profile = picture)
 
 
-@app.route('/personal_process', methods=['GET','POST'])
+@app.route('/personal_process', methods=['POST'])
+@authenticate
 def personal_process():
     username = escape(session['username'])
     if request.method=="POST":
@@ -174,6 +180,7 @@ def personal_process():
 
 
 @app.route('/personal/<thing>', methods=['GET', 'POST'])
+@authenticate
 def personal(thing = None):
     username = escape(session['username'])
     udict = util.getUser(username)
@@ -183,13 +190,15 @@ def personal(thing = None):
 
 
 @app.route('/create_events', methods=['GET','POST'])
+@authenticate
 def event_create():
     username = escape(session['username'])
 
     return render_template('eventCreate.html', udict=util.getUser(username))
 
 
-@app.route('/create_event_process', methods=['GET','POST'])
+@app.route('/create_event_process', methods=['POST'])
+@authenticate
 def process():
     if request.method=="POST":
         username = escape(session['username'])
@@ -214,6 +223,7 @@ def process():
 
 
 @app.route('/events', methods=['GET','POST'])
+@authenticate
 def events():
     username = escape(session['username'])
     udict = util.getUser(username)
@@ -223,6 +233,7 @@ def events():
 
 
 @app.route('/joinevent', methods=['GET','POST']) #does order matter?
+@authenticate
 def joinevent():
     username = escape(session['username'])
     udict = util.getUser(username)
@@ -239,6 +250,7 @@ def joinevent():
                                name = util.getEventAttribute(event, "ename"))
 
 @app.route('/your_events', methods=['GET','POST'])
+@authenticate
 def your_event():
     username = escape(session['username'])
     udict = util.getUser(username)
@@ -250,18 +262,21 @@ def your_event():
                            rlist=rlist)
 
 @app.route('/confirm/<event>/<uname>', methods=['GET', 'POST'])
+@authenticate
 def confirm(event = None, uname = None):
     util.confirmPerson(uname, event)
 
     return redirect('/your_events')
 
 @app.route('/delete_event', methods=['GET', 'POST'])
+@authenticate
 def delete():
     util.deleteEvent(request.form["submit"])
 
     return redirect('/your_events')
 
 @app.route('/user/<uname>', methods=['GET', 'POST'])
+@authenticate
 def user_page(uname = None):
 
     #if util. ---this will check if the uname exists
@@ -281,6 +296,7 @@ def user_page(uname = None):
     return render_template('user.html', udict = udict, pdict=pdict, profile = pic)
 
 @app.route('/event_page/<id>', methods=['GET', 'POST'])
+@authenticate
 def event_page(id = None):
     username = escape(session['username'])
     udict = util.getUser(username)
@@ -288,11 +304,13 @@ def event_page(id = None):
     return render_template('event_page.html', udict = udict, event = event)
 
 @app.route('/event_page/<eventid>/<uname>', methods=['GET', 'POST'])
+@authenticate
 def confirme(eventid = None, uname = None):
     util.confirmPerson(uname, eventid)
     return redirect('/event_page/'+ eventid )
 
 @app.route('/newmsg/<eventid>', methods=['GET', 'POST'])
+@authenticate
 def newmsg(eventid = None):
     username = escape(session['username'])
     udict = util.getUser(username)
