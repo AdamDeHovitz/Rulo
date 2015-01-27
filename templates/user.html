@@ -3,7 +3,7 @@
 {% block body %}
 
 <h1> {{pdict['fname']}} {{pdict['lname']}} </h1>
-<img src= {{ url_for('static', filename = "profilePictures/"~profile) }} height = "150" width="150">
+<img class= "shadow" src= {{ url_for('static', filename = "profilePictures/"~profile) }} height = "150" width="150">
 <br><br>
 <br><br>
 <br>
@@ -33,7 +33,7 @@ Rate your experience with {{pdict['fname']}}: <br>
     <input type="radio" name="rating" value="4"/><i></i>
     <input type="radio" name="rating" value="5"/><i></i>
   </span>
-  
+
   <div class="pure-control-group">
     <label for="comment">Comment</label><textarea name="comment" id="comment" placeholder="Leave a comment." cols="40" rows="5"></textarea></div><br>
   <button type="submit" onclick="action()" class="pure-button">Submit</button>

@@ -20,13 +20,13 @@ var action = function () {
     map = document.getElementById('map-test');
 
     if (!navigator.geolocation){
-       map.innerHTML = "Geolocation is not supported by this browser. Please update to experience our awesomeness.";
+       alert("Geolocation is not supported by this browser. Please update to experience our awesomeness.");
        return;
     }
 
 
     var ahNo = function() {
-	map.innerHTML = "We were unable to retrieve your location, our apologies.";
+	alert("We were unable to retrieve your location, our apologies.");
 	console.log("ah noes,its an error");
 	return new google.maps.LatLng(36.112666, -115.176293);
     };
@@ -40,8 +40,22 @@ var action = function () {
 	var locationArray = [latitude, longitude];
         var location = new google.maps.LatLng(latitude, longitude);
         console.log(location)
-        currentLoc = location
-        console.log(currentLoc)
+        currentLoc = location;
+        storage = document.getElementById('loc');
+        place =document.getElementById('yourLocation');
+        if (storage != null){
+           console.log("still working?");
+           storage.value = currentLoc;
+           console.log("This is storage:");
+           console.log(storage.value);
+        }
+        if (place != null){
+           console.log("still working?");
+           place.value = currentLoc;
+           console.log("This is storage:");
+           console.log(storage.value);
+        }
+        console.log(currentLoc);
         mappy.setCenter(location);
         console.log('map function finished. Latitude is: ' + latitude + " Longitude is: " + longitude);
 	console.log(location);
@@ -54,11 +68,15 @@ var action = function () {
 		    });
 		    //console.log('assign address');
 		    address = results[0].formatted_address;
-		    var wordPlace = document.getElementById('map-location');
+		    var wordPlace = document.getElementById('address');
 		    var mapi = document.getElementById('map-test');
 		    console.log(address);
-		    wordPlace.innerHTML = address;
-		    map.innerHTML = new google.maps.LatLng(latitude,longitude);
+        if (wordPlace != null){
+		        wordPlace.value = address;
+        }
+        console.log("Testing WordPlace:");
+        console.log(wordPlace.value);
+		    //map.innerHTML = new google.maps.LatLng(latitude,longitude);
 		    console.log(mappy);
 		}
 	    } else {
@@ -79,7 +97,7 @@ var action = function () {
 
 
 var distTest = function() {
-    distance = distanceFunc(currentLoc, document.getElementById('loc'), 'dist-test')
+    distance = distanceFunc(currentLoc, document.getElementById(), 'dist')
 }
 
 var distanceFunc = function (origin, destination, div){
@@ -112,12 +130,11 @@ function callback (response, status) {
 	var destinations = response.destinationAddresses;
         console.log(destinations);
         var output = document.getElementById(distanceDiv);
-        output.InnerHTML = '';
   	for (var i = 0; i < origins.length; i++){
   	    var results = response.rows[i].elements;
   	    for (var j = 0; j < results.length; j++){
-                output.innerHTML = "";
-		output.innerHTML += results[j].distance.text + ", which would take " + results[j].duration.text + " to complete.<br>";
+		        output.value += results[j].distance.text + ", " + results[j].duration.text;
+            console.log(output.value);
             }
         }
     }
@@ -125,12 +142,9 @@ function callback (response, status) {
 
 window.addEventListener("load", function getGeoLoc() {
     action();
-    var storage = document.getElementById('loc');
-    if (storage != null){
-	storage.value = currentLoc;
-    }
+    //distTest();
     //console.log(storage);
-    action();
+    //action();
 }, false);
 
 /*

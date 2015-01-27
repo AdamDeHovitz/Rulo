@@ -17,7 +17,7 @@
   {% endif %}
 </h1>
 {% if list[0] %}
-
+<div id="yourEventFont">
 {% for e in list %}
 <h2> Name: <a href={{"/event_page/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
 {% if e['numb'] %}
@@ -30,7 +30,8 @@
 <b>Price Per Person: </b> {{e['price']}} <br>
 {% endif %}
 <b>Description:</b> {{e['desc']}} <br>
-{% if e['creator']==udict['uname'] %}
+<b>Address:</b> {{e['address']}} <br>
+  {% if e['creator']==udict['uname'] %}
 <b>Active Requests:</b>
 <br>
 {% if e['requests'] %}
@@ -71,7 +72,7 @@
 
 
 
-
+</div>
 
 
 {% endblock %}

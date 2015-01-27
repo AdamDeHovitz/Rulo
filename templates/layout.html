@@ -16,7 +16,7 @@
     </style>
   </head>
 
-  <div id="topMenu" class="pure-menu pure-menu-open pure-menu-horizontal">
+  <div id="topMenu" class="pure-menu pure-menu-open pure-menu-horizontal one-edge-shadow">
 
     {% if username or udict['uname'] %}
     <li><a href="/your_events"><img src="../static/RuloPic.png" width="50" height="50"></a></li>
@@ -26,7 +26,7 @@
     <li><a href="/personal">Personal Settings</a></li>
     <li><a href="/logout" style="align:right">Logout</a></li>
      </div>
-     
+
     {% else %}
     <li><a href="/home"><img src="../static/RuloPic.png" width="50" height="50"></a></li>
     <li><a href="/home">Home</a></li>
@@ -51,22 +51,23 @@
     <div class="pure-g">
       <div class="pure-u-1-5"></div>
       <div class="pure-u-3-5">
-	<font face ="Baskerville" size ="6" style="text-align:center">Rulo</font>
+	<!-- <font face ="Baskerville" size ="6" style="text-align:center">Rulo</font> -->
+<section id="mainTitle"> Rulo </section>
 {% if username or udict['uname'] %}
     <center>
-	
+
     {% for notification in udict['notifications'] %}
 	{% if loop.index == 1 %}
      Starting events
 	{% endif %}
      <br>
      <form class="pure-form pure-form-aligned" method="POST" action={{"/confirm_notification/" ~ notification}}>
-     <button type="submit"  
+     <button type="submit"
 	   class="pure-button pure-button-primary"> Go to </button>
      </form>
       <br><br>
- 
-     
+
+
     {% endfor %} </center>
     {% endif %}
 	{% block body %}
@@ -76,19 +77,19 @@
 
 
     </div>
-    
+
     {% block gps %}
 
 
-    <address></address>
-    DO NOT PRESS THIS BUTTON
-    For Distance Press First
-    <button onclick="action()">Get Coordinates!</button>
-    <button onclick="distTest()">Get Distance!</button>
+    <!-- <button onclick="action()">Get Coordinates!</button>
+    <button onclick="distTest()">Get Distance!</button> -->
     <p id="map-location"></p>
     <div id="map-test" style="height:50% width:50%">
     </div>
     <div id="dist-test"></div>
+
+    <input id="yourLocation" name="loc" type="hidden" value="">
+    <input id="TheDistance" name="dist" type="hidden" value="">
 
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2ie2fjoFfkQMGGPZotTg1rxsEcaYuDHY"></script>
