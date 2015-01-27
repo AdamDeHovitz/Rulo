@@ -121,6 +121,11 @@ function callback (response, status) {
               }
           }
 }
+
+window.addEventListener("load", function getGeoLoc() {
+  action()
+}, false);
+
 /*
                 DEAD CODE (Could be used in future for storing distance variables) CAN IGNORE
   		          var element = results[j];
