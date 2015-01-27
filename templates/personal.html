@@ -5,7 +5,6 @@
 <h1>Personal Information</h1>
 <br>
 <br>
-<br>
 <!-- <img src="../static/profilePictures/ewokPing.jpg" height="50" width="50"> -->
 <!-- <img id= src="{{ profile }}" height = "75" width="75"> -->
 <img class="shadow" src= {{ url_for('static', filename = "profilePictures/"~profile) }} height = "150" width="150"><br><br>
@@ -38,7 +37,7 @@
     <font size="2"><a class="pure-button"  href="/personal/name">Change</a></font>
   </div>
     {% endif %}
-    <br><br>
+    <br>
 
     Email: {{udict['email']}} <br>
 
@@ -54,7 +53,7 @@
     <font size="2"><a class="pure-button"  href="/personal/email">Change</a></font>
   </div>
     {% endif %}
-    <br><br>
+    <br>
 
     {% if change == "pw" %}
     <div class="pure-control-group">
@@ -76,24 +75,12 @@
 	    class="pure-button">submit</button>
     {% else %}
     <div class ="change">
-    Password: <font size="2"><a class="pure-button"  href="/personal/pw">Change</a></font>
+    Password: <br><font size="2"><a class="pure-button"  href="/personal/pw">Change</a></font>
   </div>
 
 
     {% endif %}
-    <br><br>
-    {% if change == "age" %}
-    <label for="age">Age</label>
-    <input id="age" name="age" type="text" placeholder="age">
-    <br>
-
-    <button type="submit" name="submit" value="age"
-	    class="pure-button">submit</button>
-    {% else %}
-    <div class ="change">
-    Age: <font size="2"><a class="pure-button" href="/personal/age">Change</a></font>
-  </div>
-    {% endif %}
+    
 
   </fieldset>
 </form>
