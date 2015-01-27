@@ -19,9 +19,9 @@ things
 GPS location
 
 ###Installation Instructions:
-Got our url at:
+Got to <url>
 
-###Calendar: <br>
+###Planned Calendar: <br>
 <b> 12/23 </b> - Figure out GPS (Deanna, Adam) DONE <br>
 <b> 1/5 </b> - Full login work - so far: name (f+l), username, age; still to do: comments about you, rating, picture, user since* (send date from form?), number of ratings (Sophie, Benedict) Done <br>
 <b> 1/11  3 pm</b> Basic events done (sophie, benedict) (ie creating them, NOT joining) updated - need to add GPS Done br>
