@@ -129,7 +129,8 @@ window.addEventListener("load", function getGeoLoc() {
   if (storage != null){
     storage.value = currentLoc;
   }
-    action()
+    //console.log(storage);
+    action();
 }, false);
 
 /*
