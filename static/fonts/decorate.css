@@ -35,16 +35,16 @@ BAD ==> Grey-Blue: #DFE7F2*/
   src: url(Jaapokkienchance-Regular.otf);
 }
 @font-face{
-  font-family: elegantLux;
-  src: url(ElegantLux-Mager.otf);
+    font-family: elegantLux;
+    src: url(ElegantLux-Mager.otf);
 }
 @font-face{
-  font-family: LockSmithTitle;
-  src: url(LockSmith_reg.otf);
+    font-family: LockSmithTitle;
+    src: url(LockSmith_reg.otf);
 }
 @font-face{
-  font-family: aqua;
-  src: url(aqua.ttf)
+    font-family: aqua;
+    src: url(aqua.ttf)
 }
 
 #mainTitle {
@@ -66,9 +66,9 @@ BAD ==> Grey-Blue: #DFE7F2*/
 }
 
 body {
-  color: #DDDDDD;
-  background-image: url(../stylingPictures/Elegant_Background-9.jpg);
-  font-family: elegantLux;
+    color: #DDDDDD;
+    background-image: url(../stylingPictures/Elegant_Background-9.jpg);
+    font-family: elegantLux;
 }
 
 img {
@@ -90,11 +90,64 @@ a {
 }
 
 h1{
-  font-family: aqua;
+    font-family: aqua;
 }
 h2{
-  font-family: LockSmithTitle;
+    font-family: LockSmithTitle;
 }
 h3{
-  font-family: aqua;
+    font-family: aqua;
+}
+
+#your_events{
+    font-family: LockSmithTitle;
+}
+
+#nav {
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+#nav li {
+    display: block;
+    float: left;
+    margin: 0 5px;
+    background: url(../static/fonts/first) no-repeat center top;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+    -moz-box-shadow: 1px 1px 1px #666;
+    -webkit-box-shadow: 1px 1px 1px #666;
+    -o-box-shadow: 1px 1px 1px #666;
+    box-shadow: 1px 1px 1px #666;
+
+}
+
+#nav a {
+    display: block;
+    padding: 25px 35px;
+    font-family:Arial, sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px #666;
+    text-align:center;
+    background: url(../static/fonts/second.jpg) no-repeat center -200px;
+    background: rgba(80, 125, 200, 0.55);
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-transition: background 0.5s linear;
+    -moz-transition: background 0.5s linear;
+    -o-transition: background 0.5s linear;
+    transition: background 0.5s linear;
+}
+
+#nav a:hover {
+    background: url(../images/bg.jpg) no-repeat center top;
+    background: rgba(100, 125, 175, 0);
 }

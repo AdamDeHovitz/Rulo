@@ -8,7 +8,7 @@
 <br>
 <!-- <img src="../static/profilePictures/ewokPing.jpg" height="50" width="50"> -->
 <!-- <img id= src="{{ profile }}" height = "75" width="75"> -->
-<img class="shadow" src= {{ url_for('static', filename = "profilePictures/"~profile) }} height = "75" width="75">
+<img class="shadow" src= {{ url_for('static', filename = "profilePictures/"~profile) }} height = "150" width="150"><br><br>
 
 <form action="/proPic" method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned">
   <div class="pure-control-group">
@@ -21,16 +21,19 @@
   <fieldset>
     Name: {{udict['fname']}} {{udict['lname']}} <br>
 
-    {% if change == "name" %}
-    <label for="fname">First Name</label>
-    <input id="fname" name="fname" type="text" placeholder="First Name">
-    <br>
-    <label for="lname">Last Name</label>
-    <input id="lname" name="lname" type="text" placeholder="Last Name"><br>
+  {% if change == "name" %}
+    <div class="pure-control-group">
+        <label for="fname">First Name</label>
+        <input id="fname" name="fname" type="text"
+            placeholder="First Name"></div><br>
+    <div class="pure-control-group">
+        <label for="lname">Last Name</label>
+        <input id="lname" name="lname" type="text"
+            placeholder="Last Name"></div><br>
 
     <button type="submit" name="submit" value="name"
 	    class="pure-button">submit</button>
-    {% else %}
+  {% else %}
     <div class="change">
     <font size="2"><a class="pure-button"  href="/personal/name">Change</a></font>
   </div>
@@ -54,12 +57,19 @@
     <br><br>
 
     {% if change == "pw" %}
-    <label for="pw">Old Password</label>
-    <input id="oldpw" name="oldpw" type="text" placeholder="Old Password"><br>
-    <!-- has to agree with old password-->
-    New Password: <input id="pw" name="pw" type="text" placeholder="Password">
-    <br>
-    Confirm New Password: <input id="cpw" name="cpw" type="text" placeholder="Password">
+    <div class="pure-control-group">
+        <label for="oldpw">Old Password</label>
+        <input id="oldpw" name="oldpw" type="text"
+            placeholder="Old Password"></div><br>
+    <div class="pure-control-group">
+        <label for="ename">New Password</label>
+        <input id="pw" name="pw" type="text"
+            placeholder="New Password"></div><br>
+    <div class="pure-control-group">
+        <label for="cpw">Confirm New Password</label>
+        <input id="cpw" name="cpw" type="text"
+            placeholder="Confirm Password"></div><br>
+
     <br>
 
     <button type="submit" name="submit" value="pw"

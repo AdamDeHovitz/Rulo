@@ -8,14 +8,16 @@ import platform
 from werkzeug import secure_filename
 import datetime
 
+
+
+#---------pic stuff------#
 ALLOWED_FILES = set(['jpg', 'gif', 'png', 'jpeg', 'tif', 'tiff', 'jif', 'jfif', 'fpx'])
 
 #UPLOAD_LOC = R'C:\Users\Mr.Something\Documents\GitHub\Rulo\static\profilePictures'
 if platform.system == 'Windows':
   UPLOAD_LOC = R'static\profilePictures/'
 else:
-  UPLOAD_LOC = R'static/profilePicture/'
-
+  UPLOAD_LOC = R'static/profilePictures/'
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = 'a'
@@ -95,6 +97,7 @@ def user():
 @app.route('/proPic', methods=['GET', 'POST'])
 @authenticate
 def changePic():
+  username = session['username']
   if request.method == "POST":
     img = request.files['pic']
     if img and isFileAllowed(img.filename):
@@ -308,16 +311,33 @@ def addreview(uname = None):
 @authenticate
 @app.route('/event_page/<id>', methods=['GET', 'POST'])
 def event_page(id = None):
+    if request.method=="POST":
+        value = request.form["submit"]
+        if (value == "close"):
+            util.updateEventField(id, "open", False)
+        elif (value == "start"):
+            util.startEvent(id);
     username = escape(session['username'])
     udict = util.getUser(username)
     event = util.getEvent(id)
     return render_template('event_page.html', udict = udict, event = event)
+
+
 
 @authenticate
 @app.route('/event_page/<eventid>/<uname>', methods=['GET', 'POST'])
 def confirme(eventid = None, uname = None):
     util.confirmPerson(uname, eventid)
     return redirect('/event_page/'+ eventid )
+
+@authenticate
+@app.route('/confirm_notification/<eventid>', methods=['GET', 'POST'])
+def confirm_event(eventid = None):
+    username = escape(session['username'])
+    #util.confirmNotification(username, eventid)
+    util.removeUField(username, 'notifications', eventid)
+    return redirect('/event_page/'+ eventid )
+
 
 @authenticate
 @app.route('/newmsg/<eventid>', methods=['GET', 'POST'])

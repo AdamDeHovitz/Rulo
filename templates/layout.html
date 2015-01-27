@@ -19,33 +19,23 @@
   <div id="topMenu" class="pure-menu pure-menu-open pure-menu-horizontal one-edge-shadow">
 
     {% if username or udict['uname'] %}
+    <li><a href="/your_events"><img src="../static/RuloPic.png" width="50" height="50"></a></li>
     <li><a href="/your_events">Your Events</a></li>
     <li><a href="/events">Events</a></li>
     <li><a href="/create_events">Create Events</a></li>
     <li><a href="/personal">Personal Settings</a></li>
     <li><a href="/logout" style="align:right">Logout</a></li>
+     </div>
+
     {% else %}
+    <li><a href="/home"><img src="../static/RuloPic.png" width="50" height="50"></a></li>
     <li><a href="/home">Home</a></li>
     <li><a href="/register">Register</a></li>
     <li><a href="/login" style="text-align:right">Login</a></li>
+     </div>
     {% endif %}
     <!-- put in whichever tabs we want -->
 
-  </div>
-
-  <!--
-      <div class="pure-u-1-5">
-	<div class="pure-menu pure-menu-open pure-menu-horizontal">
-	  <ul>
-	    {% if udict['uname'] %}
-	    <li><a href="/logout">Logout</a></li>
-	    {% else %}
-	    <li><a href="/login">Login</a></li>
-	    {% endif %}
-	  </ul>
-	</div>
-      </div>
-    -->
 
   {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -63,6 +53,23 @@
       <div class="pure-u-3-5">
 	<!-- <font face ="Baskerville" size ="6" style="text-align:center">Rulo</font> -->
 <section id="mainTitle"> Rulo </section>
+{% if username or udict['uname'] %}
+    <center>
+
+    {% for notification in udict['notifications'] %}
+	{% if loop.index == 1 %}
+     Starting events
+	{% endif %}
+     <br>
+     <form class="pure-form pure-form-aligned" method="POST" action={{"/confirm_notification/" ~ notification}}>
+     <button type="submit"
+	   class="pure-button pure-button-primary"> Go to </button>
+     </form>
+      <br><br>
+
+
+    {% endfor %} </center>
+    {% endif %}
 	{% block body %}
 	{% endblock %}
 

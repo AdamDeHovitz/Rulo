@@ -12,7 +12,7 @@ from datetime import datetime
 if platform.system() == 'Windows':
   UPLOAD_LOC = R'static\profilePictures/'
 else:
-  UPLOAD_LOC = R'../static/profilePicture/'
+  UPLOAD_LOC = R'static/profilePictures/'
 
 
 picsDB = MongoClient().gridfs_example
@@ -42,7 +42,9 @@ def uploadPicture (picture):
     print UPLOAD_LOC
     print(type(picture))
     print (os.path.join(UPLOAD_LOC, filename))
+    print "have not saved yet..."
     picture.save(os.path.join(UPLOAD_LOC, filename))
+    print "saved the pic"
   return filename
 
 
@@ -81,6 +83,7 @@ def getPicture(user):
   path = os.path.join(UPLOAD_LOC, filename)
   path = os.path.join('..', path)
   return filename
+
 
 #----------------------USER STUFF--------------------#
 def newUser(udict):
@@ -160,6 +163,7 @@ def addPerson(pdict):
     pdict['hevents'] = [] #hosted events
     pdict['revents'] = [] #requested events
     pdict['aevents'] = [] #approved events
+    pdict['notifications'] = [] #event notifs
     pdict['avrate'] = 0.0
     users.insert(pdict)
 
@@ -272,6 +276,30 @@ def getHostedEvents(uname):
     es = u.get('hevents')
     return events.find( { '_id' : { '$in' : es } } )
 
+'''
+def confirmNotification(uname, eventid):
+
+
+    notification = users.find_one(
+        {
+            uname:{
+                'notifications': {
+                    '$elemMatch': {
+                        "id": ObjectId(eventid)
+                        }
+                        }
+                }
+            }
+        )
+    
+  
+    users.update(
+        { 'uname' : uname },
+        { '$pull' : { 'notifications' : notification.get('_id') }
+    
+    })  '''
+       
+    
 
 
 #--------------------------EVENT STUFF------------------------#
@@ -282,6 +310,7 @@ def createEvent(edict):
     edict['members'] = []
     edict['msgs'] = [] # list of dictionaries, msgs should have: time, user, msg
     edict['open'] = True
+    edict['started'] = False
     edict['datetime'] = datetime.today()
     e = events.insert(edict)
     #print e
@@ -305,10 +334,6 @@ def updateEField(eventid, field, data):
         { '_id' : ObjectId(eventid) },
         { '$push' : { field : data } }
     )
-
-
-
-
 
 def pullEField(eventid, field, data):
     events.update(
@@ -372,7 +397,28 @@ def deleteEvent(eventid):
     #Now let's remove the event itself
     events.remove(ev)
 
-
+def startEvent(eventid):
+    
+    ev = events.find_one( { '_id' : ObjectId( eventid ) } )
+    '''
+    notification = {}
+    notification["id"] = eventid
+    notification["ename"]= ev.get("ename")
+    for member in ev.get("members"):
+        print(member + " getting the notification")
+        users.update(
+        { 'uname' : member },
+        { '$push' : { 'notifications' : notification } }
+        )
+        '''
+    events.update( {"_id":ObjectId(eventid)} , { '$set': {'started':True} } )
+    print (ev.get("started"))
+    for member in ev.get("members"):
+        users.update(
+        { 'uname' : member },
+        { '$push' : { 'notifications' : eventid } }
+        )
+    
 def validEvents(uname):
     '''
     returns a list of the events uname can join based on
@@ -428,13 +474,13 @@ def setup():
 if __name__ == "__main__":
 
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
-    '''
+    #'''
     for e in events.find():
         events.remove(e)
     for p in users.find():
         users.remove(p)
-    setup()
-    '''
+        #setup()
+    #xs'''
     #------UNCOMMENT TO PRINT STUFF---------#
     #'''
     for person in users.find():
