@@ -29,7 +29,7 @@ events = db.events
     print picture
     _id = fs.put(picture)
     print "uploaded"
-    return _id"""
+    return _id """
 
 def uploadPicture (picture):
   try:
@@ -240,16 +240,17 @@ def addHostPerson(eventid, uname):
 
 
 def getRequestedEvents(uname):
-    u = getUser(uname)
-    es = u.get('revents')
-    print "revents"
-    print es
-    return events.find( { '_id' : { '$in' : es } } )
+  u = getUser(uname)
+  es = u.get('revents')
+  print "revents"
+  print es
+  return events.find( { '_id' : { '$in' : es } } )
 
 def getApprovedEvents(uname):
-    u = getUser(uname)
-    es = u.get('aevents')
-    return events.find( { '_id' : { '$in' : es } } )
+  u = getUser(uname)
+  es = u.get('aevents')
+  return events.find( { '_id' : { '$in' : es } } )
+
 '''
 eventList = list(getUserEvents(uname))
     approved = []
