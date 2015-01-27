@@ -80,14 +80,6 @@ def user():
         #img = stepOne.load()
         #print img.read()
         img = "default"
-        '''
-        DEAD CODE IGNORE
-        print type(send_from_directory(app.static_folder, 'ewokPing.jpg'))
-        img = send_from_directory('static', 'ewokPing.jpg')
-        print img
->>>>>>> 6049dc3f7c9cd18e8cbcd176061c971514dd78b8
-        print '\n\nDefault image assigned to newuser'
-        print type(img)'''
         newuser['pic'] = img
 
         valid_msg = util.newUser(newuser)
@@ -218,8 +210,7 @@ def process():
         #util.addHostPerson(newevent, username)
         util.updateUField(username, 'hevents', newevent)
         return redirect('/events')
-    #return render_template('eventCreated.html', udict=util.getUser(username), edict=edict)
-
+        
 
 @app.route('/events', methods=['GET','POST'])
 @authenticate
@@ -272,7 +263,6 @@ def confirm(event = None, uname = None):
 @authenticate
 def delete():
     util.deleteEvent(request.form["submit"])
-
     return redirect('/your_events')
 
 @authenticate
