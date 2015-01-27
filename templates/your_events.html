@@ -2,20 +2,21 @@
 
 {% block body %}
 
-<h1>Your Events</h1>
+
 
 
 {% for list in alist %}
 
 <h1>
-{% if loop.index == 0 %}
+{% if loop.index == 1 %}
 Your Events
-{% elif loop.index == 1 %}
-Joined Events
 {% elif loop.index == 2 %}
+Joined Events
+{% elif loop.index == 3 %}
 Requested Events
 {% endif %}
 </h1>
+{% if list[0] %}
 
 {% for e in list %}
 <h2> Name: <a href={{"/event_page/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
@@ -47,7 +48,7 @@ Requested Events
 <a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <br></li>
 {% endfor %}
 {% else %}
-<br><i>No Other Members</i><br>
+<i>No Other Members</i><br>
 {% endif %}
 {% if loop.index == 0 %}
 <form action="/delete_event" method="post" class="pure-form pure-form-aligned">
@@ -57,6 +58,10 @@ Requested Events
 </form>
 {% endif %}
 {% endfor %}
+{% else %}  
+<i>Not Available</i>
+<!-- list is empty !-->
+{% endif %}
 {% endfor %}
 <!--
 <br>

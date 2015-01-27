@@ -254,8 +254,8 @@ def your_event():
     username = escape(session['username'])
     udict = util.getUser(username)
     all_lists =[]
-    all_lists.append(util.getApprovedEvents(username))
     all_lists.append(util.getHostedEvents(username))
+    all_lists.append(util.getApprovedEvents(username))
     all_lists.append(util.getRequestedEvents(username))
 
     return render_template('your_events.html', udict = udict, alist = all_lists)
