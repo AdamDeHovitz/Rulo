@@ -11,7 +11,9 @@ background: #DFE7F2;
 .button-small {
   font-size: 85%;
 }
-
+.button-delete {
+            background: rgb(202, 60, 60); /* this is a maroon */
+        }
 
 .personal {
   background-color: #DFE7F2

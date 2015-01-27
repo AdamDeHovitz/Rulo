@@ -55,10 +55,10 @@
 {% endif %}
   created {{e['datetime'].month}}/{{e['datetime'].day}} at {{e['datetime'].hour}}:{{e['datetime'].minute}} <br>
 {% if e['creator']==udict['uname'] %}
-<form action="/delete_event" method="post" class="pure-form pure-form-aligned">
+<form action= {{"/delete_event/" ~ e['_id']}} method="post" class="pure-form pure-form-aligned">
 
-  <button type="submit" name="submit" value='{{e['_id']}}'
-	  class="pure-button""> Delete </button>
+  <button type="submit" name="submit" value='/your_events'
+	  class="pure-button button-delete"> Delete </button>
 </form>
 {% endif %}
 

@@ -270,12 +270,12 @@ def confirm(event = None, uname = None):
 
     return redirect('/your_events')
 
-@app.route('/delete_event', methods=['GET', 'POST'])
 @authenticate
-def delete():
-    util.deleteEvent(request.form["submit"])
+@app.route('/delete_event/<id>', methods=['GET', 'POST'])
+def delete(id = None):
+    util.deleteEvent(id)
 
-    return redirect('/your_events')
+    return redirect(request.form["submit"])
 
 @authenticate
 @app.route('/user/<uname>', methods=['GET', 'POST'])
