@@ -81,10 +81,6 @@ def getPicture(user):
   path = os.path.join(UPLOAD_LOC, filename)
   path = os.path.join('..', path)
   return filename
-<<<<<<< HEAD
-
-=======
->>>>>>> b9f1c49dd36c5109c9f8fb883d8ae59ce56a7be2
 
 #----------------------USER STUFF--------------------#
 def newUser(udict):
