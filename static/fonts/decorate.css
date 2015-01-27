@@ -18,6 +18,12 @@ background: #DFE7F2;
 }
 
 
+.one-edge-shadow {
+	-webkit-box-shadow: 0 8px 6px -6px black;
+	   -moz-box-shadow: 0 8px 6px -6px black;
+	        box-shadow: 0 8px 6px -6px black;
+}
+
 
 /*Good Colors:
 Mint: #FF944D
@@ -55,6 +61,9 @@ BAD ==> Grey-Blue: #DFE7F2*/
   font-family: elegantLux;
 }
 
+#topMenu {
+  background-color:#EEEEEE;
+}
 
 body {
   color: #DDDDDD;
@@ -77,7 +86,7 @@ a {
   text-decoration: underline;
   font-weight: bold;
   color: #CCA300;
-  border-bottom: 2px solid #542C62;
+  border-bottom: 2px solid #BBBBBB;
 }
 
 h1{
