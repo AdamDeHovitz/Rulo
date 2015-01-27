@@ -6,7 +6,7 @@ import os
 import platform
 #import Image
 from werkzeug import secure_filename
-import datetime
+from datetime import datetime
 
 ALLOWED_FILES = set(['jpg', 'gif', 'png', 'jpeg', 'tif', 'tiff', 'jif', 'jfif', 'fpx'])
 
@@ -321,7 +321,8 @@ def newmsg(eventid = None):
     msg = {}
     msg['user'] = username
     msg['msg'] = request.form["msg"]
-    # msg['time'] = ???? how do we do time
+    msg['time'] = datetime.today()
+    print type(msg['time'])
     util.updateEField(eventid, 'msgs', msg)
 
     return redirect('/event_page/'+ eventid )

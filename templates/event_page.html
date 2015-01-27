@@ -3,7 +3,7 @@
 
 {% block body %}
 <h1> {{event['ename']}}</h1>
-
+created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['datetime'].hour}}:{{event['datetime'].minute}}<br>
 <b>Host:</b> {{event['creator']}}
 <br>
 <b>Members:</b> <br>
@@ -13,12 +13,12 @@
 {% if udict['uname'] == event['creator'] %}
 <b>Requests:</b>
 {% for u in event['requests'] %}<li>
-  <a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <font size="2"><a href={{"/confirm/" ~ event["_id"] ~ "/"~ u }}>Confirm</a>><br></li>
+  <a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <font size="2"><a href={{"/confirm/" ~ event["_id"] ~ "/"~ u }}>Confirm</a><br></li></font>
 
 {% endfor %}
 {% endif %}
 <br>
-<b>Event Created:</b> {{event['datetime'].strftime()}} <br>
+
 <br><br>
 Event is
 	{% if event['open']%}
@@ -45,7 +45,7 @@ Event is
 <h3> Messages: </h3>
 {% for msg in event['msgs'] %}
 <font size="3.25">{{msg['msg']}}<br> </font>
-<font size="2">&nbsp;-  <a href={{"/user/" ~ msg['user']}} style="text-decoration:none;">{{msg['user']}}</a> </font> <font size="2.5">(4:20)</font><br><br>
+<font size="3">&nbsp;-  <a href={{"/user/" ~ msg['user']}} style="text-decoration:none;">{{msg['user']}}</a> </font> <font size="2.5">{{msg['time'].month}}/{{msg['time'].day}} at {{msg['time'].hour}}:{{msg['time'].minute}}<br></font><br><br>
 <!-- Still needs time --!>
      {% endfor %}
      
