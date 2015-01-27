@@ -79,6 +79,12 @@ Event is
      
      <br>
      <br>
-     Rating:
+  {% if udict['uname'] == event['creator'] %}
+    <form action= {{"/delete_event/" ~ event['_id']}} method="post" class="pure-form pure-form-aligned">
+
+  <button type="submit" name="submit" value='/events'
+	  class="pure-button button-delete"> Delete Event </button>
+</form>
+{% endif %}
      {% endblock %}
      
