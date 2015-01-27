@@ -327,7 +327,8 @@ def confirme(eventid = None, uname = None):
 @app.route('/confirm_notification/<eventid>', methods=['GET', 'POST'])
 def confirm_event(eventid = None):
     username = escape(session['username'])
-    util.confirmNotification(username, eventid)
+    #util.confirmNotification(username, eventid)
+    util.removeUField(username, 'notifications', eventid)
     return redirect('/event_page/'+ eventid )
 
 

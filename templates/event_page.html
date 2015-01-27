@@ -6,7 +6,9 @@
 created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['datetime'].hour}}:{{event['datetime'].minute}}<br>
 <b>Host:</b> {{event['creator']}}
 <br>
-{% if udict['uname'] == event['creator'] and False == event['open'] %}
+{% if event['started'] %}
+<font color="green" size = "8">Event has started!</font>
+{% elif udict['uname'] == event['creator'] and false == event['open'] %}
 <form method="post" class="pure-form pure-form-aligned">
     <fieldset>  
         <button type="submit" id="submit" name="submit" value = "start"
