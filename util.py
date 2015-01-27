@@ -163,6 +163,7 @@ def addPerson(pdict):
     pdict['hevents'] = [] #hosted events
     pdict['revents'] = [] #requested events
     pdict['aevents'] = [] #approved events
+    pdict['notifications'] = [] #event notifs
     pdict['avrate'] = 0.0
     users.insert(pdict)
 
@@ -275,6 +276,14 @@ def getHostedEvents(uname):
     es = u.get('hevents')
     return events.find( { '_id' : { '$in' : es } } )
 
+def confirmNotification(uname, eventid):
+    notification = []
+    notification.append(eventid)
+    notification.append(getEventAttribute(eventid, "uname"))
+    users.update(
+        { 'uname' : uname },
+        { '$pull' : { 'notifications' : notification } })
+    
 
 
 #--------------------------EVENT STUFF------------------------#
@@ -308,10 +317,6 @@ def updateEField(eventid, field, data):
         { '_id' : ObjectId(eventid) },
         { '$push' : { field : data } }
     )
-
-
-
-
 
 def pullEField(eventid, field, data):
     events.update(
@@ -375,6 +380,17 @@ def deleteEvent(eventid):
     #Now let's remove the event itself
     events.remove(ev)
 
+def startEvent(eventid):
+    ev = events.find_one( { '_id' : ObjectId( eventid ) } )
+    notification = []
+    notification.append(eventid)
+    notification.append(ev.get("ename"))
+    for member in ev.get("members"):
+        print(member + " getting the notification")
+        users.update(
+        { 'uname' : member },
+        { '$push' : { 'notifications' : notification } }
+        )
 
 def validEvents(uname):
     '''
@@ -430,13 +446,13 @@ def setup():
 if __name__ == "__main__":
 
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
-    '''
+    #'''
     for e in events.find():
         events.remove(e)
     for p in users.find():
         users.remove(p)
-    setup()
-    '''
+        #setup()
+    #xs'''
     #------UNCOMMENT TO PRINT STUFF---------#
     #'''
     for person in users.find():
