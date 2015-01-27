@@ -6,6 +6,7 @@ import re
 import os
 import platform
 from werkzeug import secure_filename
+from datetime import datetime
 
 #UPLOAD_LOC = R'C:\Users\Mr.Something\Documents\GitHub\Rulo\static\profilePictures'
 if platform.system() == 'Windows':
@@ -29,7 +30,7 @@ events = db.events
     print picture
     _id = fs.put(picture)
     print "uploaded"
-    return _id"""
+    return _id """
 
 def uploadPicture (picture):
   try:
@@ -97,7 +98,7 @@ def newUser(udict):
     pwcheck = checkNewPW(udict['pw'], udict['rpw'])
     emailcheck = checkEmail(email)
     validagecheck = True
-    agecheck = (age >= 13)
+    agecheck = (int(age) >= 13)
 
     s = ""
     if uncheck == False:
@@ -240,16 +241,17 @@ def addHostPerson(eventid, uname):
 
 
 def getRequestedEvents(uname):
-    u = getUser(uname)
-    es = u.get('revents')
-    print "revents"
-    print es
-    return events.find( { '_id' : { '$in' : es } } )
+  u = getUser(uname)
+  es = u.get('revents')
+  print "revents"
+  print es
+  return events.find( { '_id' : { '$in' : es } } )
 
 def getApprovedEvents(uname):
-    u = getUser(uname)
-    es = u.get('aevents')
-    return events.find( { '_id' : { '$in' : es } } )
+  u = getUser(uname)
+  es = u.get('aevents')
+  return events.find( { '_id' : { '$in' : es } } )
+
 '''
 eventList = list(getUserEvents(uname))
     approved = []
@@ -275,6 +277,8 @@ def createEvent(edict):
     #list of people in event, including creator
     edict['members'] = []
     edict['msgs'] = [] # list of dictionaries, msgs should have: time, user, msg
+    edict['open'] = True
+    edict['datetime'] = datetime.today()
     e = events.insert(edict)
     #print e
     return e #returns w/o objectid( )
@@ -327,10 +331,13 @@ def confirmPerson(uname, eventid):
     updateEField(eventid, 'members', uname)
     updateUField(uname, 'aevents', ObjectId(eventid))
     removeUField(uname, 'revents', ObjectId(eventid))
+    ev = events.find_one( { '_id' : ObjectId( eventid ) } )
+    print("Length: "+str(len(list(ev['members']))))
+    if (int(ev['numb'] ) <= (len(list(ev['members'])) + 1)):
+        print("Closing thing")
+        events.update( {"_id":ObjectId(eventid)} , { '$set': {"open":False} } )
 
-
-
-
+        
 
 def getEvent(eventid):
     print("id:")
@@ -361,16 +368,21 @@ def deleteEvent(eventid):
     events.remove(ev)
 
 
-def eventsNotIn(uname):
+def validEvents(uname):
     '''
-    returns a list of the events uname is not already involved with
+    returns a list of the events uname can join based on
+    - Not already in
+    - Open
+    - GEOLOCATION********************!!!!!!
+      - we could do some cool cs list organizing things with like a insertion sort
     '''
     evs = []
     for e in events.find():
         nc = e['creator'] != uname
         nm = uname not in e['members']
         nr = uname not in e['requests']
-        if nc and nm and nr:
+        if nc and nm and nr and e['open']:
+            print e['open']
             evs.append(e)
     return evs
 
@@ -384,6 +396,7 @@ def setup():
     newuser['rpw'] = 'sssss'
     newuser['age'] = 18
     newuser['email'] = 's@g.c'
+    newuser['pic'] = "default"
     newUser(newuser)
 
     edict = {}
@@ -408,24 +421,26 @@ def setup():
 if __name__ == "__main__":
 
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
-    #'''
+    '''
     for e in events.find():
         events.remove(e)
     for p in users.find():
         users.remove(p)
     setup()
-    #'''
+    '''
     #------UNCOMMENT TO PRINT STUFF---------#
-'''
+    '''
     for person in users.find():
         print person
         print "\n"
     print "-------"
     print listEvents()
     '''
+    d = datetime.today()
+    print type(d)
 
-    #print getUser('ergoijergo')
 
+    
 """
 Events:
 'ename', u'desc', 'total', 'numb', 'price', u'long', 'lat'

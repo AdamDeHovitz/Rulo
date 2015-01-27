@@ -2,134 +2,72 @@
 
 {% block body %}
 
-<h1>Your Events</h1>
 
-{% if hlist %}
 
-{% for e in hlist %}
+
+{% for list in alist %}
+
+<h1>
+  {% if loop.index == 1 %}
+  Your Events
+  {% elif loop.index == 2 %}
+  Joined Events
+  {% elif loop.index == 3 %}
+  Requested Events
+  {% endif %}
+</h1>
+{% if list[0] %}
+
+{% for e in list %}
 <h2> Name: <a href={{"/event_page/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
 {% if e['numb'] %}
-   <b>Number of people: </b> {{e['numb']}} <br>
+<b>Number of people: </b> {{e['numb']}} <br>
 {% endif %}
 {% if e['total'] %}
-   <b>Total Price: </b> {{e['total']}} <br>
+<b>Total Price: </b> {{e['total']}} <br>
 {% endif %}
 {% if e['price'] %}
-   <b>Price Per Person: </b> {{e['price']}} <br>
+<b>Price Per Person: </b> {{e['price']}} <br>
 {% endif %}
-   <b>Description:</b> {{e['desc']}} <br>
- <b>Active Requests:</b>
+<b>Description:</b> {{e['desc']}} <br>
+{% if loop.index == 1 %}
+<b>Active Requests:</b>
 <br>
 {% if e['requests'] %}
 {% for u in e['requests'] %}<li>
-<a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br></li>
+  <a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br></li>
 {% endfor %}
 {% else %}
 <i>No Active Requests</i><br>
 {% endif %}
- <b>Members:</b>
-
+{% endif %}
+<b>Members:</b>
+<li><a href={{"/user/" ~ e['creator']}} style="text-decoration:none;">{{e['creator']}}</a><font size="2.5">(Host)</font></li>
 {% if e['members'] %}
 {% for u in e['members'] %}<li>
-<a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <br></li>
+  <a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <br></li>
 {% endfor %}
 {% else %}
-<i>No Members</i><br>
+<i>No Other Members</i><br>
 {% endif %}
-
+{% if loop.index == 0 %}
 <form action="/delete_event" method="post" class="pure-form pure-form-aligned">
-
-<button type="submit" name="submit" value='{{e['_id']}}'
-	   class="pure-button" color= "red"> Delete </button>
+  
+  <button type="submit" name="submit" value='{{e['_id']}}'
+	  class="pure-button" color= "red"> Delete </button>
 </form>
-{% endfor %}
-{% endif %}
-<br>
-<br>
-
-
-
-
-
-
-<h1> Joined Events </h1>
-
-{% if jlist %}
-{% for e in jlist %}
-<h2> Name: <a href={{"/event_page/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
-{% if e['numb'] %}
-   <b>Number of people: </b> {{e['numb']}} <br>
-{% endif %}
-{% if e['total'] %}
-   <b>Total Price: </b> {{e['total']}} <br>
-{% endif %}
-{% if e['price'] %}
-   <b>Price Per Person: </b> {{e['price']}} <br>
-{% endif %}
-   <b>Description:</b> {{e['desc']}} <br>
- <b>Active Requests:</b>
-<br>
-{% if e['requests'] %}
-{% for u in e['requests'] %}<li>
-<a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br></li>
-{% endfor %}
-{% else %}
-<i>No Active Requests</i><br>
-{% endif %}
- <b>Members:</b>
-
-{% if e['members'] %}
-{% for u in e['members'] %}<li>
-<a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <br></li>
-{% endfor %}
-{% else %}
-<i>No Members</i><br>
 {% endif %}
 {% endfor %}
+{% else %}  
+<i>Not Available</i>
+<!-- list is empty !-->
 {% endif %}
-
-
-
-<h1> Requested Events </h1>
-    
-    {% if rlist %}
-    {% for e in rlist %}
-<h2> Name: <a href={{"/event_page/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
-    {% if e['numb'] %}
-   <b>Number of people: </b> {{e['numb']}} <br>
-{% endif %}
-{% if e['total'] %}
-   <b>Total Price: </b> {{e['total']}} <br>
-{% endif %}
-{% if e['price'] %}
-   <b>Price Per Person: </b> {{e['price']}} <br>
-{% endif %}
-   <b>Description:</b> {{e['desc']}} <br>
- <b>Active Requests:</b>
-<br>
-{% if e['requests'] %}
-{% for u in e['requests'] %}<li>
-<a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <font size="2"><a href={{"/confirm/" ~ e["_id"] ~ "/"~ u }}>Confirm</a></font><br></li>
 {% endfor %}
-{% else %}
-<i>No Active Requests</i><br>
-{% endif %}
- <b>Members:</b>
-
-{% if e['members'] %}
-{% for u in e['members'] %}<li>
-<a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <br></li>
-{% endfor %}
-{% else %}
-<i>No Members</i><br>
-{% endif %}
-    {% endfor %}
-    {% endif %}
 
 
 
 
- 
+
 
 
 {% endblock %}

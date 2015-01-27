@@ -100,6 +100,7 @@ var distanceFunc = function (origin, destination, div){
 	     }, callback);
 }
 
+
 function callback (response, status) {
        console.log("in callback")
 	     if (status != google.maps.DistanceMatrixStatus.OK){
@@ -120,7 +121,7 @@ function callback (response, status) {
               }
           }
 }
-                /*
+/*
                 DEAD CODE (Could be used in future for storing distance variables) CAN IGNORE
   		          var element = results[j];
   		          var dist = element.distance.text;
@@ -138,4 +139,4 @@ function callback (response, status) {
   	    return answer;
   	}
   }
-}*/
+} */

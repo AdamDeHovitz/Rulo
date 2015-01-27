@@ -1,10 +1,12 @@
 from flask import flash, Flask, g, render_template, session, redirect, url_for, \
      escape, request, send_from_directory
 import util #util.py
+from functools import wraps
 import os
 import platform
 #import Image
 from werkzeug import secure_filename
+import datetime
 
 ALLOWED_FILES = set(['jpg', 'gif', 'png', 'jpeg', 'tif', 'tiff', 'jif', 'jfif', 'fpx'])
 
@@ -20,18 +22,19 @@ app.secret_key = 'a'
 app.config['UPLOAD_LOC'] = UPLOAD_LOC
 
 
-def authenticate(page):
-    def yo(func):
-        @wraps(func)
-        def inner(*args):
-            if 'username' not in session:
-                session['nextpage']=page
-                flash("Incorrect access, please login")
-                return redirect("/login")
-                result = func(*args)
-            return result
-        return inner
-    return yo
+
+def authenticate(func):
+    @wraps(func)
+    def inner(*args):
+        if 'username' not in session:
+            session['nextpage']='/'
+            flash("Incorrect access, please login")
+            return redirect("/login")
+        username = escape(session['username'])
+        result = func(*args)
+        return result
+    return inner
+
 
 def isFileAllowed (filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_FILES
@@ -90,6 +93,7 @@ def user():
             return redirect('/register')
 
 @app.route('/proPic', methods=['GET', 'POST'])
+@authenticate
 def changePic():
   if request.method == "POST":
     img = request.files['pic']
@@ -132,13 +136,15 @@ def verify():
 
 
 @app.route('/personal', methods=['GET','POST'])
+@authenticate
 def p():
     username = escape(session['username'])
     picture = util.getPicture (session['username'])
     return render_template('personal.html', udict=util.getUser(username), change = "Null", profile = picture)
 
 
-@app.route('/personal_process', methods=['GET','POST'])
+@app.route('/personal_process', methods=['POST'])
+@authenticate
 def personal_process():
     username = escape(session['username'])
     if request.method=="POST":
@@ -165,7 +171,7 @@ def personal_process():
             util.addField(username, submit, request.form[submit])
     return redirect('/personal')
 
-
+@authenticate
 @app.route('/personal/<thing>', methods=['GET', 'POST'])
 def personal(thing = None):
     username = escape(session['username'])
@@ -176,13 +182,14 @@ def personal(thing = None):
 
 
 @app.route('/create_events', methods=['GET','POST'])
+@authenticate
 def event_create():
     username = escape(session['username'])
 
     return render_template('eventCreate.html', udict=util.getUser(username))
 
 
-@app.route('/create_event_process', methods=['GET','POST'])
+@app.route('/create_event_process', methods=['POST'])
 def process():
     if request.method=="POST":
         username = escape(session['username'])
@@ -203,24 +210,27 @@ def process():
         #util.addEventPerson(username, newevent)
         #util.addHostPerson(newevent, username)
         util.updateUField(username, 'hevents', newevent)
-        return render_template('eventCreated.html', udict=util.getUser(username), edict=edict)
+        return redirect('/events')
+    #return render_template('eventCreated.html', udict=util.getUser(username), edict=edict)
 
 
 @app.route('/events', methods=['GET','POST'])
+@authenticate
 def events():
     username = escape(session['username'])
     udict = util.getUser(username)
     #elist = util.listEvents();
-    elist = util.eventsNotIn(username)
+    elist = util.validEvents(username)
     return render_template('events.html', udict=udict, elist=elist)
 
 
 @app.route('/joinevent', methods=['GET','POST']) #does order matter?
+@authenticate
 def joinevent():
     username = escape(session['username'])
     udict = util.getUser(username)
     #elist = util.listEvents(); # do we need this?
-    elist = util.eventsNotIn(username)
+    elist = util.validEvents(username)
     if request.method=="POST":
         event = request.form["submit"] # objectid
         #print event
@@ -231,17 +241,20 @@ def joinevent():
         return render_template('events.html', udict=udict, elist=elist,
                                name = util.getEventAttribute(event, "ename"))
 
+@authenticate
 @app.route('/your_events', methods=['GET','POST'])
+
 def your_event():
     username = escape(session['username'])
     udict = util.getUser(username)
-    jlist = util.getApprovedEvents(username);
-    hlist = util.getHostedEvents(username);
-    rlist = util.getRequestedEvents(username)
+    all_lists =[]
+    all_lists.append(util.getHostedEvents(username))
+    all_lists.append(util.getApprovedEvents(username))
+    all_lists.append(util.getRequestedEvents(username))
 
-    return render_template('your_events.html', udict = udict, hlist=hlist, jlist=jlist,
-                           rlist=rlist)
+    return render_template('your_events.html', udict = udict, alist = all_lists)
 
+@authenticate
 @app.route('/confirm/<event>/<uname>', methods=['GET', 'POST'])
 def confirm(event = None, uname = None):
     util.confirmPerson(uname, event)
@@ -249,11 +262,13 @@ def confirm(event = None, uname = None):
     return redirect('/your_events')
 
 @app.route('/delete_event', methods=['GET', 'POST'])
+@authenticate
 def delete():
     util.deleteEvent(request.form["submit"])
 
     return redirect('/your_events')
 
+@authenticate
 @app.route('/user/<uname>', methods=['GET', 'POST'])
 def user_page(uname = None):
 
@@ -273,6 +288,18 @@ def user_page(uname = None):
 
     return render_template('user.html', udict = udict, pdict=pdict, profile = pic)
 
+@app.route('/addreview/<uname>', methods=['GET', 'POST'])
+def addreview(uname = None):
+    username = escape(session['username'])
+    udict = util.getUser(username)
+    review = {}
+    review['user'] = username
+    review['rating'] = request.form["rating"]
+    review['comment'] = request.form["comment"]
+    util.updateUField(uname, 'reviews', review)
+    return redirect('/user/'+ uname)
+
+@authenticate
 @app.route('/event_page/<id>', methods=['GET', 'POST'])
 def event_page(id = None):
     username = escape(session['username'])
@@ -280,11 +307,13 @@ def event_page(id = None):
     event = util.getEvent(id)
     return render_template('event_page.html', udict = udict, event = event)
 
+@authenticate
 @app.route('/event_page/<eventid>/<uname>', methods=['GET', 'POST'])
 def confirme(eventid = None, uname = None):
     util.confirmPerson(uname, eventid)
     return redirect('/event_page/'+ eventid )
 
+@authenticate
 @app.route('/newmsg/<eventid>', methods=['GET', 'POST'])
 def newmsg(eventid = None):
     username = escape(session['username'])
