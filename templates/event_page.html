@@ -13,7 +13,7 @@
 {% if udict['uname'] == event['creator'] %}
 <b>Requests:</b>
 {% for u in event['requests'] %}<li>
-        <a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <font size="2"><a href={{"/event_page/" ~ event["_id"] ~ "/"~ u }}>Confirm</a></font><br></li>
+        <a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <font size="2"><a href={{"/confirm/" ~ event["_id"] ~ "/"~ u }}>Confirm</a>><br></li>
 
 {% endfor %}
 {% endif %}

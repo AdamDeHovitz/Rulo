@@ -254,12 +254,12 @@ def joinevent():
 def your_event():
     username = escape(session['username'])
     udict = util.getUser(username)
-    jlist = util.getApprovedEvents(username);
-    hlist = util.getHostedEvents(username);
-    rlist = util.getRequestedEvents(username)
+    all_lists =[]
+    all_lists.append(util.getApprovedEvents(username))
+    all_lists.append(util.getHostedEvents(username))
+    all_lists.append(util.getRequestedEvents(username))
 
-    return render_template('your_events.html', udict = udict, hlist=hlist, jlist=jlist,
-                           rlist=rlist)
+    return render_template('your_events.html', udict = udict, alist = all_lists)
 
 @app.route('/confirm/<event>/<uname>', methods=['GET', 'POST'])
 @authenticate
