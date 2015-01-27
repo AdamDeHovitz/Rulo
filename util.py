@@ -364,7 +364,7 @@ def confirmPerson(uname, eventid):
     removeUField(uname, 'revents', ObjectId(eventid))
     ev = events.find_one( { '_id' : ObjectId( eventid ) } )
     print("Length: "+str(len(list(ev['members']))))
-    if (ev['numb'] != None and int(ev['numb'] ) <= (len(list(ev['members'])) + 1)):
+    if (ev['numb'] != "" and int(ev['numb'] ) <= (len(list(ev['members'])) + 1)):
         updateEventField(eventid, "open", False)
 
 
