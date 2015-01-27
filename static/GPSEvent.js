@@ -124,6 +124,11 @@ function callback (response, status) {
 }
 
 window.addEventListener("load", function getGeoLoc() {
+  action()
+  var storage = document.getElementById('loc')
+  if (storage != null){
+    storage.value = currentLoc;
+  }
     action()
 }, false);
 
@@ -138,7 +143,7 @@ window.addEventListener("load", function getGeoLoc() {
   answer[0] = dist;
   }
   }
-  
+
   return answer;
   } else {
   alert("Distance Calculation failed due to: " + status);
