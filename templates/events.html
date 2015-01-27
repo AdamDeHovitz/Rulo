@@ -18,23 +18,16 @@
 } --><!-- need to figure out how to get GPS to run -->
 
   {% for e in elist %}
-<<<<<<< HEAD
+ <!-- {% raw %}
 
   {% if distTest() < .5 %}
   
   {% if e['datetime'] < datetime.today() %}
 			deleteEvent(e)
 			{% endif %}
-=======
-  <!--
-      if (distanceFunce(location, e) < 100){
-    -->
-  <!-- {% raw %}
-{% if e['datetime'] < datetime.today() %}
-			deleteEvent(e);
-			{% endif % }{% endraw %}
+{% endraw %}
 -->
->>>>>>> aa1c2eddafba1efb20eee43e4a6dfe886ae1a60a
+
 
   <h2> Name: {{e['ename']}} </h2> <br>
   Creator: {{e['creator']}} <br>

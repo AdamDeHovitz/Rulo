@@ -25,23 +25,8 @@
     <li><a href="/create_events">Create Events</a></li>
     <li><a href="/personal">Personal Settings</a></li>
     <li><a href="/logout" style="align:right">Logout</a></li>
-    {% if udict['notifications'] %}
-    <li><a href="/logout" style="align:right">Logout</a></li>
-    {% endif %}
      </div>
      
-    {% for notification in udict['notifications'] %}
-     <center>
-     {{notification['ename']}} is Starting!
-     <br>
-     <form class="pure-form pure-form-aligned" method="POST" action={{"/confirm_notification/" ~ notification['id']}}>
-     <button type="submit"  
-	   class="pure-button pure-button-primary"> Confirm </button>
-     <form>
-      <br><br>
- 
-     
-    {% endfor %} </center>
     {% else %}
     <li><a href="/home"><img src="../static/RuloPic.png" width="50" height="50"></a></li>
     <li><a href="/home">Home</a></li>
@@ -51,21 +36,6 @@
     {% endif %}
     <!-- put in whichever tabs we want -->
 
- 
-
-  <!--
-      <div class="pure-u-1-5">
-	<div class="pure-menu pure-menu-open pure-menu-horizontal">
-	  <ul>
-	    {% if udict['uname'] %}
-	    <li><a href="/logout">Logout</a></li>
-	    {% else %}
-	    <li><a href="/login">Login</a></li>
-	    {% endif %}
-	  </ul>
-	</div>
-      </div>
-    -->
 
   {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -82,7 +52,21 @@
       <div class="pure-u-1-5"></div>
       <div class="pure-u-3-5">
 	<font face ="Baskerville" size ="6" style="text-align:center">Rulo</font>
-
+{% if username or udict['uname'] %}
+    <center>
+    {% for notification in udict['notifications'] %}
+    
+     {{notification['ename']}} is Starting!
+     <br>
+     <form class="pure-form pure-form-aligned" method="POST" action={{"/confirm_notification/" ~ notification['id']}}>
+     <button type="submit"  
+	   class="pure-button pure-button-primary"> Confirm </button>
+     </form>
+      <br><br>
+ 
+     
+    {% endfor %} </center>
+    {% endif %}
 	{% block body %}
 	{% endblock %}
 
@@ -90,7 +74,7 @@
 
 
     </div>
-
+    
     {% block gps %}
 
 
