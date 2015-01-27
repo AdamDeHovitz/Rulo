@@ -178,9 +178,8 @@ def personal_process():
             util.addField(username, submit, request.form[submit])
     return redirect('/personal')
 
-
-@app.route('/personal/<thing>', methods=['GET', 'POST'])
 @authenticate
+@app.route('/personal/<thing>', methods=['GET', 'POST'])
 def personal(thing = None):
     username = escape(session['username'])
     udict = util.getUser(username)
@@ -261,8 +260,8 @@ def your_event():
 
     return render_template('your_events.html', udict = udict, alist = all_lists)
 
-@app.route('/confirm/<event>/<uname>', methods=['GET', 'POST'])
 @authenticate
+@app.route('/confirm/<event>/<uname>', methods=['GET', 'POST'])
 def confirm(event = None, uname = None):
     util.confirmPerson(uname, event)
 
@@ -275,8 +274,8 @@ def delete():
 
     return redirect('/your_events')
 
-@app.route('/user/<uname>', methods=['GET', 'POST'])
 @authenticate
+@app.route('/user/<uname>', methods=['GET', 'POST'])
 def user_page(uname = None):
 
     #if util. ---this will check if the uname exists
@@ -295,22 +294,22 @@ def user_page(uname = None):
 
     return render_template('user.html', udict = udict, pdict=pdict, profile = pic)
 
-@app.route('/event_page/<id>', methods=['GET', 'POST'])
 @authenticate
+@app.route('/event_page/<id>', methods=['GET', 'POST'])
 def event_page(id = None):
     username = escape(session['username'])
     udict = util.getUser(username)
     event = util.getEvent(id)
     return render_template('event_page.html', udict = udict, event = event)
 
-@app.route('/event_page/<eventid>/<uname>', methods=['GET', 'POST'])
 @authenticate
+@app.route('/event_page/<eventid>/<uname>', methods=['GET', 'POST'])
 def confirme(eventid = None, uname = None):
     util.confirmPerson(uname, eventid)
     return redirect('/event_page/'+ eventid )
 
-@app.route('/newmsg/<eventid>', methods=['GET', 'POST'])
 @authenticate
+@app.route('/newmsg/<eventid>', methods=['GET', 'POST'])
 def newmsg(eventid = None):
     username = escape(session['username'])
     udict = util.getUser(username)

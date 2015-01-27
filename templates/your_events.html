@@ -41,13 +41,13 @@ Requested Events
 {% endif %}
 {% endif %}
  <b>Members:</b>
-
+<li><a href={{"/user/" ~ e['creator']}} style="text-decoration:none;">{{e['creator']}}</a><font size="2.5">(Host)</font></li>
 {% if e['members'] %}
 {% for u in e['members'] %}<li>
 <a href={{"/user/" ~ u}} style="text-decoration:none;">{{u}}</a> <br></li>
 {% endfor %}
 {% else %}
-<i>No Members</i><br>
+<br><i>No Other Members</i><br>
 {% endif %}
 {% if loop.index == 0 %}
 <form action="/delete_event" method="post" class="pure-form pure-form-aligned">
