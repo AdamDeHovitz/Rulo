@@ -411,6 +411,7 @@ def setup():
   edict['desc'] = '1'
   edict['total'] = 10
   edict['price'] = 10
+  edict['loc'] = 0
   edict['long'] = 0
   edict['lat'] = 0
   newevent = createEvent(edict)
