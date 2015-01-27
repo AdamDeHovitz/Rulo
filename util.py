@@ -276,15 +276,29 @@ def getHostedEvents(uname):
     es = u.get('hevents')
     return events.find( { '_id' : { '$in' : es } } )
 
+'''
 def confirmNotification(uname, eventid):
 
-    '''
+
+    notification = users.find_one(
+        {
+            uname:{
+                'notifications': {
+                    '$elemMatch': {
+                        "id": ObjectId(eventid)
+                        }
+                        }
+                }
+            }
+        )
+    
+  
     users.update(
         { 'uname' : uname },
-        { '$pull' : { 'notifications' : notification['id']=eventid }
-    #<< pseudo code
-    })  
-        '''
+        { '$pull' : { 'notifications' : notification.get('_id') }
+    
+    })  '''
+       
     
 
 
@@ -296,6 +310,7 @@ def createEvent(edict):
     edict['members'] = []
     edict['msgs'] = [] # list of dictionaries, msgs should have: time, user, msg
     edict['open'] = True
+    edict['started'] = False
     edict['datetime'] = datetime.today()
     e = events.insert(edict)
     #print e
@@ -383,7 +398,9 @@ def deleteEvent(eventid):
     events.remove(ev)
 
 def startEvent(eventid):
+    
     ev = events.find_one( { '_id' : ObjectId( eventid ) } )
+    '''
     notification = {}
     notification["id"] = eventid
     notification["ename"]= ev.get("ename")
@@ -393,7 +410,15 @@ def startEvent(eventid):
         { 'uname' : member },
         { '$push' : { 'notifications' : notification } }
         )
-
+        '''
+    events.update( {"_id":ObjectId(eventid)} , { '$set': {'started':True} } )
+    print (ev.get("started"))
+    for member in ev.get("members"):
+        users.update(
+        { 'uname' : member },
+        { '$push' : { 'notifications' : eventid } }
+        )
+    
 def validEvents(uname):
     '''
     returns a list of the events uname can join based on

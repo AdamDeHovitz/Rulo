@@ -11,41 +11,40 @@
 <h2>Check out your local Events </h2>
 
 <form action="/joinevent" method="post" class="pure-form pure-form-aligned">
-
-  <hr>
-  <!-- window.onload= functioning(){
-  action();
-} --><!-- need to figure out how to get GPS to run -->
-
-  {% for e in elist %}
- <!-- {% raw %}
-
-  {% if distTest() < .5 %}
-  
-  {% if e['datetime'] < datetime.today() %}
-			deleteEvent(e)
-			{% endif %}
-{% endraw %}
--->
-
-
-  <h2> Name: {{e['ename']}} </h2> <br>
-  Creator: {{e['creator']}} <br>
-  created {{e['datetime'].month}}/{{e['datetime'].day}} at {{e['datetime'].hour}}:{{e['datetime'].minute}} <br>
-  Number of people: {{e['numb']}} <br>
-  Total Price: {{e['total']}} <br>
-  Price Per Person: {{e['price']}} <br>
-  Description: {{e['desc']}} <br>
-  <!-- Lat: {{e['lat']}} <br>
-       Lon: {{e['lon']}} <br> -->
-  Location: {{e['loc']}} <br>
-
-  <button type="submit" name="submit" value='{{e['_id']}}'
-	  class="pure-button"> join </button>
-  <hr>
-
-  {% endfor %}
-
+    
+    <hr>
+    <!-- window.onload= functioning(){
+     action();
+     } --><!-- need to figure out how to get GPS to run -->
+    
+    {% for e in elist %}
+    <!-- {% raw %}
+     {% if distTest() < .5 %}
+     
+     {% if e['datetime'] < datetime.today() %}
+     deleteEvent(e)
+     {% endif %}
+     {% endraw %}
+     -->
+    
+    
+    <h2> Name: {{e['ename']}} </h2> <br>
+    Creator: {{e['creator']}} <br>
+    created {{e['datetime'].month}}/{{e['datetime'].day}} at {{e['datetime'].hour}}:{{e['datetime'].minute}} <br>
+    Number of people: {{e['numb']}} <br>
+    Total Price: {{e['total']}} <br>
+    Price Per Person: {{e['price']}} <br>
+    Description: {{e['desc']}} <br>
+    <!-- Lat: {{e['lat']}} <br>
+     Lon: {{e['lon']}} <br> -->
+    Location: {{e['loc']}} <br>
+    
+    <button type="submit" name="submit" value='{{e['_id']}}'
+        class="pure-button"> join </button>
+    <hr>
+    
+    {% endfor %}
+    
 </form>
 
 {% endblock %}

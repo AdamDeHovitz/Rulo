@@ -54,13 +54,15 @@
 	<font face ="Baskerville" size ="6" style="text-align:center">Rulo</font>
 {% if username or udict['uname'] %}
     <center>
+	
     {% for notification in udict['notifications'] %}
-    
-     {{notification['ename']}} is Starting!
+	{% if loop.index == 1 %}
+     Starting events
+	{% endif %}
      <br>
-     <form class="pure-form pure-form-aligned" method="POST" action={{"/confirm_notification/" ~ notification['id']}}>
+     <form class="pure-form pure-form-aligned" method="POST" action={{"/confirm_notification/" ~ notification}}>
      <button type="submit"  
-	   class="pure-button pure-button-primary"> Confirm </button>
+	   class="pure-button pure-button-primary"> Go to </button>
      </form>
       <br><br>
  
