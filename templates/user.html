@@ -11,6 +11,7 @@
 
 <h3> Ratings: </h3>
 {% if pdict['reviews'] %}
+<b> Average Rating: {{'%0.1f' % pdict['avrate']}} </b> <br><br>
 
 {% for r in pdict['reviews'] %}
 
