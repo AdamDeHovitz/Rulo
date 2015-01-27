@@ -6,6 +6,7 @@ import re
 import os
 import platform
 from werkzeug import secure_filename
+import datetime
 
 #UPLOAD_LOC = R'C:\Users\Mr.Something\Documents\GitHub\Rulo\static\profilePictures'
 if platform.system() == 'Windows':

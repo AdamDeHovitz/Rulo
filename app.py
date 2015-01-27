@@ -6,6 +6,7 @@ import os
 import platform
 #import Image
 from werkzeug import secure_filename
+import datetime
 
 ALLOWED_FILES = set(['jpg', 'gif', 'png', 'jpeg', 'tif', 'tiff', 'jif', 'jfif', 'fpx'])
 
@@ -61,7 +62,6 @@ def home():
 
 
 @app.route('/user', methods=['POST', 'GET'])
-@authenticate
 def user():
     #print("user!");
     if request.method=="POST":
@@ -198,7 +198,6 @@ def event_create():
 
 
 @app.route('/create_event_process', methods=['POST'])
-@authenticate
 def process():
     if request.method=="POST":
         username = escape(session['username'])
@@ -249,8 +248,9 @@ def joinevent():
         return render_template('events.html', udict=udict, elist=elist,
                                name = util.getEventAttribute(event, "ename"))
 
-@app.route('/your_events', methods=['GET','POST'])
 @authenticate
+@app.route('/your_events', methods=['GET','POST'])
+
 def your_event():
     username = escape(session['username'])
     udict = util.getUser(username)
