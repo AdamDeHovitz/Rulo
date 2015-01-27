@@ -10,73 +10,73 @@ Change Your Picture
   <div class="pure-control-group">
     <label for="pic">Picture</label>
     <input id="pic" name="pic"  type="file" accept="image/*"></div><br>
-    <button type="submit" class="pure-button">Use This Picture</button>
+  <button type="submit" class="pure-button">Use This Picture</button>
 </form>
 <br><br>
 <form action="/personal_process" method="post" class="pure-form pure-form-aligned">
-<fieldset>
-Name: {{udict['fname']}} {{udict['lname']}} <br>
-
-{% if change == "name" %}
-   <label for="fname">First Name</label>
-   <input id="fname" name="fname" type="text" placeholder="First Name">
-   <br>
-   <label for="lname">Last Name</label>
-   <input id="lname" name="lname" type="text" placeholder="Last Name"><br>
-
-   <button type="submit" name="submit" value="name"
-	   class="pure-button">submit</button>
-   {% else %}
-   <font size="2"><a href="/personal/name">Change</a></font>
-
-   {% endif %}
-   <br><br>
-
-   Email: {{udict['email']}} <br>
-
-   {% if change == "email" %}
-   <label for="email">Email:</label>
-   <input id="email" name="email" type="text"
-	  placeholder="example@gmail.com">
-   <br>
-   <button type="submit" name="submit" value="email"
-	   class="pure-button">submit</button>
-   {% else %}
-   <font size="2"><a href="/personal/email">Change</a></font>
-
-   {% endif %}
-   <br><br>
-
-  {% if change == "pw" %}
-   <label for="pw">Old Password</label>
-   <input id="oldpw" name="oldpw" type="text" placeholder="Old Password"><br>
-   <!-- has to agree with old password-->
-   New Password: <input id="pw" name="pw" type="text" placeholder="Password">
-   <br>
-   Confirm New Password: <input id="cpw" name="cpw" type="text" placeholder="Password">
-       <br>
-
-   <button type="submit" name="submit" value="pw"
-	   class="pure-button">submit</button>
-   {% else %}
-   Password: <font size="2"><a href="/personal/pw">Change</a></font>
-
-
-
-   {% endif %}
-<br><br>
-   {% if change == "age" %}
-   <label for="age">Age</label>
-   <input id="age" name="age" type="text" placeholder="age">
-   <br>
-
-   <button type="submit" name="submit" value="age"
-	   class="pure-button">submit</button>
-   {% else %}
-   Age: <font size="2"><a href="/personal/age">Change</a></font>
-
-   {% endif %}
-
-</fieldset>
+  <fieldset>
+    Name: {{udict['fname']}} {{udict['lname']}} <br>
+    
+    {% if change == "name" %}
+    <label for="fname">First Name</label>
+    <input id="fname" name="fname" type="text" placeholder="First Name">
+    <br>
+    <label for="lname">Last Name</label>
+    <input id="lname" name="lname" type="text" placeholder="Last Name"><br>
+    
+    <button type="submit" name="submit" value="name"
+	    class="pure-button">submit</button>
+    {% else %}
+    <font size="2"><a href="/personal/name">Change</a></font>
+    
+    {% endif %}
+    <br><br>
+    
+    Email: {{udict['email']}} <br>
+    
+    {% if change == "email" %}
+    <label for="email">Email:</label>
+    <input id="email" name="email" type="text"
+	   placeholder="example@gmail.com">
+    <br>
+    <button type="submit" name="submit" value="email"
+	    class="pure-button">submit</button>
+    {% else %}
+    <font size="2"><a href="/personal/email">Change</a></font>
+    
+    {% endif %}
+    <br><br>
+    
+    {% if change == "pw" %}
+    <label for="pw">Old Password</label>
+    <input id="oldpw" name="oldpw" type="text" placeholder="Old Password"><br>
+    <!-- has to agree with old password-->
+    New Password: <input id="pw" name="pw" type="text" placeholder="Password">
+    <br>
+    Confirm New Password: <input id="cpw" name="cpw" type="text" placeholder="Password">
+    <br>
+    
+    <button type="submit" name="submit" value="pw"
+	    class="pure-button">submit</button>
+    {% else %}
+    Password: <font size="2"><a href="/personal/pw">Change</a></font>
+    
+    
+    
+    {% endif %}
+    <br><br>
+    {% if change == "age" %}
+    <label for="age">Age</label>
+    <input id="age" name="age" type="text" placeholder="age">
+    <br>
+    
+    <button type="submit" name="submit" value="age"
+	    class="pure-button">submit</button>
+    {% else %}
+    Age: <font size="2"><a href="/personal/age">Change</a></font>
+    
+    {% endif %}
+    
+  </fieldset>
 </form>
 {% endblock %}
