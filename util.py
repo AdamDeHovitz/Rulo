@@ -170,9 +170,7 @@ def addPerson(pdict):
 
 def addField(uname, field, data):
     '''
-
     add a new field or update an old one that isn't a list
-
     '''
     if field == 'pic':
         print "in add"
@@ -198,6 +196,7 @@ def updateReview(uname, review):
     a = 0.0;
     for r in u['reviews']:
         a += r['rating']
+        print a
     addField(uname, 'avrate', a/len(u['reviews']))
 
 
@@ -474,13 +473,13 @@ def setup():
 if __name__ == "__main__":
 
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
-    #'''
+    '''
     for e in events.find():
         events.remove(e)
     for p in users.find():
         users.remove(p)
-        #setup()
-    #xs'''
+    setup()
+    xs'''
     #------UNCOMMENT TO PRINT STUFF---------#
     #'''
     for person in users.find():
