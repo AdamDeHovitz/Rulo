@@ -17,6 +17,8 @@
 
 {% endfor %}
 {% endif %}
+<br>
+<b>Event Created:</b> {{event['datetime'].strftime()}} <br>
 <br><br>
 Event is
 	{% if event['open']%}

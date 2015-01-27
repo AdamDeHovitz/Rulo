@@ -295,9 +295,9 @@ def addreview(uname = None):
     udict = util.getUser(username)
     review = {}
     review['user'] = username
-    review['rating'] = request.form["rating"]
+    review['rating'] = int(request.form["rating"])
     review['comment'] = request.form["comment"]
-    util.updateUField(uname, 'reviews', review)
+    util.updateReview(uname, review)
     return redirect('/user/'+ uname)
 
 @authenticate
