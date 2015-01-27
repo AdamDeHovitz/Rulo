@@ -37,7 +37,7 @@ def uploadPicture (picture):
     filename = secure_filename(picture.filename)
   except AttributeError:
     filename = secure_filename(picture.name)
-  if not(os.path.exists(UPLOAD_LOC + "/" + filename)):
+  if not(os.path.exists(os.path.join(UPLOAD_LOC, filename))):
     print filename
     print UPLOAD_LOC
     print(type(picture))
@@ -80,7 +80,7 @@ def getPicture(user):
   print filename
   path = os.path.join(UPLOAD_LOC, filename)
   path = os.path.join('..', path)
-return path
+  return filename
 
 #----------------------USER STUFF--------------------#
 def newUser(udict):
@@ -307,7 +307,7 @@ def updateEField(eventid, field, data):
     )
 
 
-   
+
 
 
 def pullEField(eventid, field, data):
@@ -342,7 +342,7 @@ def confirmPerson(uname, eventid):
     if (ev['numb'] != None and int(ev['numb'] ) <= (len(list(ev['members'])) + 1)):
         updateEventField(eventid, "open", False)
 
-        
+
 
 def getEvent(eventid):
     print("id:")
@@ -403,7 +403,7 @@ def setup():
   newuser['email'] = 's@g.c'
   newuser['pic'] = "default"
   newUser(newuser)
-  
+
   edict = {}
   edict['creator'] = 's'
   edict['ename'] = '1st event'
@@ -445,7 +445,7 @@ if __name__ == "__main__":
     print type(d)
 
 
-    
+
 """
 Events:
 'ename', u'desc', 'total', 'numb', 'price', u'long', 'lat'
