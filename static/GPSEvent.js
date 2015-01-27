@@ -129,24 +129,25 @@ window.addEventListener("load", function getGeoLoc() {
   if (storage != null){
     storage.value = currentLoc;
   }
+    action()
 }, false);
 
 /*
-                DEAD CODE (Could be used in future for storing distance variables) CAN IGNORE
-  		          var element = results[j];
-  		          var dist = element.distance.text;
-                console.log (dist)
-  		          var dura = element.duration.text;
-  		          var from = origins[i];
-  		          var to = origins[i];
-  		          answer[0] = dist;
-  		       }
-  	    }
-
-  	    return answer;
-  	} else {
-  	    alert("Distance Calculation failed due to: " + status);
-  	    return answer;
-  	}
+  DEAD CODE (Could be used in future for storing distance variables) CAN IGNORE
+  var element = results[j];
+  var dist = element.distance.text;
+  console.log (dist)
+  var dura = element.duration.text;
+  var from = origins[i];
+  var to = origins[i];
+  answer[0] = dist;
   }
-} */
+  }
+
+  return answer;
+  } else {
+  alert("Distance Calculation failed due to: " + status);
+  return answer;
+  }
+  }
+  } */
