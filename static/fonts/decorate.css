@@ -104,8 +104,8 @@ h3{
 }
 
 #nav {
-    margin: 0px;
-    padding: 0px;
+    margin: 10px;
+    padding: 10px;
     list-style-type: none;
 }
 
@@ -113,7 +113,7 @@ h3{
     display: block;
     float: left;
     margin: 0 5px;
-    background: url(../static/fonts/first) no-repeat center top;
+    background: url(first) no-repeat center top;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     -o-border-radius: 10px;
@@ -135,7 +135,7 @@ h3{
     text-decoration: none;
     text-shadow: 1px 1px 1px #666;
     text-align:center;
-    background: url(../static/fonts/second.jpg) no-repeat center -200px;
+    background: url(second) no-repeat center -200px;
     background: rgba(80, 125, 200, 0.55);
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -148,6 +148,6 @@ h3{
 }
 
 #nav a:hover {
-    background: url(../images/bg.jpg) no-repeat center top;
+    background: url(second) no-repeat center top;
     background: rgba(100, 125, 175, 0);
 }
