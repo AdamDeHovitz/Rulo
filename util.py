@@ -72,6 +72,7 @@ def updatePicture (picture, user):
     return picture'''
 
 def getPicture(user):
+<<<<<<< HEAD
   print platform.system()
   print UPLOAD_LOC
   p = users.find_one({"uname":user})
@@ -81,6 +82,17 @@ def getPicture(user):
   path = os.path.join(UPLOAD_LOC, filename)
   path = os.path.join('..', path)
   return filename
+=======
+    print platform.system()
+    print UPLOAD_LOC
+    p = users.find_one({"uname":user})
+    filename = p['pic']
+    print type(filename)
+    print filename
+    path = os.path.join(UPLOAD_LOC, filename)
+    path = os.path.join('..', path)
+    return path
+>>>>>>> e9e3531f9d27cb36d3f4d68c5f115111803b844a
 
 #----------------------USER STUFF--------------------#
 def newUser(udict):
@@ -411,6 +423,7 @@ def setup():
   edict['desc'] = '1'
   edict['total'] = 10
   edict['price'] = 10
+  edict['loc'] = 0
   edict['long'] = 0
   edict['lat'] = 0
   newevent = createEvent(edict)
@@ -426,13 +439,13 @@ def setup():
 if __name__ == "__main__":
 
     #-----COMMENT TO REMOVE ALL EVENTS/USERS-----#
-    #'''
+    '''
     for e in events.find():
         events.remove(e)
     for p in users.find():
         users.remove(p)
     setup()
-    #'''
+    '''
     #------UNCOMMENT TO PRINT STUFF---------#
     #'''
     for person in users.find():

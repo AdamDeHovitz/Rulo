@@ -79,7 +79,7 @@ var action = function () {
 
 
 var distTest = function() {
-    distance = distanceFunc(currentLoc, new google.maps.LatLng(25.7877, -80.2241), 'dist-test')
+    distance = distanceFunc(currentLoc, document.getElementById('loc'), 'dist-test')
 }
 
 var distanceFunc = function (origin, destination, div){
@@ -124,12 +124,13 @@ function callback (response, status) {
 }
 
 window.addEventListener("load", function getGeoLoc() {
-  action()
-  var storage = document.getElementById('loc')
-  if (storage != null){
-    storage.value = currentLoc;
-  }
-    action()
+    action();
+    var storage = document.getElementById('loc');
+    if (storage != null){
+	storage.value = currentLoc;
+    }
+    //console.log(storage);
+    action();
 }, false);
 
 /*
