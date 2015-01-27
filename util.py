@@ -72,7 +72,6 @@ def updatePicture (picture, user):
     return picture'''
 
 def getPicture(user):
-<<<<<<< HEAD
   print platform.system()
   print UPLOAD_LOC
   p = users.find_one({"uname":user})
@@ -82,17 +81,6 @@ def getPicture(user):
   path = os.path.join(UPLOAD_LOC, filename)
   path = os.path.join('..', path)
   return filename
-=======
-    print platform.system()
-    print UPLOAD_LOC
-    p = users.find_one({"uname":user})
-    filename = p['pic']
-    print type(filename)
-    print filename
-    path = os.path.join(UPLOAD_LOC, filename)
-    path = os.path.join('..', path)
-    return path
->>>>>>> e9e3531f9d27cb36d3f4d68c5f115111803b844a
 
 #----------------------USER STUFF--------------------#
 def newUser(udict):
