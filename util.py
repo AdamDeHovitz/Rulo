@@ -332,9 +332,11 @@ def confirmPerson(uname, eventid):
     updateUField(uname, 'aevents', ObjectId(eventid))
     removeUField(uname, 'revents', ObjectId(eventid))
     ev = events.find_one( { '_id' : ObjectId( eventid ) } )
-    if ( ev['numb'] <= len(ev['members']) + 1):
-        print ev['numb']
-        ev['open'] = False
+    print("Length: "+str(len(list(ev['members']))))
+    if (int(ev['numb'] ) <= (len(list(ev['members'])) + 1)):
+        print("Closing thing")
+        events.update( {"_id":ObjectId(eventid)} , { '$set': {"open":False} } )
+
         
 
 def getEvent(eventid):
@@ -380,6 +382,7 @@ def validEvents(uname):
         nm = uname not in e['members']
         nr = uname not in e['requests']
         if nc and nm and nr and e['open']:
+            print e['open']
             evs.append(e)
     return evs
 
