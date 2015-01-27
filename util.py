@@ -384,6 +384,7 @@ def setup():
     newuser['rpw'] = 'sssss'
     newuser['age'] = 18
     newuser['email'] = 's@g.c'
+    newuser['pic'] = "default"
     newUser(newuser)
 
     edict = {}
