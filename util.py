@@ -277,14 +277,25 @@ def getHostedEvents(uname):
     return events.find( { '_id' : { '$in' : es } } )
 
 def confirmNotification(uname, eventid):
-
-    '''
+    notification = users.find_one(
+        {
+            uname:{
+                'notifications': {
+                    '$elemMatch': {
+                        "id": ObjectId(eventid)
+                        }
+                        }
+                }
+            }
+        )
+    
+  
     users.update(
         { 'uname' : uname },
-        { '$pull' : { 'notifications' : notification['id']=eventid }
-    #<< pseudo code
+        { '$pull' : { 'notifications' : notification.get('_id') }
+    
     })  
-        '''
+       
     
 
 
