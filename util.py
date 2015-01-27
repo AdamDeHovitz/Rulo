@@ -82,6 +82,7 @@ def getPicture(user):
   path = os.path.join('..', path)
   return filename
 
+
 #----------------------USER STUFF--------------------#
 def newUser(udict):
     '''
