@@ -8,8 +8,7 @@
 <br>
 <!-- <img src="../static/profilePictures/ewokPing.jpg" height="50" width="50"> -->
 <!-- <img id= src="{{ profile }}" height = "75" width="75"> -->
-<img src= {{ url_for('static', filename = "profilePictures/"~profile) }} height = "75" width="75">
-
+<img class="shadow" src= {{ url_for('static', filename = "profilePictures/"~profile) }} height = "75" width="75">
 
 <form action="/proPic" method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned">
   <div class="pure-control-group">
@@ -33,7 +32,7 @@
 	    class="pure-button">submit</button>
     {% else %}
     <div class="change">
-    <font size="2"><a href="/personal/name">Change</a></font>
+    <font size="2"><a class="pure-button"  href="/personal/name">Change</a></font>
   </div>
     {% endif %}
     <br><br>
@@ -49,7 +48,7 @@
 	    class="pure-button">submit</button>
     {% else %}
     <div class ="change">
-    <font size="2"><a href="/personal/email">Change</a></font>
+    <font size="2"><a class="pure-button"  href="/personal/email">Change</a></font>
   </div>
     {% endif %}
     <br><br>
@@ -67,7 +66,7 @@
 	    class="pure-button">submit</button>
     {% else %}
     <div class ="change">
-    Password: <font size="2"><a href="/personal/pw">Change</a></font>
+    Password: <font size="2"><a class="pure-button"  href="/personal/pw">Change</a></font>
   </div>
 
 
@@ -82,7 +81,7 @@
 	    class="pure-button">submit</button>
     {% else %}
     <div class ="change">
-    Age: <font size="2"><a href="/personal/age">Change</a></font>
+    Age: <font size="2"><a class="pure-button" href="/personal/age">Change</a></font>
   </div>
     {% endif %}
 

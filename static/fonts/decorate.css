@@ -12,14 +12,21 @@ background: #DFE7F2;
   font-size: 85%;
 }
 
+
+.personal {
+  background-color: #DFE7F2
+}
+
+
+
 /*Good Colors:
 Mint: #FF944D
 Orange: #FF944D
-Grey-Blue: #DFE7F2*/
+BAD ==> Grey-Blue: #DFE7F2*/
 
 @font-face{
   font-family: Jaapokki;
-  src: url(Jaapokki-Regular.otf);
+  src: url(Jaapokkienchance-Regular.otf);
 }
 @font-face{
   font-family: elegantLux;
@@ -34,11 +41,43 @@ Grey-Blue: #DFE7F2*/
   src: url(aqua.ttf)
 }
 
+#mainTitle {
+  text-align:center;
+  font-family: elegantLux;
+  font-size: 400%;
+}
+
+#your_events{
+  font-family: LockSmithTitle;
+  font-size: 150%
+}
+#yourEventFont{
+  font-family: elegantLux;
+}
+
 
 body {
   color: #DDDDDD;
   background-image: url(../stylingPictures/Elegant_Background-9.jpg);
   font-family: elegantLux;
+}
+
+img {
+  padding: 1px;
+  border: 1px solid #021a40;
+  background-color: #DFE7F2;
+}
+
+form {
+  font-family: elegantLux;
+  font-weight: bold;
+}
+
+a {
+  text-decoration: underline;
+  font-weight: bold;
+  color: #CCA300;
+  border-bottom: 2px solid #542C62;
 }
 
 h1{
@@ -49,8 +88,4 @@ h2{
 }
 h3{
   font-family: aqua;
-}
-
-#your_events{
-  font-family: LockSmithTitle;
 }
