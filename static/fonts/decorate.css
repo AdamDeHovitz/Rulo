@@ -1,0 +1,52 @@
+.button-submit{
+        color: white;
+        border-radius: 4px;
+        background:white;
+        }
+.pure-button{
+color: black;
+background: #DFE7F2;
+}
+
+/*Good Colors:
+Mint: #FF944D
+Orange: #FF944D
+Grey-Blue: #DFE7F2*/
+
+@font-face{
+  font-family: Jaapokki;
+  src: url(Jaapokki-Regular.otf);
+}
+@font-face{
+  font-family: elegantLux;
+  src: url(ElegantLux-Mager.otf);
+}
+@font-face{
+  font-family: LockSmithTitle;
+  src: url(LockSmith_reg.otf);
+}
+@font-face{
+  font-family: aqua;
+  src: url(aqua.ttf)
+}
+
+
+body {
+  color: #DDDDDD;
+  background-image: url(../stylingPictures/Elegant_Background-9.jpg);
+  font-family: elegantLux;
+}
+
+h1{
+  font-family: aqua;
+}
+h2{
+  font-family: LockSmithTitle;
+}
+h3{
+  font-family: aqua;
+}
+
+#your_events{
+  font-family: LockSmithTitle;
+}

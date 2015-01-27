@@ -200,6 +200,7 @@ def process():
         edict['desc'] = request.form["desc"]
         edict['total'] = request.form["total"]
         edict['price'] = request.form["price"]
+        edict['loc'] = request.form["loc"]
         edict['long'] = request.form["long"]
         edict['lat'] = request.form["lat"]
         if util.checkEvent(edict) != "":
