@@ -8,7 +8,7 @@ Rulo is a unique buying and selling application that allows users to buy individ
 
 With a light and sleek design, Rulo will let you enjoy saving those grocery dollars.
 
-##Team
+##The Team
 <ul>
 <li> [Benedict Bolton](https://github.com/Benedict-Bolton) CSS Styling, GPS, javascript </li>
 <li> [Adam DeHovitz](https://github.com/adamdehovitz) Back-End to Front-End Design, component interactions, and database programming </li>
@@ -17,5 +17,9 @@ With a light and sleek design, Rulo will let you enjoy saving those grocery doll
 
 =======
 
-##Installation Instructions:
+##The Application:
 Got to <url>
+
+##The Video:
+
+##Installation Instructions:
