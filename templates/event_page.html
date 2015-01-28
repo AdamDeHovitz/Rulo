@@ -2,6 +2,11 @@
 
 
 {% block body %}
+<script>
+  onload = function() {
+  alert('loaded')
+  }
+</script>
 <section class="blue-grey">
 <h1> {{event['ename']}}</h1>
 created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['datetime'].hour}}:{{event['datetime'].minute}}<br>
