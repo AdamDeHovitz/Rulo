@@ -16,7 +16,7 @@ With a light and sleek design, Rulo will let you enjoy saving those grocery doll
 
 
 ##The Application
-Got to <url>
+Got to <url>http://104.236.40.185/</url> For the Application
 
 ##The Video
 
