@@ -22,7 +22,7 @@ Got to <url>
 ##The Video
 
 ##Installation Instructions:
-Install flask, MongoDB and datetime
+Install flask, MongoDB and datetime before running app.py
 
 ##Areas for improvement
 <ul>
