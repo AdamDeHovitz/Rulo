@@ -17,7 +17,7 @@
   <div class="pure-control-group">
     <!-- <label for="pic">Picture</label> -->
     <input id="pic" name="pic"  type="file" accept="image/*"></div><br>
-  <button type="submit" class="pure-button button-small">Use This Picture</button>
+  <button type="submit" class="pure-button pure-button-primary button-small">Use This Picture</button>
 </form>
 
 </div>
@@ -38,7 +38,7 @@
             placeholder="Last Name"></div><br>
 
     <button type="submit" name="submit" value="name"
-	    class="pure-button">Submit</button> <br>
+	    class="pure-button pure-button-primary">Submit</button> <br>
   {% else %}
     <div class="change">
     Name: {{udict['fname']}} {{udict['lname']}} &nbsp;&nbsp;<font size="2"><a class="pure-button"  href="/personal/name">Change</a></font>
@@ -53,7 +53,7 @@
 	   placeholder="example@gmail.com"><br>
     <br>
     <button type="submit" name="submit" value="email"
-	    class="pure-button">Submit</button>
+	    class="pure-button pure-button-primary">Submit</button>
     {% else %}
     <div class ="change">
     Email: {{udict['email']}} &nbsp;&nbsp;<font size="2"><a class="pure-button"  href="/personal/email">Change</a></font>
@@ -78,7 +78,7 @@
     <br>
 
     <button type="submit" name="submit" value="pw"
-	    class="pure-button">Submit</button>
+	    class="pure-button pure-button-primary">Submit</button>
     {% else %}
     <div class ="change">
     Password: &nbsp;&nbsp;<font size="2"><a class="pure-button"  href="/personal/pw">Change</a></font>
