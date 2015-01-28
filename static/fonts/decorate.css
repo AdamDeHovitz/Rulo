@@ -42,7 +42,9 @@ section {
 .personal {
   background-color: #DFE7F2
 }
-
+.button-secondary {
+            background: rgb(66, 184, 221); /* this is a light blue */
+        }
 
 .one-edge-shadow {
 	-webkit-box-shadow: 0 8px 6px -6px black;
