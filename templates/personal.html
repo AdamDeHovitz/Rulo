@@ -8,52 +8,57 @@
 <!-- <img src="../static/profilePictures/ewokPing.jpg" height="50" width="50"> -->
 <!-- <img id= src="{{ profile }}" height = "75" width="75"> -->
 <img class="inside-shadow" src= {{ url_for('static', filename = "profilePictures/"~profile) }} height = "150" width="150"><br><br>
+<div class='pure-g'>
+
+<div class ="pure-u-1-3">
 
 <form action="/proPic" method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned">
   <div class="pure-control-group">
-    <label for="pic">Picture</label>
+    <!-- <label for="pic">Picture</label> -->
     <input id="pic" name="pic"  type="file" accept="image/*"></div><br>
-  <button type="submit" class="pure-button">Use This Picture</button>
+  <button type="submit" class="pure-button button-small">Use This Picture</button>
 </form>
+
+</div>
+
+<div class = "pure-u-1-3 personal-form">
 <br><br>
 <form action="/personal_process" method="post" class="pure-form pure-form-aligned">
   <fieldset>
-    Name: {{udict['fname']}} {{udict['lname']}} <br>
 
   {% if change == "name" %}
     <div class="pure-control-group">
-        <label for="fname">First Name</label>
+        <label for="fname">New First Name</label>
         <input id="fname" name="fname" type="text"
             placeholder="First Name"></div><br>
     <div class="pure-control-group">
-        <label for="lname">Last Name</label>
+        <label for="lname">New Last Name</label>
         <input id="lname" name="lname" type="text"
             placeholder="Last Name"></div><br>
 
     <button type="submit" name="submit" value="name"
-	    class="pure-button">submit</button>
+	    class="pure-button">Submit</button> <br>
   {% else %}
     <div class="change">
-    <font size="2"><a class="pure-button"  href="/personal/name">Change</a></font>
+    Name: {{udict['fname']}} {{udict['lname']}} &nbsp;&nbsp;<font size="2"><a class="pure-button"  href="/personal/name">Change</a></font>
   </div>
     {% endif %}
     <br>
 
-    Email: {{udict['email']}} <br>
 
     {% if change == "email" %}
-    <label for="email">Email:</label>
+    <br> <label for="email"> New Email:</label>
     <input id="email" name="email" type="text"
-	   placeholder="example@gmail.com">
+	   placeholder="example@gmail.com"><br>
     <br>
     <button type="submit" name="submit" value="email"
-	    class="pure-button">submit</button>
+	    class="pure-button">Submit</button>
     {% else %}
     <div class ="change">
-    <font size="2"><a class="pure-button"  href="/personal/email">Change</a></font>
+    Email: {{udict['email']}} &nbsp;&nbsp;<font size="2"><a class="pure-button"  href="/personal/email">Change</a></font>
   </div>
     {% endif %}
-    <br>
+    <br><br>
 
     {% if change == "pw" %}
     <div class="pure-control-group">
@@ -72,15 +77,17 @@
     <br>
 
     <button type="submit" name="submit" value="pw"
-	    class="pure-button">submit</button>
+	    class="pure-button">Submit</button>
     {% else %}
     <div class ="change">
-    Password: <br><font size="2"><a class="pure-button"  href="/personal/pw">Change</a></font>
+    Password: &nbsp;&nbsp;<font size="2"><a class="pure-button"  href="/personal/pw">Change</a></font>
   </div>
+
+</div>
 
 
     {% endif %}
-    
+
 
   </fieldset>
 </form>
