@@ -10,13 +10,13 @@ This app will unite people in their quest for saving, by allowing users to organ
 ##Team
 
 ##[Benedict Bolton](https://github.com/Benedict-Bolton) 
-stuff
+CSS Styling, GPS, javascript
 ##[Adam DeHovitz](https://github.com/adamdehovitz) 
-Back-End to Front-End Design, component interactions, and database programming, 
+Back-End to Front-End Design, component interactions, and database programming 
 ##[Sophie Gershon](https://github.com/sophgersh) 
-things
+Database usage, events and users code, and python coding
 ##[Deanna Taylor](https://github.com/deannataylor) 
-GPS location
+GPS, javascript and HTML coding, and styling
 
 ###Installation Instructions:
 Got to <url>
