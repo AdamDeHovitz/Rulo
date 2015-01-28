@@ -3,6 +3,7 @@
         border-radius: 4px;
         background:white;
         }
+
 .pure-button{
 color: black;
 background: #D3D9DE;
@@ -11,6 +12,15 @@ background: #D3D9DE;
 .button-small {
   font-size: 85%;
 }
+/*
+.pure-button-primary {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+.pure-button-primary {
+            background: rgb(66, 184, 221);
+        }*/
 .button-delete {
             background: rgb(202, 60, 60); /* this is a maroon */
         }
