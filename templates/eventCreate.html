@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-
+<section class="blue-grey">
 <h1>{{udict['fname']}}, Create an event! </h1>
 
 <form action="/create_event_process" method="post" class="pure-form pure-form-aligned">
@@ -36,7 +36,7 @@
     <input name="lat" value=longitude id="lat" type="hidden">
 
   </fieldset>
-</form>
+</form></section>
 <br><br><br>
 
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2ie2fjoFfkQMGGPZotTg1rxsEcaYuDHY"></script>

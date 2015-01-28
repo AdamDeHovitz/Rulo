@@ -5,7 +5,7 @@
         }
 .pure-button{
 color: black;
-background: #DFE7F2;
+background: #D3D9DE;
 }
 
 .button-small {
@@ -14,7 +14,20 @@ background: #DFE7F2;
 .button-delete {
             background: rgb(202, 60, 60); /* this is a maroon */
         }
-
+section {
+        border-radius: 10px;
+        padding: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 500px
+    }
+.blue-grey {
+        background: #C8D5E0;
+        color: black;
+        }
+.indent-30 {
+    padding-left: 20pt;
+}
 .personal {
   background-color: #DFE7F2
 }
