@@ -19,6 +19,7 @@ With a light and sleek design, Rulo will let you enjoy saving those grocery doll
 Got to <url>http://104.236.40.185/</url> For the Application
 
 ##The Video
+https://www.youtube.com/watch?v=TXK971LR3Bw&feature=youtu.be
 
 ##Installation Instructions:
 Install flask, MongoDB, bson.objectid, gunicorn, and datetime before running app.py
