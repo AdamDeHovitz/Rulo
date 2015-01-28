@@ -6,7 +6,7 @@ import os
 import platform
 #import Image
 from werkzeug import secure_filename
-import datetime
+from datetime import datetime
 
 
 
@@ -270,12 +270,12 @@ def confirm(event = None, uname = None):
 
     return redirect('/your_events')
 
-@app.route('/delete_event', methods=['GET', 'POST'])
 @authenticate
-def delete():
-    util.deleteEvent(request.form["submit"])
+@app.route('/delete_event/<id>', methods=['GET', 'POST'])
+def delete(id = None):
+    util.deleteEvent(id)
 
-    return redirect('/your_events')
+    return redirect(request.form["submit"])
 
 @authenticate
 @app.route('/user/<uname>', methods=['GET', 'POST'])
@@ -303,9 +303,10 @@ def addreview(uname = None):
     udict = util.getUser(username)
     review = {}
     review['user'] = username
-    review['rating'] = request.form["rating"]
+    review['rating'] = int(request.form["rating"])
     review['comment'] = request.form["comment"]
-    util.updateUField(uname, 'reviews', review)
+    #util.updateUField(uname, 'reviews', review)
+    util.updateReview(uname, review)
     return redirect('/user/'+ uname)
 
 @authenticate
@@ -347,7 +348,7 @@ def newmsg(eventid = None):
     msg = {}
     msg['user'] = username
     msg['msg'] = request.form["msg"]
-    # msg['time'] = ???? how do we do time
+    msg['time'] = datetime.today()
     util.updateEField(eventid, 'msgs', msg)
 
     return redirect('/event_page/'+ eventid )
