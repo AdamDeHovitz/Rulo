@@ -33,9 +33,9 @@ created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['dateti
 <br><br>
 Event is
 	{% if event['open']%}
-	open
+	open to requests
 	{% else %}
-	closed
+	closed to requests
 	{% endif %}
 <br>
 {% if udict['uname'] == event['creator'] and event['open'] %}
@@ -49,8 +49,6 @@ Event is
 	
 - Stuff this page needs:<br>
 - map of location<br>
-- time<br>
-- messages from event, mongostuff
 
 	
 <h3> Messages: </h3>
