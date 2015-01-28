@@ -9,7 +9,7 @@ Rulo is a unique buying and selling application that allows users to buy individ
 With a light and sleek design, Rulo will let you enjoy saving those grocery dollars.
 
 ##The Team
-* [Benedict Bolton](https://github.com/Benedict-Bolton) CSS Styling, GPS, javascript 
+* [Benedict Bolton](https://github.com/Benedict-Bolton) CSS Styling, GPS javascript, Image Upload, and component interactions. 
 * [Adam DeHovitz](https://github.com/adamdehovitz) Back/Front-End Design, component interactions, and database usage 
 * [Sophie Gershon](https://github.com/sophgersh) Database usage, events and users code, and python coding 
 * [Deanna Taylor](https://github.com/deannataylor) Javascript and HTML coding, styling, and GPS 
@@ -21,7 +21,7 @@ Got to <url>
 ##The Video
 
 ##Installation Instructions:
-Install flask, MongoDB, bson.objectid, and datetime before running app.py
+Install flask, MongoDB, bson.objectid, gunicorn, and datetime before running app.py
 
 ##Areas for improvement
 * Google maps functionality will need improvement. It should help you get to your location, and in the future perhaps even show you your group mates
