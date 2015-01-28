@@ -12,6 +12,7 @@ background: #D3D9DE;
 .button-small {
   font-size: 85%;
 }
+/*
 .pure-button-primary {
             color: white;
             border-radius: 4px;
@@ -19,7 +20,7 @@ background: #D3D9DE;
         }
 .pure-button-primary {
             background: rgb(66, 184, 221); /* this is a light blue */
-        }
+        }*/
 .button-delete {
             background: rgb(202, 60, 60); /* this is a maroon */
         }
