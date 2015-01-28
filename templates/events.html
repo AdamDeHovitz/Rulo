@@ -25,6 +25,7 @@
 <!--   -->
 
   <h2> Name: {{e['ename']}} </h2> <br>
+ <div class = "indent-30">
   Creator:  <a href={{"/user/" ~ e['creator']}} style="text-decoration:none;">{{e['creator']}}</a> <br>
   created {{e['datetime'].month}}/{{e['datetime'].day}} at {{e['datetime'].hour}}:{{e['datetime'].minute}} <br>
   Number of people: {{e['numb']}} <br>
@@ -36,7 +37,7 @@
   <button type="submit" name="submit" value='{{e['_id']}}'
 	  class="pure-button pure-button-primary"> join </button>
   <hr>
-
+   </div>
   {% endfor %}
 </section>
 </form>

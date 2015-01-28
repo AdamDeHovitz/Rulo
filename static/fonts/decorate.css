@@ -5,8 +5,9 @@
         }
 
 .pure-button{
-color: black;
-background: #D3D9DE;
+
+background-color: rgb(0, 120, 231);
+color: #fff;
 }
 
 .button-small {
