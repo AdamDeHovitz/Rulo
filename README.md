@@ -4,8 +4,9 @@ Rulo
 
 
 ##The Project
-Rulo is a unique buying and selling application that allows users to buy individual items for bulk prices. Users can create events in order for people to join the bargain. In addition, users may search for bargain events in their location and join these events with the users in their neighborhood. Finally, users can comment and rate fellow users to ensure that each customer is comfortable with meeting the host of any event.
+Rulo is a unique buying and selling application that allows users to buy individual items for bulk prices. Through the app, users can create events centered around a specific bargain. Then, nearby users can request to join these events, and soon meet up in person to make the purchase. Members also have the opportunity to rate and comment on their experience with other users, which helps hosts discern who they want to bargain buy with.
 
+With a light and sleek design, Rulo will let you enjoy saving those grocery dollars.
 
 ##Team
 <ul>
