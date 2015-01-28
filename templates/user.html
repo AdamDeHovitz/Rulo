@@ -2,6 +2,7 @@
 
 {% block body %}
 
+<section class="blue-grey">
 <h1> {{pdict['fname']}} {{pdict['lname']}} </h1>
 <img class= "inside-shadow" src= {{ url_for('static', filename = "profilePictures/"~profile) }} height = "150" width="150">
 <br><br>
@@ -40,6 +41,6 @@ Rate your experience with {{pdict['fname']}}: <br>
 </form>
 
 {% endif %}
-
+</section>
 
 {% endblock %}

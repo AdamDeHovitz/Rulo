@@ -2,6 +2,7 @@
 
 
 {% block body %}
+<section class="blue-grey">
 <h1> {{event['ename']}}</h1>
 created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['datetime'].hour}}:{{event['datetime'].minute}}<br>
 <b>Host:</b> {{event['creator']}}
@@ -85,5 +86,6 @@ Event is
   <button type="submit" name="submit" value='/events'
 	  class="pure-button button-delete"> Delete Event </button>
 </form>
+</section>
 {% endif %}
      {% endblock %}
