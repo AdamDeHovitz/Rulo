@@ -24,6 +24,12 @@ background: #DFE7F2;
 	        box-shadow: 0 8px 6px -6px black;
 }
 
+.inside-shadow {
+   -moz-box-shadow:    inset 0 0 10px #000000;
+   -webkit-box-shadow: inset 0 0 10px #000000;
+   box-shadow:         inset 0 0 10px #000000;
+}
+
 
 /*Good Colors:
 Mint: #FF944D
@@ -63,6 +69,7 @@ BAD ==> Grey-Blue: #DFE7F2*/
 
 #topMenu {
   background-color:#EEEEEE;
+  /*position: fixed;*/
 }
 
 body {

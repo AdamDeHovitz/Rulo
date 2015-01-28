@@ -5,12 +5,16 @@
 <h1> {{event['ename']}}</h1>
 created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['datetime'].hour}}:{{event['datetime'].minute}}<br>
 <b>Host:</b> {{event['creator']}}
-<br>
+<br><br>
+<b> Location:</b> {{event['address']}}
+<input type=hidden id="latLong" value={{ event['location'] }}>
+<br><br>
+<b> Distance:</b> <div style="visibility: hidden;" id="dist">{{ event['location'] }}</div>
 {% if event['started'] %}
 <font color="green" size = "8">Event has started!</font>
 {% elif udict['uname'] == event['creator'] and false == event['open'] %}
 <form method="post" class="pure-form pure-form-aligned">
-    <fieldset>  
+    <fieldset>
         <button type="submit" id="submit" name="submit" value = "start"
         class="pure-button pure-button-primary">Start Event</button>
         </fieldset>
@@ -40,45 +44,39 @@ Event is
 <br>
 {% if udict['uname'] == event['creator'] and event['open'] %}
 <form method="post" class="pure-form pure-form-aligned">
-    <fieldset>  
+    <fieldset>
         <button type="submit" id="submit" name="submit" value = "close"
         class="pure-button">Close Event</button>
         </fieldset>
 </form>
 {% endif %}
-	
-- Stuff this page needs:<br>
-- map of location<br>
-- time<br>
-- messages from event, mongostuff
 
-	
+
 <h3> Messages: </h3>
 {% for msg in event['msgs'] %}
 <font size="3.25">{{msg['msg']}}<br> </font>
 <font size="3">&nbsp;-  <a href={{"/user/" ~ msg['user']}} style="text-decoration:none;">{{msg['user']}}</a> </font> <font size="2.5">{{msg['time'].month}}/{{msg['time'].day}} at {{msg['time'].hour}}:{{msg['time'].minute}}<br></font><br><br>
 <!-- Still needs time --!>
      {% endfor %}
-     
-     
+
+
      <form action={{"/newmsg/" ~ event["_id"]}} method="post" class="pure-form pure-form-aligned">
-       
+
        <fieldset>
          <div class="pure-control-group"><textarea name="msg"
 						   id="msg" placeholder="Feel free to leave a comment" cols="40" rows="5"></textarea></div>
-         
-         
+
+
          <button type="submit" onclick="action()" class="pure-button">Submit</button>
          <input name="long" value=latitude id="long" type="hidden">
          <input name="lat" value=longitude id="lat" type="hidden">
-         
+
        </fieldset>
      </form>
-     
-     
-     
+
+
+
      <br>
      <br>
      Rating:
      {% endblock %}
-     

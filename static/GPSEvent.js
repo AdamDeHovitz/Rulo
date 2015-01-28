@@ -5,6 +5,10 @@ var geocoder;
 var marker;
 var currentLoc;
 var distanceDiv;
+var start;
+
+
+var waitUp = true;
 
 var action = function () {
     console.log("button action begun");
@@ -53,9 +57,28 @@ var action = function () {
            console.log("still working?");
            place.value = currentLoc;
            console.log("This is storage:");
-           console.log(storage.value);
+           console.log(place.value);
+           waitUp = false;
         }
         console.log(currentLoc);
+
+        //Distance
+        if (start != null){
+          console.log(start);
+          //yes this is the wrong way to do it,
+          var realStart =  start.substr(1, start.length -2);
+          realStart = realStart.split(',');
+          console.log(realStart);
+          var destination = new google.maps.LatLng(parseFloat(realStart[0]), parseFloat(realStart[1]));
+          console.log("Destination Object:");
+          console.log(destination);
+          var origin = currentLoc;
+          console.log("originObject:");
+          console.log(origin);
+          distanceFunc (origin, destination, 'dist');
+        }
+
+
         mappy.setCenter(location);
         console.log('map function finished. Latitude is: ' + latitude + " Longitude is: " + longitude);
 	console.log(location);
@@ -73,9 +96,9 @@ var action = function () {
 		    console.log(address);
         if (wordPlace != null){
 		        wordPlace.value = address;
+            console.log("Testing WordPlace:");
+            console.log(wordPlace.value);
         }
-        console.log("Testing WordPlace:");
-        console.log(wordPlace.value);
 		    //map.innerHTML = new google.maps.LatLng(latitude,longitude);
 		    console.log(mappy);
 		}
@@ -133,15 +156,35 @@ function callback (response, status) {
   	for (var i = 0; i < origins.length; i++){
   	    var results = response.rows[i].elements;
   	    for (var j = 0; j < results.length; j++){
-		        output.value += results[j].distance.text + ", " + results[j].duration.text;
-            console.log(output.value);
+		        output.innerHTML += results[j].distance.text + ", which is " + results[j].duration.text + " by Driving.";
+            //console.log(output.value);
             }
         }
     }
 }
 
+
 window.addEventListener("load", function getGeoLoc() {
+    start = document.getElementById("dist").innerHTML;
+    document.getElementById("dist").innerHTML = "";
+    document.getElementById("dist").style.visibility="visible";
     action();
+
+    var NOTstart = document.getElementById("latLong").value;
+    /*if (start != null){
+      console.log(start);
+      //yes this is the wrong way to do it,
+      var realStart =  start.substr(1, start.length -2);
+      realStart = realStart.split(',');
+      console.log(realStart);
+      var destination = new google.maps.LatLng(parseFloat(realStart[0]), parseFloat(realStart[1]));
+      console.log("Destination Object:");
+      console.log(destination);
+      var origin = currentLoc;
+      console.log("originObject:");
+      console.log(origin);
+      distanceFunc (origin, destination, 'dist');
+    }*/
     //distTest();
     //console.log(storage);
     //action();
