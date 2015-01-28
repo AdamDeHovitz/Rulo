@@ -18,6 +18,18 @@ background: #DFE7F2;
 }
 
 
+.one-edge-shadow {
+  -webkit-box-shadow: 0 8px 6px -6px black;
+     -moz-box-shadow: 0 8px 6px -6px black;
+          box-shadow: 0 8px 6px -6px black;
+}
+
+.inside-shadow {
+   -moz-box-shadow:    inset 0 0 10px #000000;
+   -webkit-box-shadow: inset 0 0 10px #000000;
+   box-shadow:         inset 0 0 10px #000000;
+}
+
 
 /*Good Colors:
 Mint: #FF944D
@@ -29,16 +41,16 @@ BAD ==> Grey-Blue: #DFE7F2*/
   src: url(Jaapokkienchance-Regular.otf);
 }
 @font-face{
-  font-family: elegantLux;
-  src: url(ElegantLux-Mager.otf);
+    font-family: elegantLux;
+    src: url(ElegantLux-Mager.otf);
 }
 @font-face{
-  font-family: LockSmithTitle;
-  src: url(LockSmith_reg.otf);
+    font-family: LockSmithTitle;
+    src: url(LockSmith_reg.otf);
 }
 @font-face{
-  font-family: aqua;
-  src: url(aqua.ttf)
+    font-family: aqua;
+    src: url(aqua.ttf)
 }
 
 #mainTitle {
@@ -55,11 +67,15 @@ BAD ==> Grey-Blue: #DFE7F2*/
   font-family: elegantLux;
 }
 
+#topMenu {
+  background-color:#EEEEEE;
+  /*position: fixed;*/
+}
 
 body {
-  color: #DDDDDD;
-  background-image: url(../stylingPictures/Elegant_Background-10.jpg);
-  font-family: elegantLux;
+    color: #DDDDDD;
+    background-image: url(../stylingPictures/Elegant_Background-10.jpg);
+    font-family: elegantLux;
 }
 
 img {
@@ -77,21 +93,21 @@ a {
   text-decoration: underline;
   font-weight: bold;
   color: #CCA300;
-  border-bottom: 2px solid #CCCCCC;
+  border-bottom: 2px solid #BBBBBB;
 }
 
 h1{
-  font-family: aqua;
+    font-family: aqua;
 }
 h2{
-  font-family: LockSmithTitle;
+    font-family: LockSmithTitle;
 }
 h3{
-  font-family: aqua;
+    font-family: aqua;
 }
 
 #your_events{
-  font-family: LockSmithTitle;
+    font-family: LockSmithTitle;
 }
 
 #nav {

@@ -290,15 +290,15 @@ def confirmNotification(uname, eventid):
                 }
             }
         )
-    
-  
+
+
     users.update(
         { 'uname' : uname },
         { '$pull' : { 'notifications' : notification.get('_id') }
-    
+
     })  '''
-       
-    
+
+
 
 
 #--------------------------EVENT STUFF------------------------#
@@ -397,7 +397,7 @@ def deleteEvent(eventid):
     events.remove(ev)
 
 def startEvent(eventid):
-    
+
     ev = events.find_one( { '_id' : ObjectId( eventid ) } )
     '''
     notification = {}
@@ -417,7 +417,7 @@ def startEvent(eventid):
         { 'uname' : member },
         { '$push' : { 'notifications' : eventid } }
         )
-    
+
 def validEvents(uname):
     '''
     returns a list of the events uname can join based on
@@ -456,7 +456,7 @@ def setup():
   edict['desc'] = '1'
   edict['total'] = 10
   edict['price'] = 10
-  edict['loc'] = 0
+  edict['location'] = 0
   edict['address'] = "nowhere"
   edict['long'] = 0
   edict['lat'] = 0
