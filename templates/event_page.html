@@ -12,6 +12,7 @@ created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['dateti
 <br><br>
 <div id="location" sytle="display: none;">{{event['address']}}</div>
 <div id="map" height="50%" width="50%"></div>
+{% raw %}
 <script>
   var location = document.getElementById("location").value;
   var m = document.getElementById("map");
@@ -20,6 +21,7 @@ created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['dateti
   m.innerHTML="";
   m.appendChild(img);
 </script>
+{% endraw %}
 <br><br>
 <b> Distance:</b> <div style="visibility: hidden;" id="dist">{{ event['location'] }}</div>
 {% if event['started'] %}

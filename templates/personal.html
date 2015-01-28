@@ -17,12 +17,13 @@
   <div class="pure-control-group">
     <!-- <label for="pic">Picture</label> -->
     <input id="pic" name="pic"  type="file" accept="image/*"></div><br>
-  <button type="submit" class="pure-button pure-button-primary button-small">Use This Picture</button>
+  <button type="submit" class="pure-button button-secondary
+  button-small">Replace with uploaded Picture</button>
 </form>
 
-</div>
+<!--</div>
 
-<div class = "pure-u-1-3 personal-form">
+<div class = "pure-u-1-3 personal">--!>
 <br><br>
 <form action="/personal_process" method="post" class="pure-form pure-form-aligned">
   <fieldset>
@@ -41,7 +42,7 @@
 	    class="pure-button pure-button-primary">Submit</button> <br>
   {% else %}
     <div class="change">
-    Name: {{udict['fname']}} {{udict['lname']}} &nbsp;&nbsp;<font size="2"><a class="pure-button"  href="/personal/name">Change</a></font>
+    Name: {{udict['fname']}} {{udict['lname']}} <br><font size="2"><a class="pure-button"  href="/personal/name">Change</a></font>
   </div>
     {% endif %}
     <br>
@@ -56,10 +57,10 @@
 	    class="pure-button pure-button-primary">Submit</button>
     {% else %}
     <div class ="change">
-    Email: {{udict['email']}} &nbsp;&nbsp;<font size="2"><a class="pure-button pure-button-primary"  href="/personal/email">Change</a></font>
+    Email: {{udict['email']}}<br><font size="2"><a class="pure-button pure-button-primary"  href="/personal/email">Change</a></font>
   </div>
     {% endif %}
-    <br><br>
+    <br>
 
     {% if change == "pw" %}
     <div class="pure-control-group">
@@ -75,13 +76,13 @@
         <input id="cpw" name="cpw" type="text"
             placeholder="Confirm Password"></div><br>
 
-    <br>
+    
 
     <button type="submit" name="submit" value="pw"
 	    class="pure-button pure-button-primary">Submit</button>
     {% else %}
     <div class ="change">
-    Password: &nbsp;&nbsp;<font size="2"><a class="pure-button pure-button-primary"  href="/personal/pw">Change</a></font>
+    Password: <br><font size="2"><a class="pure-button pure-button-primary"  href="/personal/pw">Change</a></font>
   </div>
 
 </div>
