@@ -2,6 +2,11 @@
 
 
 {% block body %}
+<script>
+    onload = function() {
+    alert('loaded')
+    }
+</script>
 <section class="blue-grey">
 <h1> {{event['ename']}}</h1>
 created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['datetime'].hour}}:{{event['datetime'].minute}}<br>
@@ -10,7 +15,7 @@ created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['dateti
 <b> Location:</b> {{event['address']}}
 <input type=hidden id="latLong" value={{ event['location'] }}>
 <br><br>
-<div id="location" sytle="display: none;">{{event['address']}}</div>
+<div id="location" style="display: none;">{{event['address']}}</div>
 <div id="map" height="50%" width="50%"></div>
 <script>
   var location = document.getElementById("location").value;
@@ -19,7 +24,9 @@ created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['dateti
   img.src="https://maps.googleapis.com/maps/api/staticmap?center="+location+"&zoom=15&size=350x350&sensor=true";
   m.innerHTML="";
   m.appendChild(img);
-</script>
+</script> 
+ <!-- https://maps.googleapis.com/maps/api/staticmap?center="+345%chambers%street+"&zoom=15&size=350x350&sensor=true-->
+
 <br><br>
 <b> Distance:</b> <div style="visibility: hidden;" id="dist">{{ event['location'] }}</div>
 {% if event['started'] %}
