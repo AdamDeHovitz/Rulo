@@ -10,6 +10,17 @@ created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['dateti
 <b> Location:</b> {{event['address']}}
 <input type=hidden id="latLong" value={{ event['location'] }}>
 <br><br>
+<div id="location" sytle="display: none;">{{event['address']}}</div>
+<div id="map" height="50%" width="50%"></div>
+<script>
+  var location = {{event['address']}};
+  var m = document.getElementById("map");
+  var img = new Image();
+  img.src="https://maps.googleapis.com/maps/api/staticmap?center="+location+"&zoom=15&size=350x350&sensor=true";
+  m.innerHTML="";
+  m.appendChild(img);
+</script>
+<br><br>
 <b> Distance:</b> <div style="visibility: hidden;" id="dist">{{ event['location'] }}</div>
 {% if event['started'] %}
 <font color="green" size = "8">Event has started!</font>
