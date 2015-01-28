@@ -4,7 +4,7 @@
 
 
 
-<section class="white">
+<section class="blue-grey">
 {% for list in alist %}
 
 <h1 id="your_events">
@@ -18,8 +18,11 @@
 </h1>
 {% if list[0] %}
 <div id="yourEventFont">
+ 
 {% for e in list %}
-<h2> Name: <a href={{"/event_page/" ~  e['_id']}} style="text-decoration:none;"> {{e['ename']}}</a> </h2>
+<h2> Name: <a href={{"/event_page/" ~  e['_id']}}
+  style="text-decoration:none;"> {{e['ename']}}</a> </h2>
+  <div class = "indent-30">
 {% if e['numb'] %}
 <b>Number of people: </b> {{e['numb']}} <br>
 {% endif %}
@@ -62,12 +65,14 @@
 </form>
 {% endif %}
 
+  </div>
 {% endfor %}
 {% else %}
 <i>Not Available</i>
 <!-- list is empty !-->
 {% endif %}
-  
+
+
 {% endfor %}
 
 

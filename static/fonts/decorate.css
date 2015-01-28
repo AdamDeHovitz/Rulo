@@ -21,10 +21,13 @@ section {
         margin-right: auto;
         width: 500px
     }
-.white {
+.blue-grey {
         background: #C8D5E0;
         color: black;
         }
+.indent-30 {
+    padding-left: 20pt;
+}
 .personal {
   background-color: #DFE7F2
 }
