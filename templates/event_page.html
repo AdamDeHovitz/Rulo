@@ -17,15 +17,9 @@ created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['dateti
 <br><br>
 <div id="location" style="display: none;">{{event['address']}}</div>
 <div id="map" height="50%" width="50%"></div>
-<script>
-  var location = document.getElementById("location").value;
-  var m = document.getElementById("map");
-  var img = new Image();
-  img.src="https://maps.googleapis.com/maps/api/staticmap?center="+location+"&zoom=15&size=350x350&sensor=true";
-  m.innerHTML="";
-  m.appendChild(img);
-</script> 
- <!-- https://maps.googleapis.com/maps/api/staticmap?center="+345%chambers%street+"&zoom=15&size=350x350&sensor=true-->
+<img src= "https://maps.googleapis.com/maps/api/staticmap?center=345%chambers%street&zoom=15&size=350x350&sensor=true" >
+
+ 
 
 <br><br>
 <b> Distance:</b> <div style="visibility: hidden;" id="dist">{{ event['location'] }}</div>
@@ -76,8 +70,20 @@ Event is
 {% for msg in event['msgs'] %}
 <font size="3.25">{{msg['msg']}}<br> </font>
 <font size="3">&nbsp;-  <a href={{"/user/" ~ msg['user']}} style="text-decoration:none;">{{msg['user']}}</a> </font> <font size="2.5">{{msg['time'].month}}/{{msg['time'].day}} at {{msg['time'].hour}}:{{msg['time'].minute}}<br></font><br><br>
+
+{% endfor %}
+
+<script>
+    var location = document.getElementById("location").value;
+    var m = document.getElementById("map");
+    var img = new Image();
+    <!-- img.src="https://maps.googleapis.com/maps/api/staticmap?center="+location+"&zoom=15&size=350x350&sensor=true";
+    m.innerHTML="";
+    m.appendChild(img); -->
+</script>
+
 <!-- Still needs time --!>
-     {% endfor %}
+ 
 
 
      <form action={{"/newmsg/" ~ event["_id"]}} method="post" class="pure-form pure-form-aligned">
