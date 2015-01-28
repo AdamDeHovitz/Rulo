@@ -3,9 +3,9 @@
 
 {% block body %}
 <script>
-    onload = function() {
-    alert('loaded')
-    }
+  onload = function() {
+  alert('loaded')
+  }
 </script>
 <section class="blue-grey">
 <h1> {{event['ename']}}</h1>
@@ -13,7 +13,7 @@ created {{event['datetime'].month}}/{{event['datetime'].day}} at {{event['dateti
 <b>Host:</b> {{event['creator']}}
 <br><br>
 <b> Location:</b> {{event['address']}}
-<input type=hidden id="latLong" value={{ event['location'] }}>
+<input type=hidden id="latLong" value={{event['location']}}>
 <br><br>
 <div id="location" style="display: none;">{{event['address']}}</div>
 <div id="map" height="50%" width="50%"></div>

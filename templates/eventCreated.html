@@ -13,5 +13,16 @@ Description: {{edict['desc']}} <br>
 <!--Lat: {{edict['lat']}} <br>
     Lon: {{edict['lon']}} <br> -->
 Location: {{edict['loc']}} <br>
+<div id="location" sytle="display: none;">{{edict['loc']}}</div>
+<div id="map" height="50%" width="50%"></div>
+<script>
+  var location = document.getElementById("location").value;
+  var m = document.getElementById("map");
+  var img = new Image();
+  img.src="https://maps.googleapis.com/maps/api/staticmap?center="+location+"&zoom=15&size=350x350&sensor=true";
+  m.innerHTML="";
+  m.appendChild(img);
+</script>
+
 
 {% endblock %}
