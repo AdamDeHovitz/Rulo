@@ -24,8 +24,7 @@ Got to <url>
 Install flask, MongoDB, bson.objectid, and datetime before running app.py
 
 ##Areas for improvement
-<ul>
-<li> Google maps functionality will need improvement. It should help you get to your location, and in the future perhaps even show you your group mates
-<li> Events can be made more flexible to allow for future scheduling. The app is currently optomized for "I'm in Costco and want to buy this now" type circumstances
-<li> Mobile optomization, and eventually maybe app deployment, are a critical next step in Rulo's development
-</ul>
+* Google maps functionality will need improvement. It should help you get to your location, and in the future perhaps even show you your group mates
+* Events can be made more flexible to allow for future scheduling. The app is currently optomized for "I'm in Costco and want to buy this now" type circumstances
+* Mobile optomization, and eventually maybe app deployment, are a critical next step in Rulo's development
+* Increasing notifications to notify of more things and to include text or email 
