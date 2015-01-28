@@ -15,9 +15,9 @@ With a light and sleek design, Rulo will let you enjoy saving those grocery doll
 <li> [Sophie Gershon](https://github.com/sophgersh) Database usage, events and users code, and python coding </li>
 <li> [Deanna Taylor](https://github.com/deannataylor) Javascript and HTML coding, styling, and GPS </li>
 
-##The Application:
+##The Application
 Got to <url>
 
-##The Video:
+##The Video
 
-##Installation Instructions:
+##Installation Instructions
