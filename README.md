@@ -15,10 +15,21 @@ With a light and sleek design, Rulo will let you enjoy saving those grocery doll
 <li> [Sophie Gershon](https://github.com/sophgersh) Database usage, events and users code, and python coding </li>
 <li> [Deanna Taylor](https://github.com/deannataylor) Javascript and HTML coding, styling, and GPS </li>
 </ul>
+<<<<<<< HEAD
 
+=======
+>>>>>>> a57fe65f5bfa1de5bbfd3fc2250da2cb29347cae
 ##The Application
 Got to <url>
 
 ##The Video
 
-##Installation Instructions
+##Installation Instructions:
+Install flask, MongoDB and datetime
+
+##Areas for improvement
+<ul>
+<li> Google maps functionality will need improvement. It should help you get to your location, and in the future perhaps even show you your group mates
+<li> Events can be made more flexible to allow for future scheduling. The app is currently optomized for "I'm in Costco and want to buy this now" type circumstances
+<li> Mobile optomization, and eventually maybe app deployment, are a critical next step in Rulo's development
+</ul>
