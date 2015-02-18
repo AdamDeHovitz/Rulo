@@ -353,6 +353,12 @@ def newmsg(eventid = None):
 
     return redirect('/event_page/'+ eventid )
 
+@app.route('/about')
+def about():
+    udict = {'uname':False}
+    return render_template('about.html', udict=udict) 
+  
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
