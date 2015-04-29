@@ -8,6 +8,7 @@ Rulo is a unique buying and selling application that allows users to buy individ
 
 With a light and sleek design, Rulo will let you enjoy saving those grocery dollars.
 
+
 ##The Team
 * [Benedict Bolton](https://github.com/Benedict-Bolton) CSS Styling, GPS javascript, Image Upload, and component interactions. 
 * [Adam DeHovitz](https://github.com/adamdehovitz) Back/Front-End Design, component interactions, and database usage 
@@ -29,3 +30,6 @@ Install flask, MongoDB, bson.objectid, gunicorn, and datetime before running app
 * Events can be made more flexible to allow for future scheduling. The app is currently optomized for "I'm in Costco and want to buy this now" type circumstances
 * Mobile optomization, and eventually maybe app deployment, are a critical next step in Rulo's development
 * Increasing notifications to notify of more things and to include text or email 
+
+
+[See the continuation here](https://github.com/AdamDeHovitz/Rulo-2.0)
